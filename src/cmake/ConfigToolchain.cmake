@@ -1,3 +1,4 @@
+# target system information
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
@@ -25,6 +26,7 @@ else ()
   message(STATUS "EEL_TOOLCHAIN_PATH not defined. eel assumes toolchain is in system path.")
 endif ()
 
+# set toolchain specific executables
 set(CMAKE_C_COMPILER "${TOOLCHAIN_PATH_PREFIX}arm-none-eabi-gcc${TOOLCHAIN_BIN_EXTENSION}" CACHE INTERNAL "c compiler")
 set(CMAKE_CXX_COMPILER "${TOOLCHAIN_PATH_PREFIX}arm-none-eabi-g++${TOOLCHAIN_BIN_EXTENSION}" CACHE INTERNAL "cxx compiler")
 set(CMAKE_ASM_COMPILER "${TOOLCHAIN_PATH_PREFIX}arm-none-eabi-gcc${TOOLCHAIN_BIN_EXTENSION}" CACHE INTERNAL "asm compiler")
@@ -32,3 +34,17 @@ set(CMAKE_BIN_SIZE "${TOOLCHAIN_PATH_PREFIX}arm-none-eabi-size${TOOLCHAIN_BIN_EX
 set(CMAKE_OBJCOPY "${TOOLCHAIN_PATH_PREFIX}arm-none-eabi-objcopy${TOOLCHAIN_BIN_EXTENSION}" CACHE INTERNAL "objcopy")
 set(CMAKE_OBJDUMP "${TOOLCHAIN_PATH_PREFIX}arm-none-eabi-objdump${TOOLCHAIN_BIN_EXTENSION}" CACHE INTERNAL "objdump")
 
+# Parse MCU family
+if (CMAKE_CROSSCOMPILING)
+  if (NOT EEL_MCU)
+    message(FATAL_ERROR "EEL_MCU must be defined.")
+  else ()
+    if (${EEL_MCU} MATCHES "^[sS][tT][mM]32.*")
+      ParseStm32McuInfo()
+    endif ()
+  endif ()
+endif ()
+
+function(ParseStm32McuInfo)
+  message(STATUS "STM32 MCU detected - ${EEL_MCU}")
+endfunction()
