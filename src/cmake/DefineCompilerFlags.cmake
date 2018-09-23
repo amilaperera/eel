@@ -1,5 +1,5 @@
 # Setting flags common to both C & C++
-set(COMMON_FLAGS "-mcpu=cortex-m4 -mthumb -Wall -ffunction-sections" CACHE INTERNAL "common flags")
+set(COMMON_FLAGS "-mcpu=${CPU_FLAG} -mthumb -Wall -ffunction-sections" CACHE INTERNAL "common flags")
 # Setting C specific flags
 set(CMAKE_C_FLAGS "${COMMON_FLAGS} -std=gnu11" CACHE INTERNAL "c compiler flags")
 # Setting C++ specific flags
