@@ -5,7 +5,7 @@ set(CMAKE_C_FLAGS "${COMMON_FLAGS} -std=gnu11" CACHE INTERNAL "c compiler flags"
 # Setting C++ specific flags
 set(CMAKE_CXX_FLAGS "${COMMON_FLAGS} -std=gnu++17 -Wno-write-strings -fno-exceptions -fno-rtti" CACHE INTERNAL "cxx compiler flags")
 # Setting Asemmbler specific flags
-set(CMAKE_ASM_FLAGS "-mcpu=cortex-m4 -mthumb -x assembler-with-cpp" CACHE INTERNAL "asm compiler flags")
+set(CMAKE_ASM_FLAGS "-mcpu=${CPU_FLAG} -mthumb -x assembler-with-cpp" CACHE INTERNAL "asm compiler flags")
 # Basic linker flags
 set(CMAKE_EXE_LINKER_FLAGS "--specs=nano.specs --specs=rdimon.specs" CACHE INTERNAL "executable linker flags")
 
