@@ -49,10 +49,10 @@ endif ()
 
 # Parse STM32 specific information
 function(ParseStm32McuInfo)
-  message(STATUS "STM32 MCU detected - ${EEL_MCU}")
-
   # Guard condition to recursion happens otherwise in toolchain file
   if (NOT STM32_FAMILY)
+    message(STATUS "STM32 MCU detected - ${EEL_MCU}")
+
     # TODO(Amila): Is REGEX MATCH really needed before REGEX REPLACE ?
     # REGEX REPLACE alone would give the full input as the group match when
     # there's no match.
