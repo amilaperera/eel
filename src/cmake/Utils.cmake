@@ -1,0 +1,16 @@
+function(SetTargetProperties Target)
+  if("${STM32_FAMILY_UPPER}" STREQUAL "F1")
+    if ("${STM32_DEV_NUM}" STREQUAL "103")
+      set(TARGET_DEFS "STM32F103")
+    endif()
+
+    if("${STM32_DEV_LETTERS_UPPER}" STREQUAL "RB")
+      set(TARGET_DEFS "${TARGET_DEFS}xB")
+    endif()
+  endif()
+
+  if (TARGET_DEFS)
+    message(STATUS "Target Definitions: ${TARGET_DEFS}")
+    target_compile_options(${Target} PUBLIC -D${TARGET_DEFS})
+  endif()
+endfunction()
