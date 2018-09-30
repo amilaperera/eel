@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+project(C CXX ASM)
 include(Utils)
 
 find_package(STM32HAL COMPONENTS gpio REQUIRED)
@@ -10,4 +10,5 @@ add_executable(blinky.elf main.cpp ${STM32HAL_SOURCES} ${CMSIS_SOURCES} config/s
   config/stm32f1xx_hal_msp.c)
 
 SetTargetProperties(blinky.elf)
+SET_LINKER_PROPERTIES()
 ADD_POST_BUILD_COPY(blinky)

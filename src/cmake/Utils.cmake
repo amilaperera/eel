@@ -27,3 +27,7 @@ macro(ADD_POST_BUILD_COPY BINARY)
   unset(BIN_FILE)
 endmacro()
 
+macro(SET_LINKER_PROPERTIES)
+  message(STATUS "Linker script: ${EEL_LINKER_SCRIPT}")
+  set(CMAKE_EXE_LINKER_FLAGS "-T ${EEL_LINKER_SCRIPT} -Xlinker --gc-sections -Wl,--no-wchar-size-warning" CACHE INTERNAL "executable linker flags")
+endmacro()
