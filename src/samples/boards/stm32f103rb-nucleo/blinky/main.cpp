@@ -10,13 +10,16 @@ int main() {
 
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
-  HAL_GPIO_WritePin(ld2_GPIO_Port, ld2_Pin, GPIO_PIN_RESET);
-
   GPIO_InitStruct.Pin = ld2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(ld2_GPIO_Port, &GPIO_InitStruct);
 
-  HAL_GPIO_WritePin(ld2_GPIO_Port, ld2_Pin, GPIO_PIN_SET);
-  while (1) { }
+  while (1) {
+    HAL_GPIO_WritePin(ld2_GPIO_Port, ld2_Pin, GPIO_PIN_SET);
+    HAL_Delay(1000);
+    HAL_GPIO_WritePin(ld2_GPIO_Port, ld2_Pin, GPIO_PIN_RESET);
+    HAL_Delay(1000);
+  }
 }
+
