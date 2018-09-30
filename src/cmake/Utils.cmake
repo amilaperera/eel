@@ -11,7 +11,7 @@ function(SetTargetProperties Target)
 
   if (TARGET_DEFS)
     message(STATUS "Target Definitions: ${TARGET_DEFS}")
-    target_compile_options(${Target} PUBLIC -D${TARGET_DEFS})
+    target_compile_options(${Target} PUBLIC -D${TARGET_DEFS} -DUSE_HAL_DRIVER)
   endif()
 endfunction()
 
@@ -29,5 +29,5 @@ endmacro()
 
 macro(SET_LINKER_PROPERTIES)
   message(STATUS "Linker script: ${EEL_LINKER_SCRIPT}")
-  set(CMAKE_EXE_LINKER_FLAGS "-T ${EEL_LINKER_SCRIPT} -Xlinker --gc-sections -Wl,--no-wchar-size-warning" CACHE INTERNAL "executable linker flags")
+  set(CMAKE_EXE_LINKER_FLAGS "-mcpu=cortex-m3 -mthumb -specs=nano.specs -T${EEL_LINKER_SCRIPT} -lc -lm -lnosys -Wl,--gc-sections" CACHE INTERNAL "executable linker flags")
 endmacro()
