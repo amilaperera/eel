@@ -1,22 +1,3 @@
-# Parse MCU family
-if (CMAKE_CROSSCOMPILING)
-  if (NOT EEL_MCU)
-    message(FATAL_ERROR "EEL_MCU must be defined.")
-  else ()
-    if (${EEL_MCU} MATCHES "^[sS][tT][mM]32.*")
-      ParseStm32McuInfo()
-      # Now parse CPU_FLAG
-      if ("${STM32_FAMILY_UPPER}" STREQUAL "F1")
-        set(CPU_FLAG "cortex-m3")
-      else ()
-        set(CPU_FLAG "cortex-m4")
-      endif ()
-    else ()
-      message(FATAL_ERROR "Unsupported MCU family")
-    endif ()
-  endif ()
-endif ()
-
 # Parse STM32 specific information
 function(ParseStm32McuInfo)
   # Guard condition to recursion happens otherwise in toolchain file
@@ -81,3 +62,22 @@ function(ParseStm32McuInfo)
     endif ()
   endif ()
 endfunction()
+
+# Parse MCU family
+if (CMAKE_CROSSCOMPILING)
+  if (NOT EEL_MCU)
+    message(FATAL_ERROR "EEL_MCU must be defined.")
+  else ()
+    if (${EEL_MCU} MATCHES "^[sS][tT][mM]32.*")
+      ParseStm32McuInfo()
+      # Now parse CPU_FLAG
+      if ("${STM32_FAMILY_UPPER}" STREQUAL "F1")
+        set(CPU_FLAG "cortex-m3")
+      else ()
+        set(CPU_FLAG "cortex-m4")
+      endif ()
+    else ()
+      message(FATAL_ERROR "Unsupported MCU family")
+    endif ()
+  endif ()
+endif ()
