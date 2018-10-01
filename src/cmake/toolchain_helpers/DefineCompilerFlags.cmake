@@ -29,9 +29,9 @@ if(CMAKE_CROSSCOMPILING)
     if(NOT LINKER_SCRIPT)
       message(FATAL_ERROR "Linker script couldn't be deduced by the MCU definitions.")
     else()
-      set(EEL_LINKER_SCRIPT ${CMAKE_CURRENT_LIST_DIR}/../platform/stm32/f1/linker_scripts/${LINKER_SCRIPT})
+      # TODO: This reference path has to be fixed
+      set(EEL_LINKER_SCRIPT ${CMAKE_CURRENT_LIST_DIR}/../../platform/stm32/f1/linker_scripts/${LINKER_SCRIPT})
     endif()
   endif()
-
 endif()
 
