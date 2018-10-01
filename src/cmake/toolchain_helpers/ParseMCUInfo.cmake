@@ -63,8 +63,28 @@ function(ParseStm32McuInfo)
   endif ()
 endfunction()
 
-# Parse MCU family
+# MCU particular linker script paths
+set(STM32F1_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../platform/stm32/f1/linker_scripts)
+
+# Set linker script
+function(SetLinkerScriptPath)
+  if(NOT EEL_LINKER_SCRIPT)
+    if("${EEL_MCU}" MATCHES "[sS][tT][mM]32[fF]103[rR][bB]")
+      set(LINKER_SCRIPT "STM32F103RBTx_FLASH.ld")
+    endif()
+
+    if(NOT LINKER_SCRIPT)
+      message(FATAL_ERROR "Linker script couldn't be deduced by the MCU definitions.")
+    else()
+      if ("${STM32_FAMILY_UPPER}" STREQUAL "F1")
+        set(EEL_LINKER_SCRIPT ${STM32F1_LINKER_SCRIPTS_PATH}/${LINKER_SCRIPT} CACHE INTERNAL "linker script")
+      endif ()
+    endif()
+  endif()
+endfunction()
+
 if (CMAKE_CROSSCOMPILING)
+  # Parse MCU family
   if (NOT EEL_MCU)
     message(FATAL_ERROR "EEL_MCU must be defined.")
   else ()
@@ -80,4 +100,8 @@ if (CMAKE_CROSSCOMPILING)
       message(FATAL_ERROR "Unsupported MCU family")
     endif ()
   endif ()
+
+  # Set Linker script
+  SetLinkerScriptPath()
 endif ()
+
