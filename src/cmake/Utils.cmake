@@ -31,3 +31,16 @@ macro(SET_LINKER_PROPERTIES)
   message(STATUS "Linker script: ${EEL_LINKER_SCRIPT}")
   set(CMAKE_EXE_LINKER_FLAGS "-mcpu=cortex-m3 -mthumb -specs=nano.specs -T${EEL_LINKER_SCRIPT} -lc -lm -lnosys -Wl,--gc-sections" CACHE INTERNAL "executable linker flags")
 endmacro()
+
+macro(ADD_OPENOCD_TARGETS BINARY)
+  if (OPENOCD_EXECUTABLE)
+    set(OPENOCD_TARGET_CONFIG "target/stm32${STM32_FAMILY_LOWER}x.cfg")
+
+    # Flash the program to target & reset
+    add_custom_target(${BINARY}_flash
+      DEPENDS ${BINARY}.elf
+      COMMAND "${OPENOCD_EXECUTABLE}" -f interface/stlink-v2-1.cfg -f ${OPENOCD_TARGET_CONFIG}
+      -c "program ${BINARY}.elf verify reset exit")
+  endif ()
+  unset(OPENOCD_TARGET_CONFIG)
+endmacro()
