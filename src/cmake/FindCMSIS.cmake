@@ -35,9 +35,6 @@ foreach(SRC ${CMSIS_DEVICE_SOURCES} ${CMSIS_STARTUP_SOURCE})
   list(APPEND CMSIS_SOURCES ${FILE_${SRC}})
 endforeach ()
 
-message(STATUS "Startup source: ${CMSIS_STARTUP_SOURCE}")
-message(STATUS "CMSIS: ${CMSIS_SOURCES}")
-
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(CMSIS DEFAULT_MSG CMSIS_INCLUDE_DIRS CMSIS_SOURCES)
 
