@@ -2,7 +2,7 @@ unset(OPENOCD_EXECUTABLE)
 
 # find OpenOCD on system path
 find_program(OPENOCD_EXECUTABLE
-  NAMES openocd open-ocd
+  NAMES openocd open-ocd OpenOCD
   PATHS OpenOcd)
 
 # We merge the output stream and error stream

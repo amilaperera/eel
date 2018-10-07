@@ -7,6 +7,14 @@ function(SetTargetProperties Target)
     if("${STM32_DEV_LETTERS_UPPER}" STREQUAL "RB")
       set(TARGET_DEFS "${TARGET_DEFS}xB")
     endif()
+  elseif("${STM32_FAMILY_UPPER}" STREQUAL "F4")
+    if ("${STM32_DEV_NUM}" STREQUAL "446")
+      set(TARGET_DEFS "STM32F446")
+    endif()
+
+    if("${STM32_DEV_LETTERS_UPPER}" STREQUAL "ZE")
+      set(TARGET_DEFS "${TARGET_DEFS}xx")
+    endif()
   endif()
 
   if (TARGET_DEFS)
@@ -29,7 +37,7 @@ endmacro()
 
 macro(SET_LINKER_PROPERTIES)
   message(STATUS "Linker script: ${EEL_LINKER_SCRIPT}")
-  set(CMAKE_EXE_LINKER_FLAGS "-mcpu=cortex-m3 -mthumb -specs=nano.specs -T${EEL_LINKER_SCRIPT} -lc -lm -lnosys -Wl,--gc-sections" CACHE INTERNAL "executable linker flags")
+  set(CMAKE_EXE_LINKER_FLAGS "-mcpu=${CPU_FLAG} -mthumb -specs=nano.specs -T${EEL_LINKER_SCRIPT} -lc -lm -lnosys -Wl,--gc-sections" CACHE INTERNAL "executable linker flags")
 endmacro()
 
 macro(ADD_OPENOCD_TARGETS BINARY)
@@ -39,7 +47,7 @@ macro(ADD_OPENOCD_TARGETS BINARY)
     # Flash the program to target & reset
     add_custom_target(${BINARY}_flash
       DEPENDS ${BINARY}.elf
-      COMMAND "${OPENOCD_EXECUTABLE}" -f interface/stlink-v2-1.cfg -f ${OPENOCD_TARGET_CONFIG}
+      COMMAND "${OPENOCD_EXECUTABLE}" -f interface/stlink.cfg -f ${OPENOCD_TARGET_CONFIG}
       -c "program ${BINARY}.elf verify reset exit")
   endif ()
   unset(OPENOCD_TARGET_CONFIG)

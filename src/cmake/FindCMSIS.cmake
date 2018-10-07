@@ -20,6 +20,17 @@ if(${STM32_FAMILY_UPPER} STREQUAL "F1")
       set(CMSIS_STARTUP_SOURCE ${CMSIS_STARTUP_SOURCE_PREFIX}xb.s)
     endif()
   endif()
+elseif(${STM32_FAMILY_UPPER} STREQUAL "F4")
+  list(APPEND CMSIS_COMMON_HEADERS core_cm4.h)
+
+  set(CMSIS_DEVICE_HEADERS stm32f4xx.h system_stm32f4xx.h)
+  set(CMSIS_DEVICE_SOURCES system_stm32f4xx.c)
+  # Now append the startup source
+  if(${STM32_DEV_NUM} STREQUAL "446")
+    if(${STM32_DEV_LETTERS_UPPER} STREQUAL "ZE")
+      set(CMSIS_STARTUP_SOURCE ${CMSIS_STARTUP_SOURCE_PREFIX}xx.s)
+    endif()
+  endif()
 endif()
 
 # include dirs

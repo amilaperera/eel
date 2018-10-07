@@ -8,6 +8,15 @@ if(STM32_FAMILY_UPPER STREQUAL "F1")
         gpio)
     # common prefix for f1
     set(HAL_PREFIX stm32f1xx_)
+elseif(STM32_FAMILY_UPPER STREQUAL "F4")
+    set(HAL_REQUIRED_COMPONENTS
+        cortex pwr rcc)
+    set(HAL_COMPONENTS
+        gpio)
+    set(HAL_EX_COMPONENTS
+        rcc)
+    # common prefix for f1
+    set(HAL_PREFIX stm32f4xx_)
 endif()
 
 if(NOT STM32HAL_FIND_COMPONENTS)

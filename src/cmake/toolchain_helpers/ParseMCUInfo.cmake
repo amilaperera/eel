@@ -65,12 +65,15 @@ endfunction()
 
 # MCU particular linker script paths
 set(STM32F1_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../platform/stm32/f1/linker_scripts)
+set(STM32F4_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../platform/stm32/f4/linker_scripts)
 
 # Set linker script
 function(SetLinkerScriptPath)
   if(NOT EEL_LINKER_SCRIPT)
     if("${EEL_MCU}" MATCHES "[sS][tT][mM]32[fF]103[rR][bB]")
       set(LINKER_SCRIPT "STM32F103RBTx_FLASH.ld")
+    elseif("${EEL_MCU}" MATCHES "[sS][tT][mM]32[fF]446[zZ][eE]")
+      set(LINKER_SCRIPT "STM32F446ZETx_FLASH.ld")
     endif()
 
     if(NOT LINKER_SCRIPT)
@@ -78,6 +81,8 @@ function(SetLinkerScriptPath)
     else()
       if ("${STM32_FAMILY_UPPER}" STREQUAL "F1")
         set(EEL_LINKER_SCRIPT ${STM32F1_LINKER_SCRIPTS_PATH}/${LINKER_SCRIPT} CACHE INTERNAL "linker script")
+      elseif ("${STM32_FAMILY_UPPER}" STREQUAL "F4")
+        set(EEL_LINKER_SCRIPT ${STM32F4_LINKER_SCRIPTS_PATH}/${LINKER_SCRIPT} CACHE INTERNAL "linker script")
       endif ()
     endif()
   endif()
