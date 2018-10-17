@@ -1,8 +1,9 @@
-project(blinky C CXX ASM)
+project(blinky_chibios C CXX ASM)
 include(Utils)
 
 find_package(STM32HAL COMPONENTS gpio REQUIRED)
 find_package(CMSIS REQUIRED)
+find_package(ChibiOS REQUIRED)
 find_package(OpenOCD REQUIRED)
 
 include_directories(${CMSIS_INCLUDE_DIRS} ${STM32HAL_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/config)
