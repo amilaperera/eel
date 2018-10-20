@@ -1,3 +1,8 @@
+# Select ChibiOS components.
+# Currently HAL & RT
+# TODO: NIL
+set(CHIBIOS_ROOT_PATH ${CMAKE_CURRENT_LIST_DIR}/../ots/ChibiOS_18.2.1)
+
 if(NOT ChibiOS_FIND_COMPONENTS)
   set(ChibiOS_FIND_COMPONENTS HAL RT)
   message(STATUS "No ChibiOS components selected, using defaults: ${ChibiOS_FIND_COMPONENTS}")
@@ -50,3 +55,34 @@ message(STATUS "Detected ChibiOS RT components:")
 foreach(COMP ${CHIBIOS_RT_COMPONENTS})
   message(STATUS "\t${COMP}")
 endforeach()
+
+LIST(FIND ChibiOS_FIND_COMPONENTS "HAL" CHIBIOS_HAL_ENABLED)
+LIST(FIND ChibiOS_FIND_COMPONENTS "RT" CHIBIOS_RT_ENABLED)
+
+if(NOT ${CHIBIOS_HAL_ENABLED} LESS 0)
+  # HAL found
+endif()
+
+if(NOT ${CHIBIOS_RT_ENABLED} LESS 0)
+  # RT found
+  include(${CMAKE_CURRENT_LIST_DIR}/ChibiOS/ChibiOS_RTOS.cmake)
+endif()
+
+# populate export variables with HAL sources
+# TODO
+
+# populate export variables with RT sources
+foreach(SRC ${CHIBIOS_SOURCES_RT})
+  find_file(FILE_${SRC}
+    NAMES ${SRC}
+    PATHS ${CHIBIOS_ROOT_PATH})
+  list(APPEND ChibiOS_SOURCES ${FILE_${SRC}})
+endforeach()
+
+foreach(INCLUDE_DIR ${CHIBIOS_INCLUDE_DIRS})
+  LIST(APPEND ChibiOS_INCLUDE_DIRS ${CHIBIOS_ROOT_PATH}/${INCLUDE_DIR})
+endforeach()
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(ChibiOS DEFAULT_MSG ChibiOS_INCLUDE_DIRS ChibiOS_SOURCES)
+
