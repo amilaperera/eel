@@ -1,7 +1,37 @@
-# Set chibios root path
+# TODO: This should be generalized,
+# currently considering F4
+set(CHIBIOS_COMMON_SOURCES
+  os/common/startup/ARMCMx/compilers/GCC/crt0_v7m.S
+  os/common/ports/ARMCMx/chcore.c
+  os/common/ports/ARMCMx/chcore_v7m.c
+  os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S
+)
+
+set(CHIBIOS_COMMON_INCLUDE
+  os/common/startup/ARMCMx/devices/STM32F4xx
+  # os/common/ext/ST/STM32F4xx
+  os/common/oslib/include
+  os/common/ports/ARMCMx
+  os/common/ports/ARMCMx/compilers/GCC
+)
+
+list(APPEND CHIBIOS_COMMON_SOURCES
+  os/common/startup/ARMCMx/compilers/GCC/crt1.c
+  os/common/startup/ARMCMx/compilers/GCC/vectors.S
+)
+
+list(APPEND CHIBIOS_COMMON_INCLUDE
+    os/license
+    os/common/portability/GCC
+    os/common/startup/ARMCMx/compilers/GCC
+    os/common/ext/ARM/CMSIS/Core/Include
+)
+
+list(APPEND CHIBIOS_SOURCES_RT ${CHIBIOS_COMMON_SOURCES})
+
 # Accumulate ChibiOS RT components
 # ChibiOS core compoents
-set(CHIBIOS_SOURCES_RT
+list(APPEND CHIBIOS_SOURCES_RT
   os/rt/src/chsys.c
   os/rt/src/chdebug.c
   os/rt/src/chtrace.c
@@ -28,6 +58,7 @@ set(CHIBIOS_SOURCES_RT_MEMPOOLS       os/common/oslib/src/chmempools.c)
 set(CHIBIOS_SOURCES_RT_FACTORY        os/common/oslib/src/chfactory.c)
 
 set(CHIBIOS_INCLUDE_DIRS
+  ${CHIBIOS_COMMON_INCLUDE}
   os/rt/include
   os/common/oslib/include)
 

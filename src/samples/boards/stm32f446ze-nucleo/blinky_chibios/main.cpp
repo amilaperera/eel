@@ -1,7 +1,9 @@
 #include "stm32f4xx_hal.h"
+#include "ch.h"
 
 int main() {
   HAL_Init();
+  chSysInit();
 
   __GPIOB_CLK_ENABLE();
   GPIO_InitTypeDef GPIO_InitStructure;

@@ -9,9 +9,18 @@ find_package(OpenOCD REQUIRED)
 message(STATUS "ChibiOS SOURCES: ${ChibiOS_SOURCES}")
 message(STATUS "ChibiOS INCLUDE_DIRS: ${ChibiOS_INCLUDE_DIRS}")
 
-include_directories(${CMSIS_INCLUDE_DIRS} ${STM32HAL_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/config)
+include_directories(${CMSIS_INCLUDE_DIRS}
+  ${STM32HAL_INCLUDE_DIR}
+  ${ChibiOS_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_SOURCE_DIR}/config)
 
-add_executable(${PROJECT_NAME}.elf main.cpp ${STM32HAL_SOURCES} ${CMSIS_SOURCES} config/stm32f4xx_it.c config/stm32f4xx_hal_msp.c)
+add_executable(${PROJECT_NAME}.elf
+  main.cpp
+  ${STM32HAL_SOURCES}
+  ${ChibiOS_SOURCES}
+  ${CMSIS_SOURCES}
+  config/stm32f4xx_it.c
+  config/stm32f4xx_hal_msp.c)
 
 SetTargetProperties(${PROJECT_NAME}.elf)
 SET_LINKER_PROPERTIES()
