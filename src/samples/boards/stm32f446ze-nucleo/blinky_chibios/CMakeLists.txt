@@ -3,7 +3,7 @@ include(Utils)
 
 find_package(STM32HAL COMPONENTS gpio REQUIRED)
 find_package(CMSIS REQUIRED)
-find_package(ChibiOS REQUIRED)
+find_package(ChibiOS COMPONENTS RT REQUIRED)
 find_package(OpenOCD REQUIRED)
 
 message(STATUS "ChibiOS SOURCES: ${ChibiOS_SOURCES}")
@@ -19,8 +19,9 @@ add_executable(${PROJECT_NAME}.elf
   ${STM32HAL_SOURCES}
   ${ChibiOS_SOURCES}
   ${CMSIS_SOURCES}
-  config/stm32f4xx_it.c
-  config/stm32f4xx_hal_msp.c)
+  #config/stm32f4xx_it.c
+  #config/stm32f4xx_hal_msp.c
+  )
 
 SetTargetProperties(${PROJECT_NAME}.elf)
 SET_LINKER_PROPERTIES()
