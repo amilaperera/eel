@@ -6,6 +6,8 @@ find_package(CMSIS REQUIRED)
 find_package(ChibiOS COMPONENTS RT REQUIRED)
 find_package(OpenOCD REQUIRED)
 
+add_definitions(-DCORTEX_USE_FPU=FALSE)
+
 message(STATUS "ChibiOS SOURCES: ${ChibiOS_SOURCES}")
 message(STATUS "ChibiOS INCLUDE_DIRS: ${ChibiOS_INCLUDE_DIRS}")
 
@@ -19,11 +21,13 @@ add_executable(${PROJECT_NAME}.elf
   ${STM32HAL_SOURCES}
   ${ChibiOS_SOURCES}
   ${CMSIS_SOURCES}
-  #config/stm32f4xx_it.c
-  #config/stm32f4xx_hal_msp.c
+  # config/stm32f4xx_it.c
+  config/stm32f4xx_hal_msp.c
   )
+message(STATUS "CMSIS: ${CMSIS_INCLUDE_DIRS}")
 
 SetTargetProperties(${PROJECT_NAME}.elf)
-SET_LINKER_PROPERTIES()
+#SET_LINKER_PROPERTIES()
+SET_CHIBIOS_LINKER_SCRIPT(${ChibiOS_LINKER_PATH} ${ChibiOS_LINKER_SCRIPT})
 ADD_POST_BUILD_COPY(${PROJECT_NAME})
 ADD_OPENOCD_TARGETS(${PROJECT_NAME})

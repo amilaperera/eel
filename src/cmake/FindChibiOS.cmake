@@ -89,6 +89,13 @@ foreach(INCLUDE_DIR ${CHIBIOS_INCLUDE_DIRS})
   LIST(APPEND ChibiOS_INCLUDE_DIRS ${CHIBIOS_ROOT_PATH}/${INCLUDE_DIR})
 endforeach()
 
+set(ChibiOS_LINKER_PATH
+  ${CHIBIOS_ROOT_PATH}/os/common/startup/ARMCMx/compilers/GCC/ld)
+set(ChibiOS_LINKER_SCRIPT
+  ${CHIBIOS_ROOT_PATH}/os/common/startup/ARMCMx/compilers/GCC/ld/STM32F446xE.ld)
+
+
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(ChibiOS DEFAULT_MSG ChibiOS_INCLUDE_DIRS ChibiOS_SOURCES)
+find_package_handle_standard_args(ChibiOS DEFAULT_MSG ChibiOS_INCLUDE_DIRS ChibiOS_SOURCES
+  ChibiOS_LINKER_PATH ChibiOS_LINKER_SCRIPT)
 

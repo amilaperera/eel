@@ -40,6 +40,11 @@ macro(SET_LINKER_PROPERTIES)
   set(CMAKE_EXE_LINKER_FLAGS "-mcpu=${CPU_FLAG} -mthumb -specs=nano.specs -T${EEL_LINKER_SCRIPT} -lc -lm -lnosys -Wl,--gc-sections" CACHE INTERNAL "executable linker flags")
 endmacro()
 
+macro(SET_CHIBIOS_LINKER_SCRIPT CHIBIOS_LINKER_PATH CHIBIOS_LINKER_SCRIPT)
+  message(STATUS "Linker script: ${CHIBIOS_LINKER_SCRIPT}")
+  set(CMAKE_EXE_LINKER_FLAGS "-mcpu=${CPU_FLAG} -mthumb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -flto -nostartfiles -Wl,-Map=ss.map,--cref,--no-warn-mismatch,--library-path=${CHIBIOS_LINKER_PATH},--script=${CHIBIOS_LINKER_SCRIPT},--gc-sections,--defsym=__process_stack_size__=0x400,--defsym=__main_stack_size__=0x400" CACHE INTERNAL "executable linker flags")
+endmacro()
+
 macro(ADD_OPENOCD_TARGETS BINARY)
   if (OPENOCD_EXECUTABLE)
     set(OPENOCD_TARGET_CONFIG "target/stm32${STM32_FAMILY_LOWER}x.cfg")
