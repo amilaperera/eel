@@ -89,10 +89,14 @@ foreach(INCLUDE_DIR ${CHIBIOS_INCLUDE_DIRS})
   LIST(APPEND ChibiOS_INCLUDE_DIRS ${CHIBIOS_ROOT_PATH}/${INCLUDE_DIR})
 endforeach()
 
-set(ChibiOS_LINKER_PATH
-  ${CHIBIOS_ROOT_PATH}/os/common/startup/ARMCMx/compilers/GCC/ld)
-set(ChibiOS_LINKER_SCRIPT
-  ${CHIBIOS_ROOT_PATH}/os/common/startup/ARMCMx/compilers/GCC/ld/STM32F446xE.ld)
+# Set linker path and linker script
+set(ChibiOS_LINKER_PATH ${CHIBIOS_ROOT_PATH}/os/common/startup/ARMCMx/compilers/GCC/ld CACHE INTERNAL "linker script path")
+# Set ChibiOS linker script
+if("${EEL_MCU}" MATCHES "[sS][tT][mM]32[fF]103[rR][bB]")
+  # TODO: set
+elseif("${EEL_MCU}" MATCHES "[sS][tT][mM]32[fF]446[zZ][eE]")
+  set(ChibiOS_LINKER_SCRIPT ${ChibiOS_LINKER_PATH}/STM32F446xE.ld CACHE INTERNAL "linker script")
+endif()
 
 
 include(FindPackageHandleStandardArgs)
