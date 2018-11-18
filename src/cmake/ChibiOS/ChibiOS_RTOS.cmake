@@ -1,10 +1,10 @@
 # TODO: This should be generalized,
 # currently considering F4
 set(CHIBIOS_COMMON_SOURCES
-  os/common/startup/ARMCMx/compilers/GCC/crt0_v7m.S #OK
-  os/common/ports/ARMCMx/chcore.c # OK
-  os/common/ports/ARMCMx/chcore_v7m.c # OK
-  os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S #OK
+  os/common/startup/ARMCMx/compilers/GCC/crt0_v7m.S
+  os/common/ports/ARMCMx/chcore.c
+  os/common/ports/ARMCMx/chcore_v7m.c
+  os/common/ports/ARMCMx/compilers/GCC/chcoreasm_v7m.S
 )
 
 set(CHIBIOS_COMMON_INCLUDE
@@ -13,7 +13,6 @@ set(CHIBIOS_COMMON_INCLUDE
   os/common/oslib/include
   os/common/ports/ARMCMx
   os/common/ports/ARMCMx/compilers/GCC
-  # os/common/ports/ARMCMx/compilers/GCC/ld
 )
 
 list(APPEND CHIBIOS_COMMON_SOURCES
@@ -26,7 +25,6 @@ list(APPEND CHIBIOS_COMMON_INCLUDE
     os/common/portability/GCC
     os/common/startup/ARMCMx/compilers/GCC
     os/common/startup/ARMCMx/devices/STM32F4xx
-    # os/common/ext/ARM/CMSIS/Core/Include
 )
 
 list(APPEND CHIBIOS_SOURCES_RT ${CHIBIOS_COMMON_SOURCES})
