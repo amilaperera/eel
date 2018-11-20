@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS "${COMMON_FLAGS} -std=gnu++17 -Wno-write-strings -fno-except
 # Setting Asemmbler specific flags
 set(CMAKE_ASM_FLAGS "-mcpu=${CPU_FLAG} -mthumb -x assembler-with-cpp" CACHE INTERNAL "asm compiler flags")
 # Basic linker flags
-set(CMAKE_EXE_LINKER_FLAGS "-specs=nano.specs" CACHE INTERNAL "executable linker flags")
+# We set linker flags in SetTargetProperties() function
 
 set(CMAKE_C_FLAGS_DEBUG "-Og -g" CACHE INTERNAL "c compiler flags debug")
 set(CMAKE_CXX_FLAGS_DEBUG "-Og -g" CACHE INTERNAL "cxx compiler flags debug")

@@ -22,13 +22,15 @@ function(SetTargetProperties Target)
     target_compile_options(${Target} PUBLIC -D${TARGET_DEFS} -DUSE_HAL_DRIVER)
   endif()
 
-  # Set linker script
-
-  # FIXME: Map file should be renamed according to project name
-  # NOTE: --defsym=<symbol=expression>
-  #         Creates a global symbol in the output file
-  get_target_property(TARGET_LD_FLAGS ${Target} LINK_FLAGS)
-  set_target_properties(${Target} PROPERTIES LINK_FLAGS "-mcpu=${CPU_FLAG} -mthumb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -flto -nostartfiles -Wl,-Map=project.map,--cref,--no-warn-mismatch,--library-path=${ChibiOS_LINKER_PATH},--script=${ChibiOS_LINKER_SCRIPT},--gc-sections,--defsym=__process_stack_size__=0x400,--defsym=__main_stack_size__=0x400")
+  # Set linker properties
+  if(EEL_USE_OS_CHIBIOS)
+    # FIXME: Map file should be renamed according to project name
+    # NOTE: --defsym=<symbol=expression>
+    #         Creates a global symbol in the output file
+    set_target_properties(${Target} PROPERTIES LINK_FLAGS "-mcpu=${CPU_FLAG} -mthumb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -flto -nostartfiles -Wl,-Map=project.map,--cref,--no-warn-mismatch,--library-path=${ChibiOS_LINKER_PATH},--script=${ChibiOS_LINKER_SCRIPT},--gc-sections,--defsym=__process_stack_size__=0x400,--defsym=__main_stack_size__=0x400")
+  elseif(EEL_USE_OS_NONE)
+    set_target_properties(${Target} PROPERTIES LINK_FLAGS "-mcpu=${CPU_FLAG} -mthumb -specs=nano.specs -T${EEL_LINKER_SCRIPT} -lc -lm -lnosys -Wl,--gc-sections")
+  endif()
 endfunction()
 
 macro(ADD_POST_BUILD_COPY BINARY)
@@ -43,11 +45,6 @@ macro(ADD_POST_BUILD_COPY BINARY)
   unset(BIN_FILE)
 endmacro()
 
-macro(SET_LINKER_PROPERTIES)
-  message(STATUS "Linker script: ${EEL_LINKER_SCRIPT}")
-  set(CMAKE_EXE_LINKER_FLAGS "-mcpu=${CPU_FLAG} -mthumb -specs=nano.specs -T${EEL_LINKER_SCRIPT} -lc -lm -lnosys -Wl,--gc-sections" CACHE INTERNAL "executable linker flags")
-endmacro()
-
 macro(ADD_OPENOCD_TARGETS BINARY)
   if (OPENOCD_EXECUTABLE)
     set(OPENOCD_TARGET_CONFIG "target/stm32${STM32_FAMILY_LOWER}x.cfg")
@@ -60,3 +57,4 @@ macro(ADD_OPENOCD_TARGETS BINARY)
   endif ()
   unset(OPENOCD_TARGET_CONFIG)
 endmacro()
+
