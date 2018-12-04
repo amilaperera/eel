@@ -1,3 +1,4 @@
+#include "hal/core/critical_section.hh"
 #include "stm32f4xx_hal.h"
 
 int main() {
@@ -15,9 +16,15 @@ int main() {
 
   for (;;)
   {
+    eel::hal::core::EnterCriticalSection();
+    eel::hal::core::EnterCriticalSection();
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
+    eel::hal::core::ExitCriticalSection();
+    eel::hal::core::ExitCriticalSection();
     HAL_Delay(500);
+    eel::hal::core::EnterCriticalSection();
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_RESET);
+    eel::hal::core::ExitCriticalSection();
     HAL_Delay(500);
   }
 }
