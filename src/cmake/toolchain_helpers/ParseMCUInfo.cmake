@@ -64,8 +64,8 @@ function(ParseStm32McuInfo)
 endfunction()
 
 # MCU particular linker script paths
-set(STM32F1_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../platform/stm32/f1/linker_scripts)
-set(STM32F4_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../platform/stm32/f4/linker_scripts)
+set(STM32F1_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../ots/stm32_cube/f1/linker_scripts)
+set(STM32F4_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../ots/stm32_cube/f4/linker_scripts)
 
 # Set linker script
 function(SetLinkerScriptPath)
