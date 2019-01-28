@@ -7,9 +7,9 @@
 #    message(STATUS "EelUtil components: ${EelUtil_FIND_COMPONENTS}")
 #endif()
 
-set(Eel_Util_SOURCES)
-set(Eel_Util_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+set(EelUtil_SOURCES)
+set(EelUtil_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(EelUtil DEFAULT_MSG Eel_Util_INCLUDE_DIR)
+find_package_handle_standard_args(EelUtil DEFAULT_MSG EelUtil_INCLUDE_DIR)
 

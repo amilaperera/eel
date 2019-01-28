@@ -4,19 +4,22 @@ include(Utils)
 find_package(STM32HAL COMPONENTS gpio REQUIRED)
 find_package(CMSIS REQUIRED)
 find_package(EelHal REQUIRED)
+find_package(EelHalLL REQUIRED)
 find_package(EelUtil REQUIRED)
 find_package(OpenOCD REQUIRED)
 
 include_directories(${CMSIS_INCLUDE_DIRS}
-        ${Eel_Hal_INCLUDE_DIR}
-        ${Eel_Util_INCLUDE_DIR}
+        ${EelHal_INCLUDE_DIR}
+        ${EelHalLL_INCLUDE_DIR}
+        ${EelUtil_INCLUDE_DIR}
         ${STM32HAL_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/config)
 
 add_executable(${PROJECT_NAME}.elf
         main.cpp
-        ${Eel_Hal_SOURCES}
-        ${Eel_Util_SOURCES}
+        ${EelHal_SOURCES}
+        ${EelHalLL_SOURCES}
+        ${EelUtil_SOURCES}
         ${STM32HAL_SOURCES}
         ${CMSIS_SOURCES}
         config/stm32f4xx_it.c

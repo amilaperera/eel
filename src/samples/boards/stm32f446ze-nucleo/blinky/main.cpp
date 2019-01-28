@@ -1,5 +1,5 @@
-#include "hal/core/critical_section.hh"
-#include "stm32f4xx_hal.h"
+#include "hal/critical_section.hh"
+#include "hal/gpio.hh"
 
 int main() {
   HAL_Init();
@@ -13,6 +13,9 @@ int main() {
   GPIO_InitStructure.Speed = GPIO_SPEED_HIGH;
   GPIO_InitStructure.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+  eel::hal::gpio::Gpio pin(eel::hal::gpio::Pin::A0);
+  pin.SetDirection(eel::hal::gpio::Direction::kOutput);
 
   for (;;)
   {
