@@ -1,6 +1,6 @@
 #pragma once
 
-#include "platform/stm32/stm32_registry.hh"
+#include "platform/stm32/f4/common_defs.hh"
 
 namespace eel {
 namespace hal {
