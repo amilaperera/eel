@@ -4,5 +4,6 @@
 namespace eel {
 namespace util {
 using U32 = std::uint32_t;
+using IO_U32 = volatile U32;
 }
 }
