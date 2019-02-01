@@ -12,7 +12,7 @@ int main() {
 
   __GPIOB_CLK_ENABLE();
 
-  eel::hal::ll::gpio::Gpio pin{Pin::B7};
+  eel::hal::gpio::Gpio pin{Pin::B7};
   pin.SetMode(Mode::Output);
   pin.ConfigureOutput(PullUpDown::None, OutputType::PushPull, OutputSpeed::High);
 

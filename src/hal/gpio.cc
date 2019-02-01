@@ -11,7 +11,16 @@ namespace gpio {
 Gpio::Gpio(Pin pin) : gpio_ll_{pin} {
 }
 
-void Gpio::SetDirection(Direction dir) {
+void Gpio::SetMode(Mode mode) {
+  gpio_ll_.SetMode(mode);
+}
+
+void Gpio::ConfigureOutput(PullUpDown pud, OutputType type, OutputSpeed speed) {
+  gpio_ll_.ConfigureOutput(pud, type, speed);
+}
+
+void Gpio::Write(bool status) {
+  gpio_ll_.Write(status);
 }
 
 }
