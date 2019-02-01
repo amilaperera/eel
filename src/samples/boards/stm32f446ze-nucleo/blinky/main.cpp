@@ -5,29 +5,15 @@ int main() {
   HAL_Init();
 
   __GPIOB_CLK_ENABLE();
-  GPIO_InitTypeDef GPIO_InitStructure;
 
-  GPIO_InitStructure.Pin = GPIO_PIN_7;
+  eel::hal::ll::gpio::Gpio pin{eel::hal::gpio::Pin::B7};
+  pin.SetMode(eel::hal::gpio::Mode::Output);
+  pin.ConfigureOutput(eel::hal::gpio::PullUpDown::None, eel::hal::gpio::OutputType::PushPull, eel::hal::gpio::OutputSpeed::High);
 
-  GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStructure.Speed = GPIO_SPEED_HIGH;
-  GPIO_InitStructure.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-  eel::hal::gpio::Gpio pin(eel::hal::gpio::Pin::A0);
-  pin.SetDirection(eel::hal::gpio::Direction::kOutput);
-
-  for (;;)
-  {
-    eel::hal::core::EnterCriticalSection();
-    eel::hal::core::EnterCriticalSection();
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
-    eel::hal::core::ExitCriticalSection();
-    eel::hal::core::ExitCriticalSection();
+  for (;;) {
+    pin.Write(true);
     HAL_Delay(500);
-    eel::hal::core::EnterCriticalSection();
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_RESET);
-    eel::hal::core::ExitCriticalSection();
+    pin.Write(false);
     HAL_Delay(500);
   }
 }
