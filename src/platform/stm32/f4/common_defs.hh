@@ -27,7 +27,10 @@ enum class Pin : eel::util::U32 {
   F0, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15,
 };
 
-enum class Mode { Input = 0x00, Output, Alternate, Analog };
+enum class Mode : eel::util::U8 { Input = 0x00, Output, Alternate, Analog };
+enum class PullUpDown : eel::util::U8 { None = 0x00, Up, Down };
+enum class OutputSpeed : eel::util::U8 { Low = 0x00, Medium, Fast, High };
+enum class OutputType : eel::util::U8 { PushPull = 0x00, OpenDrain };
 
 }
 }

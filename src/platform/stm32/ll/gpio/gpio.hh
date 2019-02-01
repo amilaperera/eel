@@ -31,6 +31,10 @@ class Gpio {
  public:
   explicit Gpio(eel::hal::gpio::Pin pin);
   void SetMode(eel::hal::gpio::Mode mode);
+  void ConfigureOutput(eel::hal::gpio::PullUpDown pud,
+                       eel::hal::gpio::OutputType type,
+                       eel::hal::gpio::OutputSpeed speed);
+  void Write(bool status);
 
  private:
   eel::util::U32 port_;
