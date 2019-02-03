@@ -55,15 +55,7 @@ EEL_ALWAYS_INLINE auto RCCRegisterBlock() {
   return reinterpret_cast<eel::hal::ll::rcc::RCB*>(EEL_RCC_BASE);
 }
 
-EEL_ALWAYS_INLINE void SetGpioPort(eel::hal::gpio::Port port, bool status) {
-  auto temp = RCCRegisterBlock()->RCC_AHB1ENR;
-  if (status) {
-    temp |= (1U << static_cast<eel::util::U8>(port));
-  } else {
-    temp &= ~(1U << static_cast<eel::util::U8>(port));
-  }
-  RCCRegisterBlock()->RCC_AHB1ENR = temp;
-}
+void EnableGpioPort(eel::hal::gpio::Port port, bool status = true);
 
 }
 }

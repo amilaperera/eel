@@ -38,7 +38,7 @@ Gpio::Gpio(eel::hal::gpio::Pin pin) : port_{static_cast<eel::hal::gpio::Port>(st
       break;
   }
 
-  eel::hal::ll::rcc::SetGpioPort(port_, true);
+  eel::hal::ll::rcc::EnableGpioPort(port_, true);
 }
 
 void Gpio::SetMode(eel::hal::gpio::Mode mode) {

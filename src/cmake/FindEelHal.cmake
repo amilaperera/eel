@@ -5,7 +5,10 @@ find_package(EelHalLL REQUIRED)
 set(EelHal_ROOT_PATH ${CMAKE_CURRENT_LIST_DIR}/../hal)
 
 set(EelHal_INCLUDE_DIR ${EelHalLL_INCLUDE_DIR} ${CMAKE_CURRENT_LIST_DIR}/..)
-set(EelHal_SRCS gpio.cc)
+set(EelHal_SRCS
+        gpio.cc
+        rcc.cc
+   )
 
 foreach(SRC ${EelHal_SRCS})
     find_file(FILE_${SRC} ${SRC}
