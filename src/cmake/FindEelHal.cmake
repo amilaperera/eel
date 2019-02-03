@@ -8,6 +8,7 @@ set(EelHal_INCLUDE_DIR ${EelHalLL_INCLUDE_DIR} ${CMAKE_CURRENT_LIST_DIR}/..)
 set(EelHal_SRCS
         gpio.cc
         rcc.cc
+        sys_tick_timer.cc
    )
 
 foreach(SRC ${EelHal_SRCS})
