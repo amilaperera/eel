@@ -23,7 +23,7 @@ struct RCB {
   eel::util::IO_U32 AFHR;
 };
 
-EEL_ALWAYS_INLINE auto PortRCB(eel::util::U32 port) {
+EEL_ALWAYS_INLINE auto GpioRegisterBlock(eel::util::U32 port) {
   return reinterpret_cast<RCB*>(port);
 }
 
@@ -37,8 +37,9 @@ class Gpio {
   void Write(bool status);
 
  private:
-  eel::util::U32 port_;
+  eel::hal::gpio::Port port_;
   eel::util::U32 pin_;
+  eel::util::U32 port_base_;
 };
 
 }

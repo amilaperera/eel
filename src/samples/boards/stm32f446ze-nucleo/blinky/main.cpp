@@ -10,8 +10,6 @@ using eel::hal::gpio::OutputSpeed;
 int main() {
   HAL_Init();
 
-  __GPIOB_CLK_ENABLE();
-
   eel::hal::gpio::Gpio pin{Pin::B7};
   pin.SetMode(Mode::Output);
   pin.ConfigureOutput(PullUpDown::None, OutputType::PushPull, OutputSpeed::High);

@@ -10,12 +10,15 @@ enum class Direction {
   kOutput
 };
 
-enum class Port {
-  A,
+enum class Port : eel::util::U8 {
+  A = 0,
   B,
   C,
   D,
-  E
+  E,
+  F,
+  G,
+  H
 };
 
 enum class Pin : eel::util::U32 {
