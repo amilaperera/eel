@@ -3,14 +3,15 @@
 //
 #include "platform/stm32/ll/gpio/gpio.hh"
 #include "platform/stm32/ll/rcc/rcc.hh"
+#include "util/types.hh"
 
 namespace eel {
 namespace hal {
 namespace ll {
 namespace gpio {
 
-Gpio::Gpio(eel::hal::gpio::Pin pin) : port_{static_cast<eel::hal::gpio::Port>(static_cast<eel::util::U32>(pin) / 16)},
-                                      pin_{static_cast<eel::util::U32>(pin) % 16} {
+Gpio::Gpio(eel::hal::gpio::Pin pin) : port_{static_cast<eel::hal::gpio::Port>(util::ToInt(pin) / 16)},
+                                      pin_{util::ToInt(pin) % 16U} {
   switch (port_) {
     case eel::hal::gpio::Port::A:
       port_base_ = EEL_GPIOA_BASE;
@@ -44,7 +45,7 @@ Gpio::Gpio(eel::hal::gpio::Pin pin) : port_{static_cast<eel::hal::gpio::Port>(st
 void Gpio::SetMode(eel::hal::gpio::Mode mode) {
   eel::util::IO_U32 temp = GpioRegisterBlock(port_base_)->MODER;
   temp &= ~(3U << (pin_ * 2U));
-  temp |= (static_cast<eel::util::U8>(mode) << (pin_ * 2U));
+  temp |= (util::ToInt(mode) << (pin_ * 2U));
   GpioRegisterBlock(port_base_)->MODER = temp;
 }
 
@@ -53,17 +54,17 @@ void Gpio::ConfigureOutput(eel::hal::gpio::PullUpDown pud,
                            eel::hal::gpio::OutputSpeed speed) {
   auto temp = GpioRegisterBlock(port_base_)->PUPDR;
   temp &= ~(3U << (pin_ * 2U));
-  temp |= (static_cast<eel::util::U8>(pud) << (pin_ * 2U));
+  temp |= (util::ToInt(pud) << (pin_ * 2U));
   GpioRegisterBlock(port_base_)->PUPDR = temp;
 
   temp = GpioRegisterBlock(port_base_)->OTYPER;
   temp &= ~(1U << pin_);
-  temp |= (static_cast<eel::util::U8>(type) << pin_);
+  temp |= (util::ToInt(type) << pin_);
   GpioRegisterBlock(port_base_)->OTYPER = temp;
 
   temp = GpioRegisterBlock(port_base_)->OSPEEDR;
   temp &= ~(3U << (pin_ * 2U));
-  temp |= (static_cast<eel::util::U8>(speed) << (pin_ * 2U));
+  temp |= (util::ToInt(speed) << (pin_ * 2U));
   GpioRegisterBlock(port_base_)->OSPEEDR = temp;
 }
 
