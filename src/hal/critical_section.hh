@@ -4,7 +4,7 @@
 #pragma once
 
 #include "util/preprocessor.hh"
-#include "stm32f4xx.h"
+#include "cmsis/include/core_cm4.h"
 
 namespace eel {
 namespace hal{

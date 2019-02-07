@@ -1,8 +1,8 @@
 project(blinky C CXX ASM)
 include(Utils)
 
-find_package(STM32HAL COMPONENTS gpio REQUIRED)
-find_package(CMSIS REQUIRED)
+#find_package(STM32HAL COMPONENTS gpio REQUIRED)
+#find_package(CMSIS REQUIRED)
 find_package(EelHal REQUIRED)
 find_package(EelUtil REQUIRED)
 find_package(OpenOCD REQUIRED)
@@ -17,8 +17,8 @@ add_executable(${PROJECT_NAME}.elf
         main.cpp
         ${EelHal_SOURCES}
         ${EelUtil_SOURCES}
-        ${STM32HAL_SOURCES}
-        ${CMSIS_SOURCES}
+        #${STM32HAL_SOURCES}
+        #${CMSIS_SOURCES}
         config/stm32f4xx_it.c
         config/stm32f4xx_hal_msp.c)
 

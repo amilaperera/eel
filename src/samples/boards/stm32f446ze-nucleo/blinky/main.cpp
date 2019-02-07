@@ -1,4 +1,4 @@
-#include "stm32f4xx_hal.h" // HAL_Init() & CLK_ENABLE dependencies
+#include "stm32f446xx.h"
 #include "hal/gpio.hh"
 
 using eel::hal::gpio::Pin;
@@ -8,7 +8,7 @@ using eel::hal::gpio::OutputType;
 using eel::hal::gpio::OutputSpeed;
 
 int main() {
-  HAL_Init();
+  SysTick_Config();
 
   eel::hal::gpio::Gpio pin{Pin::B7};
   pin.SetMode(Mode::Output);
