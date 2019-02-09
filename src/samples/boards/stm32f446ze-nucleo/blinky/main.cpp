@@ -1,4 +1,4 @@
-#include "stm32f446xx.h"
+#include "hal/sys_tick_timer.hh"
 #include "hal/gpio.hh"
 
 using eel::hal::gpio::Pin;
@@ -8,7 +8,8 @@ using eel::hal::gpio::OutputType;
 using eel::hal::gpio::OutputSpeed;
 
 int main() {
-  SysTick_Config();
+  // tick per 1ms
+  eel::hal::SysTickTimer::Enable(SystemCoreClock/1000U);
 
   eel::hal::gpio::Gpio pin{Pin::B7};
   pin.SetMode(Mode::Output);
@@ -16,9 +17,9 @@ int main() {
 
   for (;;) {
     pin.Write(true);
-    HAL_Delay(500);
+    eel::hal::Tick::Delay(500);
     pin.Write(false);
-    HAL_Delay(500);
+    eel::hal::Tick::Delay(500);
   }
 }
 

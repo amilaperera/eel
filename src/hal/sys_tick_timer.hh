@@ -5,10 +5,24 @@
 namespace eel {
 namespace hal {
 
+class Tick {
+ public:
+  static void Increment() {
+    ++tick_count;
+  }
+  static eel::util::U32 Count() {
+    return tick_count;
+  }
+  static void Delay(eel::util::U32 ticks) {
+    auto now{Count()};
+    while (Count() < (now + ticks)) { }
+  }
+ private:
+  static eel::util::U32 tick_count;
+};
+
 class SysTickTimer {
  private:
-  static constexpr eel::util::U32 kBaseAddr{0xE000E010U};
-
  public:
   static void SetReloadValue(eel::util::U32 val) {
     SysTick->LOAD = (val & 0x00FFFFFFU);
