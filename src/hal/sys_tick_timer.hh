@@ -28,6 +28,8 @@ class SysTickTimer {
  public:
   static void SetReloadValue(eel::util::U32 val);
   static eel::util::U32 GetReloadValue();
+  static void Suspend();
+  static void Resume();
   static bool Enable(eel::util::U32 ticks);
 };
 

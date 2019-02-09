@@ -26,5 +26,15 @@ eel::util::U32 SysTickTimer::GetReloadValue() {
   return SysTick->LOAD & 0x00FFFFFFU;
 }
 
+void SysTickTimer::Suspend() {
+  // Disable systick interrupt
+  SysTick->CTRL &= ~SysTick_CTRL_TICKINT_Msk;
+}
+
+void SysTickTimer::Resume() {
+  // Enable systick interrupt
+  SysTick->CTRL  |= SysTick_CTRL_TICKINT_Msk;
+}
+
 }
 }
