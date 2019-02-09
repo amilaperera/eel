@@ -24,6 +24,6 @@ add_executable(${PROJECT_NAME}.elf
         #config/stm32f4xx_hal_msp.c
         )
 
-SetTargetProperties(${PROJECT_NAME}.elf)
+EelSetTargetProperties(${PROJECT_NAME}.elf)
 ADD_POST_BUILD_COPY(${PROJECT_NAME})
 ADD_OPENOCD_TARGETS(${PROJECT_NAME})
