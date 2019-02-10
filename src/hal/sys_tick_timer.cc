@@ -12,12 +12,6 @@ extern "C" void SysTick_Handler(void) {
 namespace eel {
 namespace hal {
 
-bool SysTickTimer::Enable(eel::util::U32 ticks) {
-  NVIC_SetPriorityGrouping(0x00000003U);
-  NVIC_SetPriority(SysTick_IRQn, 0xf);
-  return SysTick_Config(ticks) == 0UL;
-}
-
 void SysTickTimer::SetReloadValue(eel::util::U32 val) {
   SysTick->LOAD = (val & 0x00FFFFFFU);
 }

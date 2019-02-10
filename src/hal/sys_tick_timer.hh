@@ -23,14 +23,23 @@ class Tick {
   static eel::util::IO_U32 tick_count;
 };
 
-class SysTickTimer {
- private:
- public:
+struct SysTickTimer {
   static void SetReloadValue(eel::util::U32 val);
   static eel::util::U32 GetReloadValue();
   static void Suspend();
   static void Resume();
-  static bool Enable(eel::util::U32 ticks);
+
+  template <eel::util::U32 Frequency, eel::util::U8 Priority>
+  static bool Enable() {
+    static_assert(Frequency != 0, "Frequency can not be 0");
+    static_assert(Priority <= 0xf, "Priority should be less than 16");
+    NVIC_SetPriorityGrouping(0x00000003U);
+    NVIC_SetPriority(SysTick_IRQn, Priority);
+    // Systick_Config configures systick to run @ processor clock NOT @ AHB/8
+    // TODO: The following assumes frequency to be a multiple of SystemCoreClock.
+    eel::util::U32 ticks = SystemCoreClock/Frequency;
+    return SysTick_Config(ticks) == 0UL;
+  }
 };
 
 }

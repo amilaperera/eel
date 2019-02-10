@@ -9,7 +9,7 @@ using eel::hal::gpio::OutputSpeed;
 
 int main() {
   // tick per 1ms
-  eel::hal::SysTickTimer::Enable(SystemCoreClock/1000U);
+  eel::hal::SysTickTimer::Enable<1000UL, 0xf>();
 
   eel::hal::gpio::Gpio pin{Pin::B7};
   pin.SetMode(Mode::Output);
@@ -17,9 +17,9 @@ int main() {
 
   for (;;) {
     pin.Write(true);
-    eel::hal::Tick::Delay(500);
+    eel::hal::Tick::Delay(2000);
     pin.Write(false);
-    eel::hal::Tick::Delay(500);
+    eel::hal::Tick::Delay(2000);
   }
 }
 
