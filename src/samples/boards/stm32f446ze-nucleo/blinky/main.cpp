@@ -9,7 +9,7 @@ using eel::hal::gpio::OutputSpeed;
 
 int main() {
   // tick per 1ms
-  eel::hal::SysTickTimer::Enable<1000UL, 0xf>();
+  eel::hal::SysTickTimer::Enable<eel::hal::SysTickTimer::Frequency::k1kHz, 0xf>();
 
   eel::hal::gpio::Gpio pin{Pin::B7};
   pin.SetMode(Mode::Output);
