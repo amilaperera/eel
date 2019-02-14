@@ -69,6 +69,11 @@ bool Gpio::Read() {
   return (GpioRegisterBlock(port_base_)->IDR & (1U << pin_)) != 0;
 }
 
+void Gpio::Toggle() {
+  bool status = (GpioRegisterBlock(port_base_)->ODR & (1U << pin_)) != 0;
+  Write(!status);
+}
+
 }
 }
 }

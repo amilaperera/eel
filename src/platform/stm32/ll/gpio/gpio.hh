@@ -58,6 +58,7 @@ class Gpio {
   void ConfigureInput(eel::hal::gpio::PullUpDown pud);
   void Write(bool status);
   bool Read();
+  void Toggle();
 
  private:
   eel::hal::gpio::Port port_;

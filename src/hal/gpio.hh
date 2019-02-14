@@ -13,6 +13,7 @@ class Gpio {
   void ConfigureInput(PullUpDown pud);
   void Write(bool status);
   bool Read();
+  void Toggle();
 
  private:
   eel::hal::ll::gpio::Gpio gpio_ll_;

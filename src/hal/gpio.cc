@@ -39,6 +39,10 @@ bool Gpio::Read() {
   return gpio_ll_.Read();
 }
 
+void Gpio::Toggle() {
+  gpio_ll_.Toggle();
+}
+
 }
 }
 }
