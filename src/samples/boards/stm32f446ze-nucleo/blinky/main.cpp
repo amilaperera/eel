@@ -1,4 +1,5 @@
-#include "hal/sys_tick_timer.hh"
+#include "hal/cortex/sys_tick_timer.hh"
+#include "hal/cortex/lock.hh"
 #include "hal/gpio.hh"
 
 using eel::hal::gpio::Pin;
@@ -17,7 +18,10 @@ int main() {
   pin.Write(false);
 
   for (;;) {
-    pin.Toggle();
+    {
+      eel::hal::Lock lk;
+      pin.Toggle();
+    }
     eel::hal::Tick::Delay(500);
   }
 }

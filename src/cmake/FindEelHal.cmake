@@ -14,14 +14,14 @@ set(EelHal_INCLUDE_DIR ${EelHalLL_INCLUDE_DIR}
         ${CMAKE_CURRENT_LIST_DIR}/..
         ${DeviceIncludeDir})
 set(EelHal_SRCS
+        sys_tick_timer.cc
         gpio.cc
         rcc.cc
-        sys_tick_timer.cc
    )
 
 foreach(SRC ${EelHal_SRCS})
     find_file(FILE_${SRC} ${SRC}
-            PATHS ${EelHal_ROOT_PATH})
+            PATHS ${EelHal_ROOT_PATH} ${EelHal_ROOT_PATH}/cortex)
     list(APPEND EelHal_SOURCES ${FILE_${SRC}})
 endforeach ()
 

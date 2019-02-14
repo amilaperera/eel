@@ -1,7 +1,7 @@
 //
 // Created by Amila Perera on 4/02/2019.
 //
-#include "hal/sys_tick_timer.hh"
+#include "sys_tick_timer.hh"
 
 eel::util::IO_U32 eel::hal::Tick::tick_count{0};
 
