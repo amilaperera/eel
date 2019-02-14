@@ -11,15 +11,15 @@ int main() {
   // tick per 1ms
   eel::hal::SysTickTimer::Enable<eel::hal::SysTickTimer::Frequency::k1kHz, 0xf>();
 
+  // output pin
   eel::hal::gpio::Gpio pin{Pin::B7};
-  pin.SetMode(Mode::Output);
   pin.ConfigureOutput(PullUpDown::None, OutputType::PushPull, OutputSpeed::High);
 
   for (;;) {
     pin.Write(true);
-    eel::hal::Tick::Delay(2000);
+    eel::hal::Tick::Delay(1000);
     pin.Write(false);
-    eel::hal::Tick::Delay(2000);
+    eel::hal::Tick::Delay(1000);
   }
 }
 

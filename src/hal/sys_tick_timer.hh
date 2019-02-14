@@ -27,7 +27,6 @@ struct SysTickTimer {
   enum class Frequency : eel::util::U32 {
     k1kHz = 1000,
     k10kHz = 10000,
-    k1MHz = 1000000
   };
   static void SetReloadValue(eel::util::U32 val);
   static eel::util::U32 GetReloadValue();

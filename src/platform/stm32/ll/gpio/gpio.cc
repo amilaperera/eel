@@ -52,24 +52,21 @@ void Gpio::SetMode(eel::hal::gpio::Mode mode) {
 void Gpio::ConfigureOutput(eel::hal::gpio::PullUpDown pud,
                            eel::hal::gpio::OutputType type,
                            eel::hal::gpio::OutputSpeed speed) {
-  auto temp = GpioRegisterBlock(port_base_)->PUPDR;
-  temp &= ~(3U << (pin_ * 2U));
-  temp |= (util::ToInt(pud) << (pin_ * 2U));
-  GpioRegisterBlock(port_base_)->PUPDR = temp;
+  SetPud(port_base_, pin_, pud);
+  SetOType(port_base_, pin_, type);
+  SetOSpeed(port_base_, pin_, speed);
+}
 
-  temp = GpioRegisterBlock(port_base_)->OTYPER;
-  temp &= ~(1U << pin_);
-  temp |= (util::ToInt(type) << pin_);
-  GpioRegisterBlock(port_base_)->OTYPER = temp;
-
-  temp = GpioRegisterBlock(port_base_)->OSPEEDR;
-  temp &= ~(3U << (pin_ * 2U));
-  temp |= (util::ToInt(speed) << (pin_ * 2U));
-  GpioRegisterBlock(port_base_)->OSPEEDR = temp;
+void Gpio::ConfigureInput(eel::hal::gpio::PullUpDown pud) {
+  SetPud(port_base_, pin_, pud);
 }
 
 void Gpio::Write(bool status) {
   GpioRegisterBlock(port_base_)->BSRR = status ? (1U << pin_) : (1 << (pin_ + 16U));
+}
+
+bool Gpio::Read() {
+  return (GpioRegisterBlock(port_base_)->IDR & (1U << pin_)) != 0;
 }
 
 }
