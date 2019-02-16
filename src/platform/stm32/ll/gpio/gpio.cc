@@ -65,7 +65,7 @@ void Gpio::Write(bool status) {
   GpioRegisterBlock(port_base_)->BSRR = status ? (1U << pin_) : (1 << (pin_ + 16U));
 }
 
-bool Gpio::Read() {
+bool Gpio::Read() const {
   return (GpioRegisterBlock(port_base_)->IDR & (1U << pin_)) != 0;
 }
 

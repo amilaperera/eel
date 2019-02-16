@@ -57,7 +57,7 @@ class Gpio {
                        eel::hal::gpio::OutputSpeed speed);
   void ConfigureInput(eel::hal::gpio::PullUpDown pud);
   void Write(bool status);
-  bool Read();
+  bool Read() const;
   void Toggle();
 
  private:

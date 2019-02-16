@@ -31,12 +31,27 @@ void Gpio::ConfigureInput(PullUpDown pud) {
   gpio_ll_.ConfigureInput(pud);
 }
 
+bool Gpio::Read() const {
+  return gpio_ll_.Read();
+}
+
+Gpio::operator bool() const {
+  return gpio_ll_.Read();
+}
+
+
 void Gpio::Write(bool status) {
   gpio_ll_.Write(status);
 }
 
-bool Gpio::Read() {
-  return gpio_ll_.Read();
+Gpio & Gpio::operator=(bool status) {
+  gpio_ll_.Write(status);
+  return *this;
+}
+
+Gpio & Gpio::operator=(int status) {
+  *this = (status != 0);
+  return *this;
 }
 
 void Gpio::Toggle() {

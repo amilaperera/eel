@@ -11,8 +11,11 @@ class Gpio {
   void SetMode(Mode mode);
   void ConfigureOutput(PullUpDown pud, OutputType type, OutputSpeed speed);
   void ConfigureInput(PullUpDown pud);
+  bool Read() const;
+  explicit operator bool() const;
   void Write(bool status);
-  bool Read();
+  Gpio & operator=(bool status);
+  Gpio & operator=(int status);
   void Toggle();
 
  private:
