@@ -27,6 +27,13 @@ EEL_ALWAYS_INLINE auto GpioRegisterBlock(eel::util::U32 port) {
   return reinterpret_cast<RCB*>(port);
 }
 
+EEL_ALWAYS_INLINE void SetMode(eel::util::U32 port_base, eel::util::U32 pin, eel::hal::gpio::Mode mode) {
+  eel::util::IO_U32 temp = GpioRegisterBlock(port_base)->MODER;
+  temp &= ~(3U << (pin * 2U));
+  temp |= (util::ToInt(mode) << (pin * 2U));
+  GpioRegisterBlock(port_base)->MODER = temp;
+}
+
 EEL_ALWAYS_INLINE void SetPud(eel::util::U32 port_base, eel::util::U32 pin, eel::hal::gpio::PullUpDown pud) {
   auto temp = GpioRegisterBlock(port_base)->PUPDR;
   temp &= ~(3U << (pin * 2U));
@@ -51,11 +58,13 @@ EEL_ALWAYS_INLINE void SetOSpeed(eel::util::U32 port_base, eel::util::U32 pin, e
 class Gpio {
  public:
   explicit Gpio(eel::hal::gpio::Pin pin);
-  void SetMode(eel::hal::gpio::Mode mode);
   void ConfigureOutput(eel::hal::gpio::PullUpDown pud,
                        eel::hal::gpio::OutputType type,
                        eel::hal::gpio::OutputSpeed speed);
   void ConfigureInput(eel::hal::gpio::PullUpDown pud);
+  void ConfigureAf(eel::hal::gpio::PullUpDown pud,
+                       eel::hal::gpio::OutputType type,
+                       eel::hal::gpio::OutputSpeed speed);
   void Write(bool status);
   bool Read() const;
   void Toggle();
@@ -64,6 +73,10 @@ class Gpio {
   eel::hal::gpio::Port port_;
   eel::util::U32 pin_;
   eel::util::U32 port_base_;
+
+  void Configure(eel::hal::gpio::PullUpDown pud,
+                 eel::hal::gpio::OutputType type,
+                 eel::hal::gpio::OutputSpeed speed);
 };
 
 }

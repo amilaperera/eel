@@ -39,26 +39,26 @@ Gpio::Gpio(eel::hal::gpio::Pin pin) : port_{static_cast<eel::hal::gpio::Port>(ut
       break;
   }
 
-  eel::hal::ll::rcc::EnableGpioPort(port_, true);
-}
-
-void Gpio::SetMode(eel::hal::gpio::Mode mode) {
-  eel::util::IO_U32 temp = GpioRegisterBlock(port_base_)->MODER;
-  temp &= ~(3U << (pin_ * 2U));
-  temp |= (util::ToInt(mode) << (pin_ * 2U));
-  GpioRegisterBlock(port_base_)->MODER = temp;
+  eel::hal::ll::rcc::Rcc::EnableGpioPort(port_, true);
 }
 
 void Gpio::ConfigureOutput(eel::hal::gpio::PullUpDown pud,
                            eel::hal::gpio::OutputType type,
                            eel::hal::gpio::OutputSpeed speed) {
-  SetPud(port_base_, pin_, pud);
-  SetOType(port_base_, pin_, type);
-  SetOSpeed(port_base_, pin_, speed);
+  eel::hal::ll::gpio::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Output);
+  Configure(pud, type, speed);
 }
 
 void Gpio::ConfigureInput(eel::hal::gpio::PullUpDown pud) {
+  eel::hal::ll::gpio::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Input);
   SetPud(port_base_, pin_, pud);
+}
+
+void Gpio::ConfigureAf(eel::hal::gpio::PullUpDown pud,
+                       eel::hal::gpio::OutputType type,
+                       eel::hal::gpio::OutputSpeed speed) {
+  eel::hal::ll::gpio::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Alternate);
+  Configure(pud, type, speed);
 }
 
 void Gpio::Write(bool status) {
@@ -72,6 +72,15 @@ bool Gpio::Read() const {
 void Gpio::Toggle() {
   bool status = (GpioRegisterBlock(port_base_)->ODR & (1U << pin_)) != 0;
   Write(!status);
+}
+
+// private implementation
+void Gpio::Configure(eel::hal::gpio::PullUpDown pud,
+               eel::hal::gpio::OutputType type,
+               eel::hal::gpio::OutputSpeed speed) {
+  SetPud(port_base_, pin_, pud);
+  SetOType(port_base_, pin_, type);
+  SetOSpeed(port_base_, pin_, speed);
 }
 
 }

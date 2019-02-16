@@ -8,9 +8,9 @@ namespace gpio {
 class Gpio {
  public:
   explicit Gpio(Pin pin);
-  void SetMode(Mode mode);
   void ConfigureOutput(PullUpDown pud, OutputType type, OutputSpeed speed);
   void ConfigureInput(PullUpDown pud);
+  void ConfigureAf(PullUpDown pud, OutputType type, OutputSpeed speed);
   bool Read() const;
   explicit operator bool() const;
   void Write(bool status);

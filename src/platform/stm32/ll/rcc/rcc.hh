@@ -55,7 +55,9 @@ EEL_ALWAYS_INLINE auto RCCRegisterBlock() {
   return reinterpret_cast<eel::hal::ll::rcc::RCB*>(EEL_RCC_BASE);
 }
 
-void EnableGpioPort(eel::hal::gpio::Port port, bool status = true);
+struct Rcc {
+  static void EnableGpioPort(eel::hal::gpio::Port port, bool status = true);
+};
 
 }
 }

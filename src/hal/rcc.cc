@@ -7,8 +7,8 @@
 namespace eel {
 namespace hal {
 namespace rcc {
-void EnableGpioPort(eel::hal::gpio::Port port, bool status) {
-  eel::hal::ll::rcc::EnableGpioPort(port, status);
+void Rcc::EnableGpioPort(eel::hal::gpio::Port port, bool status) {
+  eel::hal::ll::rcc::Rcc::EnableGpioPort(port, status);
 }
 }
 }

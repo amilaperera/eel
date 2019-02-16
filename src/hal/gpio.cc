@@ -17,18 +17,16 @@ namespace gpio {
 Gpio::Gpio(Pin pin) : gpio_ll_{pin} {
 }
 
-void Gpio::SetMode(Mode mode) {
-  gpio_ll_.SetMode(mode);
-}
-
 void Gpio::ConfigureOutput(PullUpDown pud, OutputType type, OutputSpeed speed) {
-  gpio_ll_.SetMode(Mode::Output);
   gpio_ll_.ConfigureOutput(pud, type, speed);
 }
 
 void Gpio::ConfigureInput(PullUpDown pud) {
-  gpio_ll_.SetMode(Mode::Input);
   gpio_ll_.ConfigureInput(pud);
+}
+
+void Gpio::ConfigureAf(PullUpDown pud, OutputType type, OutputSpeed speed) {
+  gpio_ll_.ConfigureAf(pud, type, speed);
 }
 
 bool Gpio::Read() const {
