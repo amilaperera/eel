@@ -4,12 +4,6 @@
 namespace eel {
 namespace hal {
 namespace gpio {
-
-enum class Direction {
-  kInput,
-  kOutput
-};
-
 enum class Port : eel::util::U8 {
   A = 0,
   B,
@@ -36,6 +30,18 @@ enum class OutputSpeed : eel::util::U8 { Low = 0x00, Medium, Fast, High };
 enum class OutputType : eel::util::U8 { PushPull = 0x00, OpenDrain };
 
 }
+
+namespace usart {
+enum class Peripheral {
+ kUsart1,
+ kUsart2,
+ kUsart3,
+ kUart4,
+ kUart5,
+ kUsart6
+};
+}
+
 }
 }
 

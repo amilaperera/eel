@@ -9,6 +9,7 @@ set(EelHalLL_ROOT_PATH ${CMAKE_CURRENT_LIST_DIR}/../platform)
 set(EelHalLL_SRCS
         gpio/gpio.cc
         rcc/rcc.cc
+        usart/usart.cc
    )
 
 # TODO: Conditional enabling of platform specific drivers
