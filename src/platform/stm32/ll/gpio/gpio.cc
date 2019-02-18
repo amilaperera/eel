@@ -54,10 +54,12 @@ void Gpio::ConfigureInput(eel::hal::gpio::PullUpDown pud) {
   SetPud(port_base_, pin_, pud);
 }
 
-void Gpio::ConfigureAf(eel::hal::gpio::PullUpDown pud,
+void Gpio::ConfigureAf(eel::hal::gpio::Af af,
+                       eel::hal::gpio::PullUpDown pud,
                        eel::hal::gpio::OutputType type,
                        eel::hal::gpio::OutputSpeed speed) {
   eel::hal::ll::gpio::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Alternate);
+  SetAf(port_base_, pin_, af);
   Configure(pud, type, speed);
 }
 

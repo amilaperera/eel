@@ -10,7 +10,6 @@ class Gpio {
   explicit Gpio(Pin pin);
   void ConfigureOutput(PullUpDown pud, OutputType type, OutputSpeed speed);
   void ConfigureInput(PullUpDown pud);
-  void ConfigureAf(PullUpDown pud, OutputType type, OutputSpeed speed);
   bool Read() const;
   explicit operator bool() const;
   void Write(bool status);

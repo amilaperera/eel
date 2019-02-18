@@ -28,6 +28,7 @@ enum class Mode : eel::util::U8 { Input = 0x00, Output, Alternate, Analog };
 enum class PullUpDown : eel::util::U8 { None = 0x00, Up, Down };
 enum class OutputSpeed : eel::util::U8 { Low = 0x00, Medium, Fast, High };
 enum class OutputType : eel::util::U8 { PushPull = 0x00, OpenDrain };
+enum class Af : eel::util::U8 {k0 = 0x00, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15};
 
 }
 
@@ -40,8 +41,24 @@ enum class Peripheral {
  kUart5,
  kUsart6
 };
-}
 
+enum class OverSampling : eel::util::U8 {
+  k16 = 0,
+  k8
+};
+
+enum class WordLength : eel::util::U8 {
+  k8DataBits = 0,
+  k9DataBits
+};
+
+enum class Parity : eel::util::U8 {
+  kNone = 0,
+  kEven,
+  kOdd
+};
+
+}
 }
 }
 

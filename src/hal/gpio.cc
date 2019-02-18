@@ -25,10 +25,6 @@ void Gpio::ConfigureInput(PullUpDown pud) {
   gpio_ll_.ConfigureInput(pud);
 }
 
-void Gpio::ConfigureAf(PullUpDown pud, OutputType type, OutputSpeed speed) {
-  gpio_ll_.ConfigureAf(pud, type, speed);
-}
-
 bool Gpio::Read() const {
   return gpio_ll_.Read();
 }

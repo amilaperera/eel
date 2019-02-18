@@ -35,12 +35,16 @@ Usart::Usart(eel::hal::usart::Peripheral peripheral, eel::hal::gpio::Pin tx, eel
   // TODO: Enable clock
 }
 
-void Usart::ConfigureTx(eel::hal::gpio::PullUpDown pud, eel::hal::gpio::OutputType type, eel::hal::gpio::OutputSpeed speed) {
-  tx_.ConfigureAf(pud, type, speed);
+void Usart::ConfigureTx(eel::hal::gpio::Af af, eel::hal::gpio::PullUpDown pud, eel::hal::gpio::OutputType type, eel::hal::gpio::OutputSpeed speed) {
+  tx_.ConfigureAf(af, pud, type, speed);
 }
 
-void Usart::ConfigureRx(eel::hal::gpio::PullUpDown pud, eel::hal::gpio::OutputType type, eel::hal::gpio::OutputSpeed speed) {
-  rx_.ConfigureAf(pud, type, speed);
+void Usart::ConfigureRx(eel::hal::gpio::Af af, eel::hal::gpio::PullUpDown pud, eel::hal::gpio::OutputType type, eel::hal::gpio::OutputSpeed speed) {
+  rx_.ConfigureAf(af, pud, type, speed);
+}
+
+void Usart::Configure(eel::util::U32 baud_rate, eel::hal::usart::WordLength word_length, eel::hal::usart::Parity parity, eel::hal::usart::OverSampling over_sampling) {
+
 }
 
 }

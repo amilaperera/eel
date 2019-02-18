@@ -19,8 +19,7 @@ struct RCB {
   eel::util::IO_U32 ODR;
   eel::util::IO_U32 BSRR;
   eel::util::IO_U32 LCKR;
-  eel::util::IO_U32 AFLR;
-  eel::util::IO_U32 AFHR;
+  eel::util::IO_U32 AFR[2]; // AFLR & AFHR - collectively called AFR
 };
 
 EEL_ALWAYS_INLINE auto GpioRegisterBlock(eel::util::U32 port) {
@@ -55,6 +54,19 @@ EEL_ALWAYS_INLINE void SetOSpeed(eel::util::U32 port_base, eel::util::U32 pin, e
   GpioRegisterBlock(port_base)->OSPEEDR = temp;
 }
 
+EEL_ALWAYS_INLINE void SetAf(eel::util::U32 port_base, eel::util::U32 pin, eel::hal::gpio::Af af) {
+  auto pin_position{pin}, afr_idx{0UL};
+  if (pin >= 8) {
+    // We should write to AFHR, not AFLR. Therefore increment idx
+    afr_idx = 1;
+    pin_position = 8 - pin;
+  }
+  auto temp = GpioRegisterBlock(port_base)->AFR[afr_idx];
+  temp &= ~(0xFU << (pin_position * 4U));
+  temp |= (util::ToInt(af) << (pin_position * 4U));
+  GpioRegisterBlock(port_base)->AFR[afr_idx] = temp;
+}
+
 class Gpio {
  public:
   explicit Gpio(eel::hal::gpio::Pin pin);
@@ -62,7 +74,7 @@ class Gpio {
                        eel::hal::gpio::OutputType type,
                        eel::hal::gpio::OutputSpeed speed);
   void ConfigureInput(eel::hal::gpio::PullUpDown pud);
-  void ConfigureAf(eel::hal::gpio::PullUpDown pud,
+  void ConfigureAf(eel::hal::gpio::Af af, eel::hal::gpio::PullUpDown pud,
                        eel::hal::gpio::OutputType type,
                        eel::hal::gpio::OutputSpeed speed);
   void Write(bool status);
