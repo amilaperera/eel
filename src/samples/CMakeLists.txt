@@ -3,7 +3,11 @@ if(EEL_F1_SAMPLES)
 endif()
 if(EEL_F4_SAMPLES)
   if(EEL_USE_OS_NONE)
+    # stm32 hal projects
     add_subdirectory(boards/stm32f446ze-nucleo/blinky_stm32)
+    add_subdirectory(boards/stm32f446ze-nucleo/usart_stm32)
+
+    # eel hal projects
     add_subdirectory(boards/stm32f446ze-nucleo/blinky)
   endif()
   if(EEL_USE_OS_CHIBIOS)

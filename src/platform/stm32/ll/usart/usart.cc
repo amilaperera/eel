@@ -2,6 +2,7 @@
 // Created by Amila Perera on 17/02/2019.
 //
 #include "platform/stm32/ll/usart/usart.hh"
+#include "platform/stm32/ll/rcc/rcc.hh"
 
 namespace eel {
 namespace hal {
@@ -33,6 +34,7 @@ Usart::Usart(eel::hal::usart::Peripheral peripheral, eel::hal::gpio::Pin tx, eel
       break;
   }
   // TODO: Enable clock
+  eel::hal::ll::rcc::Rcc::EnableUsart(peripheral);
 }
 
 void Usart::ConfigureTx(eel::hal::gpio::Af af, eel::hal::gpio::PullUpDown pud, eel::hal::gpio::OutputType type, eel::hal::gpio::OutputSpeed speed) {

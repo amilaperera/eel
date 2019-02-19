@@ -57,6 +57,7 @@ EEL_ALWAYS_INLINE auto RCCRegisterBlock() {
 
 struct Rcc {
   static void EnableGpioPort(eel::hal::gpio::Port port, bool status = true);
+  static void EnableUsart(eel::hal::usart::Peripheral peripheral, bool status = true);
 };
 
 }
