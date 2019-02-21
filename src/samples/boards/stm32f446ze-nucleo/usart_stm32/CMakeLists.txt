@@ -1,7 +1,7 @@
 project(usart_stm32 C CXX ASM)
 include(Utils)
 
-find_package(STM32HAL COMPONENTS gpio REQUIRED)
+find_package(STM32HAL COMPONENTS gpio uart REQUIRED)
 find_package(CMSIS REQUIRED)
 find_package(OpenOCD REQUIRED)
 
