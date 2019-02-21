@@ -14,10 +14,10 @@ int main() {
   GPIO_InitTypeDef GPIO_InitStructure;
 
   GPIO_InitStructure.Pin = GPIO_PIN_8 | GPIO_PIN_9;
-  GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStructure.Mode = GPIO_MODE_AF_PP; // OD ? for RX
   GPIO_InitStructure.Alternate = GPIO_AF7_USART3;
-  GPIO_InitStructure.Speed = GPIO_SPEED_MEDIUM;
-  GPIO_InitStructure.Pull = GPIO_PULLUP;
+  GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  GPIO_InitStructure.Pull = GPIO_PULLUP; // Not sure ??
   HAL_GPIO_Init(GPIOD, &GPIO_InitStructure);
 
   // usart configuration
