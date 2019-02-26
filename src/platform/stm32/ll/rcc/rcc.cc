@@ -1,5 +1,6 @@
 #include "platform/stm32/ll/rcc/rcc.hh"
 #include "util/bit_manip.hh"
+#include "stm32f446xx.h"
 
 namespace eel {
 namespace hal {
@@ -51,6 +52,36 @@ void Rcc::EnableUsart(eel::hal::usart::Peripheral peripheral, bool status) {
       RCCRegisterBlock()->RCC_APB2ENR = temp;
       break;
   }
+}
+
+eel::util::U32 Rcc::AHBPrescalar() {
+  // TODO: table is set for shifting
+  //return ahb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 4) & 0xEU];
+  return 0;
+}
+
+eel::util::U32 Rcc::APB1Prescalar() {
+  // TODO: table is set for shifting
+  //return apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 10) & 0x7U];
+  return 0;
+}
+
+eel::util::U32 Rcc::APB2Prescalar() {
+  // TODO: table is set for shifting
+  //return apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 13) & 0x7U];
+  return 0;
+}
+
+eel::util::U32 Rcc::AHBFrequency() {
+  return SystemCoreClock >> ahb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 4) & 0xEU];
+}
+
+eel::util::U32 Rcc::APB1Frequency() {
+  return AHBFrequency() >> apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 10) & 0x7U];
+}
+
+eel::util::U32 Rcc::APB2Frequency() {
+  return AHBFrequency() >> apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 13) & 0x7U];
 }
 
 }

@@ -5,6 +5,7 @@
 #include "util/types.hh"
 #include "util/preprocessor.hh"
 #include "platform/stm32/ll/gpio/gpio.hh"
+#include "platform/stm32/ll/rcc/rcc.hh"
 
 namespace eel {
 namespace hal {
@@ -38,11 +39,18 @@ class Usart {
                    eel::hal::gpio::PullUpDown pud,
                    eel::hal::gpio::OutputType type,
                    eel::hal::gpio::OutputSpeed speed);
-  void Configure(eel::util::U32 baud_rate, eel::hal::usart::WordLength word_length, eel::hal::usart::Parity parity = eel::hal::usart::Parity::kNone, eel::hal::usart::OverSampling over_sampling = eel::hal::usart::OverSampling::k16);
+  void Configure(eel::util::U32 baud_rate, eel::hal::usart::WordLength word_length, eel::hal::usart::Parity parity = eel::hal::usart::Parity::kNone);
+  void Send(eel::util::U8 data);
  private:
+  eel::hal::usart::Peripheral peripheral_;
   eel::util::U32 usart_base_;
   eel::hal::ll::gpio::Gpio tx_;
   eel::hal::ll::gpio::Gpio rx_;
+
+  void SetBaudRate(eel::util::U32 value);
+  void SetWordLength(eel::hal::usart::WordLength word_length);
+  void SetParity(eel::hal::usart::Parity parity);
+  void SetMode(eel::hal::usart::Mode mode);
 };
 
 }

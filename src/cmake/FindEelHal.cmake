@@ -17,6 +17,7 @@ set(EelHal_SRCS
         sys_tick_timer.cc
         gpio.cc
         rcc.cc
+        usart.cc
    )
 
 foreach(SRC ${EelHal_SRCS})

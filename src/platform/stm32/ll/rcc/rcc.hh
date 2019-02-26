@@ -55,9 +55,19 @@ EEL_ALWAYS_INLINE auto RCCRegisterBlock() {
   return reinterpret_cast<eel::hal::ll::rcc::RCB*>(EEL_RCC_BASE);
 }
 
-struct Rcc {
+class Rcc {
+ public:
   static void EnableGpioPort(eel::hal::gpio::Port port, bool status = true);
   static void EnableUsart(eel::hal::usart::Peripheral peripheral, bool status = true);
+  static eel::util::U32 AHBFrequency();
+  static eel::util::U32 APB1Frequency();
+  static eel::util::U32 APB2Frequency();
+  static eel::util::U32 AHBPrescalar();
+  static eel::util::U32 APB1Prescalar();
+  static eel::util::U32 APB2Prescalar();
+ private:
+  static constexpr eel::util::U16 ahb_prescaler[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+  static constexpr eel::util::U8 apb_prescaler[8] = {0, 0, 0, 0, 1, 2, 3, 4}; // for bit shifting
 };
 
 }

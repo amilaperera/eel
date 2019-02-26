@@ -58,6 +58,13 @@ enum class Parity : eel::util::U8 {
   kOdd
 };
 
+enum class Mode : eel::util::U8 {
+  kNone = 0,
+  kTxOnly,
+  kRxOnly,
+  kTxRx,
+};
+
 }
 }
 }

@@ -22,7 +22,7 @@ add_executable(${PROJECT_NAME}.elf
   ${CMSIS_SOURCES}
   # config/stm32f4xx_it.c
   config/stm32f4xx_hal_msp.c
-  )
+        ../../../../hal/usart.cc ../../../../hal/usart.hh)
 
 SetTargetProperties(${PROJECT_NAME}.elf)
 ADD_POST_BUILD_COPY(${PROJECT_NAME})
