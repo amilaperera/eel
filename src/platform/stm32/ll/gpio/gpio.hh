@@ -59,7 +59,7 @@ EEL_ALWAYS_INLINE void SetAf(eel::util::U32 port_base, eel::util::U32 pin, eel::
   if (pin >= 8) {
     // We should write to AFHR, not AFLR. Therefore increment idx
     afr_idx = 1;
-    pin_position = 8 - pin;
+    pin_position = pin - 8;
   }
   auto temp = GpioRegisterBlock(port_base)->AFR[afr_idx];
   temp &= ~(0xFU << (pin_position * 4U));
