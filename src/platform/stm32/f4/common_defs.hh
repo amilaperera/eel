@@ -60,8 +60,8 @@ enum class Parity : eel::util::U8 {
 
 enum class Mode : eel::util::U8 {
   kNone = 0,
-  kTxOnly,
   kRxOnly,
+  kTxOnly,
   kTxRx,
 };
 

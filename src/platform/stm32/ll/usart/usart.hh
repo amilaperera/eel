@@ -51,6 +51,10 @@ class Usart {
   void SetWordLength(eel::hal::usart::WordLength word_length);
   void SetParity(eel::hal::usart::Parity parity);
   void SetMode(eel::hal::usart::Mode mode);
+  EEL_ALWAYS_INLINE void SetWordLength(eel::util::U32 *cr1, eel::hal::usart::WordLength word_length);
+  EEL_ALWAYS_INLINE void SetParity(eel::util::U32 *cr1, eel::hal::usart::Parity parity);
+  EEL_ALWAYS_INLINE void SetMode(eel::util::U32 *cr1, eel::hal::usart::Mode mode);
+  EEL_ALWAYS_INLINE void SetUartEnable(eel::util::U32 *cr1, bool status);
 };
 
 }

@@ -48,6 +48,7 @@ void Usart::ConfigureRx(eel::hal::gpio::Af af, eel::hal::gpio::PullUpDown pud, e
 }
 
 void Usart::Configure(eel::util::U32 baud_rate, eel::hal::usart::WordLength word_length, eel::hal::usart::Parity parity) {
+#if 0
   // UE
   auto temp = UsartRegisterBlock(usart_base_)->CR1;
   temp = eel::util::SetBit(temp, 13);
@@ -57,6 +58,16 @@ void Usart::Configure(eel::util::U32 baud_rate, eel::hal::usart::WordLength word
   SetBaudRate(baud_rate);
   SetMode(eel::hal::usart::Mode::kTxRx);
   SetParity(parity);
+#else
+  SetBaudRate(baud_rate);
+
+  auto cr1 = UsartRegisterBlock(usart_base_)->CR1;
+  SetUartEnable(&cr1, true);
+  SetWordLength(&cr1, word_length);
+  SetParity(&cr1, parity);
+  SetMode(&cr1, eel::hal::usart::Mode::kTxOnly);
+  UsartRegisterBlock(usart_base_)->CR1 = cr1;
+#endif
 }
 
 void Usart::Send(eel::util::U8 data) {
@@ -94,6 +105,27 @@ void Usart::SetMode(eel::hal::usart::Mode mode) {
   //temp = eel::util::SetBit(temp, 2); // RX Enable
   temp = eel::util::SetBit(temp, 3); // TX Enable
   UsartRegisterBlock(usart_base_)->CR1 = temp;
+}
+
+void Usart::SetUartEnable(eel::util::U32 *cr1, bool status) {
+  *cr1 = eel::util::SetOrClear(status, *cr1, 13);
+}
+
+void Usart::SetWordLength(eel::util::U32 *cr1, eel::hal::usart::WordLength word_length) {
+  *cr1 = eel::util::SetOrClear(word_length == eel::hal::usart::WordLength::k9DataBits, *cr1, 12);
+}
+
+void Usart::SetParity(eel::util::U32 *cr1, eel::hal::usart::Parity parity) {
+  // Parity enable/disable
+  *cr1 = eel::util::SetOrClear(parity != eel::hal::usart::Parity::kNone, *cr1, 10);
+  // Paridy odd/even
+  *cr1 = eel::util::SetOrClear(parity == eel::hal::usart::Parity::kOdd, *cr1, 9);
+}
+
+void Usart::SetMode(eel::util::U32 *cr1, eel::hal::usart::Mode mode) {
+  auto temp = *cr1 & ~(0x3U << 2);
+  temp |= (eel::util::ToInt(mode) << 2);
+  *cr1 = temp;
 }
 
 }
