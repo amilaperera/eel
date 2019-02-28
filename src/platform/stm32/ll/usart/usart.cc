@@ -50,7 +50,7 @@ void Usart::ConfigureRx(eel::hal::gpio::Af af, eel::hal::gpio::PullUpDown pud, e
 void Usart::Configure(eel::util::U32 baud_rate, eel::hal::usart::WordLength word_length, eel::hal::usart::Parity parity) {
   // UE
   auto temp = UsartRegisterBlock(usart_base_)->CR1;
-  eel::util::SetBit(temp, 13);
+  temp = eel::util::SetBit(temp, 13);
   UsartRegisterBlock(usart_base_)->CR1 = temp;
   // M bit
   SetWordLength(word_length);
@@ -91,8 +91,8 @@ void Usart::SetParity(eel::hal::usart::Parity parity) {
 void Usart::SetMode(eel::hal::usart::Mode mode) {
   // set Tx-Rx mode
   auto temp = UsartRegisterBlock(usart_base_)->CR1;
-  //temp = eel::util::SetBit(temp, 2);
-  temp = eel::util::SetBit(temp, 3);
+  //temp = eel::util::SetBit(temp, 2); // RX Enable
+  temp = eel::util::SetBit(temp, 3); // TX Enable
   UsartRegisterBlock(usart_base_)->CR1 = temp;
 }
 

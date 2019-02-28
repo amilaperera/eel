@@ -24,11 +24,17 @@ int main() {
                      eel::hal::gpio::OutputType::PushPull,
                      eel::hal::gpio::OutputSpeed::Medium);
   serial.Configure(115200, eel::hal::usart::WordLength::k8DataBits);
-  serial.Send('a');
-  eel::hal::Tick::Delay(500);
-  serial.Send('b');
-  eel::hal::Tick::Delay(500);
-  serial.Send('c');
-  eel::hal::Tick::Delay(500);
+  for (;;) {
+    serial.Send('S');
+    eel::hal::Tick::Delay(500);
+    serial.Send('T');
+    eel::hal::Tick::Delay(500);
+    serial.Send('M');
+    eel::hal::Tick::Delay(500);
+    serial.Send('3');
+    eel::hal::Tick::Delay(500);
+    serial.Send('2');
+    eel::hal::Tick::Delay(500);
+  }
 }
 
