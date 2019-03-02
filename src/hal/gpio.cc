@@ -6,22 +6,20 @@
 
 namespace eel {
 namespace hal {
-namespace gpio {
-
 /**
  * @class Gpio
  * @example
  *
  * @param pin
  */
-Gpio::Gpio(Pin pin) : gpio_ll_{pin} {
+Gpio::Gpio(gpio::Pin pin) : gpio_ll_{pin} {
 }
 
-void Gpio::ConfigureOutput(PullUpDown pud, OutputType type, OutputSpeed speed) {
+void Gpio::ConfigureOutput(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
   gpio_ll_.ConfigureOutput(pud, type, speed);
 }
 
-void Gpio::ConfigureInput(PullUpDown pud) {
+void Gpio::ConfigureInput(gpio::PullUpDown pud) {
   gpio_ll_.ConfigureInput(pud);
 }
 
@@ -52,6 +50,5 @@ void Gpio::Toggle() {
   gpio_ll_.Toggle();
 }
 
-}
 }
 }

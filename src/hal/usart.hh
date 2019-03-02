@@ -7,29 +7,19 @@
 
 namespace eel {
 namespace hal {
-namespace usart {
 
 class Usart {
  public:
-  explicit Usart(eel::hal::usart::Peripheral peripheral,
-                 eel::hal::gpio::Pin tx,
-                 eel::hal::gpio::Pin rx);
-  void ConfigureTx(eel::hal::gpio::Af af,
-                   eel::hal::gpio::PullUpDown pud,
-                   eel::hal::gpio::OutputType type,
-                   eel::hal::gpio::OutputSpeed speed);
-  void ConfigureRx(eel::hal::gpio::Af af,
-                   eel::hal::gpio::PullUpDown pud,
-                   eel::hal::gpio::OutputType type,
-                   eel::hal::gpio::OutputSpeed speed);
-  void Configure(eel::util::U32 baud_rate, eel::hal::usart::WordLength word_length, eel::hal::usart::Parity parity = eel::hal::usart::Parity::kNone);
-  void Send(eel::util::U8 data);
+  explicit Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx);
+  void ConfigureTx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
+  void ConfigureRx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
+  void Configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity = usart::Parity::kNone);
+  void Send(util::U8 data);
 
  private:
-  eel::hal::ll::usart::Usart usart_ll;
+  ll::Usart usart_ll;
 };
 
-}
 }
 }
 

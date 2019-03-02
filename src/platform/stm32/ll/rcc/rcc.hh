@@ -8,9 +8,8 @@
 namespace eel {
 namespace hal {
 namespace ll {
-namespace rcc {
 
-struct RCB {
+struct RccRCB {
   eel::util::IO_U32 RCC_CR;
   eel::util::IO_U32 RCC_PLLCFGR;
   eel::util::IO_U32 RCC_CFGR;
@@ -52,13 +51,13 @@ struct RCB {
 };
 
 EEL_ALWAYS_INLINE auto RCCRegisterBlock() {
-  return reinterpret_cast<eel::hal::ll::rcc::RCB*>(EEL_RCC_BASE);
+  return reinterpret_cast<ll::RccRCB*>(EEL_RCC_BASE);
 }
 
 class Rcc {
  public:
-  static void EnableGpioPort(eel::hal::gpio::Port port, bool status = true);
-  static void EnableUsart(eel::hal::usart::Peripheral peripheral, bool status = true);
+  static void EnableGpioPort(gpio::Port port, bool status = true);
+  static void EnableUsart(usart::Peripheral peripheral, bool status = true);
   static eel::util::U32 AHBFrequency();
   static eel::util::U32 APB1Frequency();
   static eel::util::U32 APB2Frequency();
@@ -70,7 +69,6 @@ class Rcc {
   static constexpr eel::util::U8 apb_prescaler[8] = {0, 0, 0, 0, 1, 2, 3, 4}; // for bit shifting
 };
 
-}
 }
 }
 }

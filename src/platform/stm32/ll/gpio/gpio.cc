@@ -8,57 +8,56 @@
 namespace eel {
 namespace hal {
 namespace ll {
-namespace gpio {
 
 Gpio::Gpio(eel::hal::gpio::Pin pin) : port_{static_cast<eel::hal::gpio::Port>(util::ToInt(pin) / 16)},
                                       pin_{util::ToInt(pin) % 16U} {
   switch (port_) {
-    case eel::hal::gpio::Port::A:
+    case gpio::Port::A:
       port_base_ = EEL_GPIOA_BASE;
       break;
-    case eel::hal::gpio::Port::B:
+    case gpio::Port::B:
       port_base_ = EEL_GPIOB_BASE;
       break;
-    case eel::hal::gpio::Port::C:
+    case gpio::Port::C:
       port_base_ = EEL_GPIOC_BASE;
       break;
-    case eel::hal::gpio::Port::D:
+    case gpio::Port::D:
       port_base_ = EEL_GPIOD_BASE;
       break;
-    case eel::hal::gpio::Port::E:
+    case gpio::Port::E:
       port_base_ = EEL_GPIOE_BASE;
       break;
-    case eel::hal::gpio::Port::F:
+    case gpio::Port::F:
       port_base_ = EEL_GPIOF_BASE;
       break;
-    case eel::hal::gpio::Port::G:
+    case gpio::Port::G:
       port_base_ = EEL_GPIOG_BASE;
       break;
-    case eel::hal::gpio::Port::H:
+    case gpio::Port::H:
       port_base_ = EEL_GPIOH_BASE;
       break;
   }
 
-  eel::hal::ll::rcc::Rcc::EnableGpioPort(port_, true);
+  ll::Rcc::EnableGpioPort(port_, true);
 }
 
-void Gpio::ConfigureOutput(eel::hal::gpio::PullUpDown pud,
-                           eel::hal::gpio::OutputType type,
-                           eel::hal::gpio::OutputSpeed speed) {
-  eel::hal::ll::gpio::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Output);
+void Gpio::ConfigureOutput(gpio::PullUpDown pud,
+                           gpio::OutputType type,
+                           gpio::OutputSpeed speed) {
+  ll::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Output);
   Configure(pud, type, speed);
 }
 
-void Gpio::ConfigureInput(eel::hal::gpio::PullUpDown pud) {
-  eel::hal::ll::gpio::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Input);
+void Gpio::ConfigureInput(gpio::PullUpDown pud) {
+  ll::SetMode(port_base_, pin_, gpio::Mode::Input);
   SetPud(port_base_, pin_, pud);
 }
 
-void Gpio::ConfigureAf(eel::hal::gpio::Af af,
-                       eel::hal::gpio::PullUpDown pud,
-                       eel::hal::gpio::OutputType type,
-                       eel::hal::gpio::OutputSpeed speed) {
-  eel::hal::ll::gpio::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Alternate);
+void Gpio::ConfigureAf(gpio::Af af,
+                       gpio::PullUpDown pud,
+                       gpio::OutputType type,
+                       gpio::OutputSpeed speed) {
+  ll::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Alternate);
   SetAf(port_base_, pin_, af);
   Configure(pud, type, speed);
 }
@@ -77,15 +76,14 @@ void Gpio::Toggle() {
 }
 
 // private implementation
-void Gpio::Configure(eel::hal::gpio::PullUpDown pud,
-               eel::hal::gpio::OutputType type,
-               eel::hal::gpio::OutputSpeed speed) {
+void Gpio::Configure(gpio::PullUpDown pud,
+               gpio::OutputType type,
+               gpio::OutputSpeed speed) {
   SetPud(port_base_, pin_, pud);
   SetOType(port_base_, pin_, type);
   SetOSpeed(port_base_, pin_, speed);
 }
 
-}
 }
 }
 }

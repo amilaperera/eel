@@ -8,9 +8,8 @@
 namespace eel {
 namespace hal {
 namespace ll {
-namespace gpio {
 
-struct RCB {
+struct GpioRCB {
   eel::util::IO_U32 MODER;
   eel::util::IO_U32 OTYPER;
   eel::util::IO_U32 OSPEEDR;
@@ -23,38 +22,38 @@ struct RCB {
 };
 
 EEL_ALWAYS_INLINE auto GpioRegisterBlock(eel::util::U32 port) {
-  return reinterpret_cast<RCB*>(port);
+  return reinterpret_cast<GpioRCB*>(port);
 }
 
-EEL_ALWAYS_INLINE void SetMode(eel::util::U32 port_base, eel::util::U32 pin, eel::hal::gpio::Mode mode) {
+EEL_ALWAYS_INLINE void SetMode(util::U32 port_base, util::U32 pin, gpio::Mode mode) {
   eel::util::IO_U32 temp = GpioRegisterBlock(port_base)->MODER;
   temp &= ~(3U << (pin * 2U));
   temp |= (util::ToInt(mode) << (pin * 2U));
   GpioRegisterBlock(port_base)->MODER = temp;
 }
 
-EEL_ALWAYS_INLINE void SetPud(eel::util::U32 port_base, eel::util::U32 pin, eel::hal::gpio::PullUpDown pud) {
+EEL_ALWAYS_INLINE void SetPud(util::U32 port_base, util::U32 pin, gpio::PullUpDown pud) {
   auto temp = GpioRegisterBlock(port_base)->PUPDR;
   temp &= ~(3U << (pin * 2U));
   temp |= (util::ToInt(pud) << (pin * 2U));
   GpioRegisterBlock(port_base)->PUPDR = temp;
 }
 
-EEL_ALWAYS_INLINE void SetOType(eel::util::U32 port_base, eel::util::U32 pin, eel::hal::gpio::OutputType type) {
+EEL_ALWAYS_INLINE void SetOType(util::U32 port_base, util::U32 pin, gpio::OutputType type) {
   auto temp = GpioRegisterBlock(port_base)->OTYPER;
   temp &= ~(1U << pin);
   temp |= (util::ToInt(type) << pin);
   GpioRegisterBlock(port_base)->OTYPER = temp;
 }
 
-EEL_ALWAYS_INLINE void SetOSpeed(eel::util::U32 port_base, eel::util::U32 pin, eel::hal::gpio::OutputSpeed speed) {
+EEL_ALWAYS_INLINE void SetOSpeed(util::U32 port_base, util::U32 pin, gpio::OutputSpeed speed) {
   auto temp = GpioRegisterBlock(port_base)->OSPEEDR;
   temp &= ~(3U << (pin * 2U));
   temp |= (util::ToInt(speed) << (pin * 2U));
   GpioRegisterBlock(port_base)->OSPEEDR = temp;
 }
 
-EEL_ALWAYS_INLINE void SetAf(eel::util::U32 port_base, eel::util::U32 pin, eel::hal::gpio::Af af) {
+EEL_ALWAYS_INLINE void SetAf(util::U32 port_base, util::U32 pin, gpio::Af af) {
   auto pin_position{pin}, afr_idx{0UL};
   if (pin >= 8) {
     // We should write to AFHR, not AFLR. Therefore increment idx
@@ -69,29 +68,26 @@ EEL_ALWAYS_INLINE void SetAf(eel::util::U32 port_base, eel::util::U32 pin, eel::
 
 class Gpio {
  public:
-  explicit Gpio(eel::hal::gpio::Pin pin);
-  void ConfigureOutput(eel::hal::gpio::PullUpDown pud,
-                       eel::hal::gpio::OutputType type,
-                       eel::hal::gpio::OutputSpeed speed);
-  void ConfigureInput(eel::hal::gpio::PullUpDown pud);
-  void ConfigureAf(eel::hal::gpio::Af af, eel::hal::gpio::PullUpDown pud,
-                       eel::hal::gpio::OutputType type,
-                       eel::hal::gpio::OutputSpeed speed);
+  explicit Gpio(gpio::Pin pin);
+  void ConfigureOutput(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
+  void ConfigureInput(gpio::PullUpDown pud);
+  void ConfigureAf(gpio::Af af, gpio::PullUpDown pud,
+                       gpio::OutputType type,
+                       gpio::OutputSpeed speed);
   void Write(bool status);
   bool Read() const;
   void Toggle();
 
  private:
-  eel::hal::gpio::Port port_;
-  eel::util::U32 pin_;
-  eel::util::U32 port_base_;
+  gpio::Port port_;
+  util::U32 pin_;
+  util::U32 port_base_;
 
-  void Configure(eel::hal::gpio::PullUpDown pud,
-                 eel::hal::gpio::OutputType type,
-                 eel::hal::gpio::OutputSpeed speed);
+  void Configure(gpio::PullUpDown pud,
+                 gpio::OutputType type,
+                 gpio::OutputSpeed speed);
 };
 
-}
 }
 }
 }

@@ -14,7 +14,7 @@ int main() {
   eel::hal::SysTickTimer::Enable<eel::hal::SysTickTimer::Frequency::k1kHz, 0xf>();
 
   // output pin
-  eel::hal::usart::Usart serial{eel::hal::usart::Peripheral::kUsart3, eel::hal::gpio::Pin::D8, eel::hal::gpio::Pin::D9};
+  eel::hal::Usart serial{eel::hal::usart::Peripheral::kUsart3, eel::hal::gpio::Pin::D8, eel::hal::gpio::Pin::D9};
   serial.ConfigureTx(eel::hal::gpio::Af::k7,
           eel::hal::gpio::PullUpDown::Up,
           eel::hal::gpio::OutputType::PushPull,

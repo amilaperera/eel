@@ -8,46 +8,45 @@
 namespace eel {
 namespace hal {
 namespace ll {
-namespace usart {
 
-Usart::Usart(eel::hal::usart::Peripheral peripheral, eel::hal::gpio::Pin tx, eel::hal::gpio::Pin rx) :
+Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) :
   peripheral_{peripheral},
   usart_base_{},
   tx_{tx},
   rx_{rx} {
   switch (peripheral) {
-    case eel::hal::usart::Peripheral::kUsart1:
+    case usart::Peripheral::kUsart1:
       usart_base_ = EEL_USART1_BASE;
       break;
-    case eel::hal::usart::Peripheral::kUsart2:
+    case usart::Peripheral::kUsart2:
       usart_base_ = EEL_USART2_BASE;
       break;
-    case eel::hal::usart::Peripheral::kUsart3:
+    case usart::Peripheral::kUsart3:
       usart_base_ = EEL_USART3_BASE;
       break;
-    case eel::hal::usart::Peripheral::kUart4:
+    case usart::Peripheral::kUart4:
       usart_base_ = EEL_UART4_BASE;
       break;
-    case eel::hal::usart::Peripheral::kUart5:
+    case usart::Peripheral::kUart5:
       usart_base_ = EEL_UART5_BASE;
       break;
-    case eel::hal::usart::Peripheral::kUsart6:
+    case usart::Peripheral::kUsart6:
       usart_base_ = EEL_USART6_BASE;
       break;
   }
   // TODO: Enable clock
-  eel::hal::ll::rcc::Rcc::EnableUsart(peripheral);
+  ll::Rcc::EnableUsart(peripheral);
 }
 
-void Usart::ConfigureTx(eel::hal::gpio::Af af, eel::hal::gpio::PullUpDown pud, eel::hal::gpio::OutputType type, eel::hal::gpio::OutputSpeed speed) {
+void Usart::ConfigureTx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
   tx_.ConfigureAf(af, pud, type, speed);
 }
 
-void Usart::ConfigureRx(eel::hal::gpio::Af af, eel::hal::gpio::PullUpDown pud, eel::hal::gpio::OutputType type, eel::hal::gpio::OutputSpeed speed) {
+void Usart::ConfigureRx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
   rx_.ConfigureAf(af, pud, type, speed);
 }
 
-void Usart::Configure(eel::util::U32 baud_rate, eel::hal::usart::WordLength word_length, eel::hal::usart::Parity parity) {
+void Usart::Configure(eel::util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {
 #if 0
   // UE
   auto temp = UsartRegisterBlock(usart_base_)->CR1;
@@ -56,7 +55,7 @@ void Usart::Configure(eel::util::U32 baud_rate, eel::hal::usart::WordLength word
   // M bit
   SetWordLength(word_length);
   SetBaudRate(baud_rate);
-  SetMode(eel::hal::usart::Mode::kTxRx);
+  SetMode(usart::Mode::kTxRx);
   SetParity(parity);
 #else
   SetBaudRate(baud_rate);
@@ -65,7 +64,7 @@ void Usart::Configure(eel::util::U32 baud_rate, eel::hal::usart::WordLength word
   SetUartEnable(&cr1, true);
   SetWordLength(&cr1, word_length);
   SetParity(&cr1, parity);
-  SetMode(&cr1, eel::hal::usart::Mode::kTxOnly);
+  SetMode(&cr1, usart::Mode::kTxOnly);
   UsartRegisterBlock(usart_base_)->CR1 = cr1;
 #endif
 }
@@ -79,27 +78,27 @@ void Usart::Send(eel::util::U8 data) {
 // private implementation
 void Usart::SetBaudRate(eel::util::U32 value) {
   auto fclk{0UL};
-  if (peripheral_ == eel::hal::usart::Peripheral::kUsart1 || peripheral_ == eel::hal::usart::Peripheral::kUsart6) {
-    fclk = eel::hal::ll::rcc::Rcc::APB2Frequency();
+  if (peripheral_ == usart::Peripheral::kUsart1 || peripheral_ == usart::Peripheral::kUsart6) {
+    fclk = ll::Rcc::APB2Frequency();
   } else {
-    fclk = eel::hal::ll::rcc::Rcc::APB1Frequency();
+    fclk = ll::Rcc::APB1Frequency();
   }
   // TODO: have to revisit this calculation
   UsartRegisterBlock(usart_base_)->BRR = (fclk + value/2) / value;
 }
 
-void Usart::SetWordLength(eel::hal::usart::WordLength word_length) {
+void Usart::SetWordLength(usart::WordLength word_length) {
   auto temp = UsartRegisterBlock(usart_base_)->CR1;
-  UsartRegisterBlock(usart_base_)->CR1 = eel::util::SetOrClear(word_length == eel::hal::usart::WordLength::k9DataBits, temp, 12);
+  UsartRegisterBlock(usart_base_)->CR1 = eel::util::SetOrClear(word_length == usart::WordLength::k9DataBits, temp, 12);
 }
 
-void Usart::SetParity(eel::hal::usart::Parity parity) {
+void Usart::SetParity(usart::Parity parity) {
   auto temp = UsartRegisterBlock(usart_base_)->CR1;
-  temp = eel::util::SetOrClear(parity != eel::hal::usart::Parity::kNone, temp, 10);
-  UsartRegisterBlock(usart_base_)->CR1 = eel::util::SetOrClear(parity == eel::hal::usart::Parity::kOdd, temp, 9);
+  temp = eel::util::SetOrClear(parity != usart::Parity::kNone, temp, 10);
+  UsartRegisterBlock(usart_base_)->CR1 = eel::util::SetOrClear(parity == usart::Parity::kOdd, temp, 9);
 }
 
-void Usart::SetMode(eel::hal::usart::Mode mode) {
+void Usart::SetMode(usart::Mode mode) {
   // set Tx-Rx mode
   auto temp = UsartRegisterBlock(usart_base_)->CR1;
   //temp = eel::util::SetBit(temp, 2); // RX Enable
@@ -111,24 +110,23 @@ void Usart::SetUartEnable(eel::util::U32 *cr1, bool status) {
   *cr1 = eel::util::SetOrClear(status, *cr1, 13);
 }
 
-void Usart::SetWordLength(eel::util::U32 *cr1, eel::hal::usart::WordLength word_length) {
-  *cr1 = eel::util::SetOrClear(word_length == eel::hal::usart::WordLength::k9DataBits, *cr1, 12);
+void Usart::SetWordLength(eel::util::U32 *cr1, usart::WordLength word_length) {
+  *cr1 = eel::util::SetOrClear(word_length == usart::WordLength::k9DataBits, *cr1, 12);
 }
 
-void Usart::SetParity(eel::util::U32 *cr1, eel::hal::usart::Parity parity) {
+void Usart::SetParity(eel::util::U32 *cr1, usart::Parity parity) {
   // Parity enable/disable
-  *cr1 = eel::util::SetOrClear(parity != eel::hal::usart::Parity::kNone, *cr1, 10);
+  *cr1 = eel::util::SetOrClear(parity != usart::Parity::kNone, *cr1, 10);
   // Paridy odd/even
-  *cr1 = eel::util::SetOrClear(parity == eel::hal::usart::Parity::kOdd, *cr1, 9);
+  *cr1 = eel::util::SetOrClear(parity == usart::Parity::kOdd, *cr1, 9);
 }
 
-void Usart::SetMode(eel::util::U32 *cr1, eel::hal::usart::Mode mode) {
+void Usart::SetMode(eel::util::U32 *cr1, usart::Mode mode) {
   auto temp = *cr1 & ~(0x3U << 2);
   temp |= (eel::util::ToInt(mode) << 2);
   *cr1 = temp;
 }
 
-}
 }
 }
 }

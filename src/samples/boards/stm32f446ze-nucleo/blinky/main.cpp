@@ -13,7 +13,7 @@ int main() {
   eel::hal::SysTickTimer::Enable<eel::hal::SysTickTimer::Frequency::k1kHz, 0xf>();
 
   // output pin
-  eel::hal::gpio::Gpio pin{Pin::B7};
+  eel::hal::Gpio pin{Pin::B7};
   pin.ConfigureOutput(PullUpDown::None, OutputType::PushPull, OutputSpeed::High);
   pin.Write(false);
 
