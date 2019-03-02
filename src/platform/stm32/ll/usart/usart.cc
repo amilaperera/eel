@@ -47,26 +47,16 @@ void Usart::ConfigureRx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type
 }
 
 void Usart::Configure(eel::util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {
-#if 0
-  // UE
-  auto temp = UsartRegisterBlock(usart_base_)->CR1;
-  temp = eel::util::SetBit(temp, 13);
-  UsartRegisterBlock(usart_base_)->CR1 = temp;
-  // M bit
-  SetWordLength(word_length);
-  SetBaudRate(baud_rate);
-  SetMode(usart::Mode::kTxRx);
-  SetParity(parity);
-#else
+  // First the baud rate in BRR
   SetBaudRate(baud_rate);
 
+  // Set all the CR1 register bits
   auto cr1 = UsartRegisterBlock(usart_base_)->CR1;
   SetUartEnable(&cr1, true);
   SetWordLength(&cr1, word_length);
   SetParity(&cr1, parity);
   SetMode(&cr1, usart::Mode::kTxOnly);
   UsartRegisterBlock(usart_base_)->CR1 = cr1;
-#endif
 }
 
 void Usart::Send(eel::util::U8 data) {

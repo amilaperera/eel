@@ -17,6 +17,11 @@ void Usart::ConfigureRx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type
   usart_ll.ConfigureRx(af, pud, type, speed);
 }
 
+void Usart::ConfigureTxRx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  ConfigureTx(af, pud, type, speed);
+  ConfigureRx(af, pud, type, speed);
+}
+
 void Usart::Configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {
   usart_ll.Configure(baud_rate, word_length, parity);
 }

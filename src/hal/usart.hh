@@ -13,7 +13,10 @@ class Usart {
   explicit Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx);
   void ConfigureTx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
   void ConfigureRx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
-  void Configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity = usart::Parity::kNone);
+  void ConfigureTxRx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
+  void Configure(util::U32 baud_rate,
+      usart::WordLength word_length = usart::WordLength::k8DataBits,
+      usart::Parity parity = usart::Parity::kNone);
   void Send(util::U8 data);
 
  private:
