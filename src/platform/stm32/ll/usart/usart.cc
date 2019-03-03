@@ -77,25 +77,6 @@ void Usart::SetBaudRate(eel::util::U32 value) {
   UsartRegisterBlock(usart_base_)->BRR = (fclk + value/2) / value;
 }
 
-void Usart::SetWordLength(usart::WordLength word_length) {
-  auto temp = UsartRegisterBlock(usart_base_)->CR1;
-  UsartRegisterBlock(usart_base_)->CR1 = eel::util::SetOrClear(word_length == usart::WordLength::k9DataBits, temp, 12);
-}
-
-void Usart::SetParity(usart::Parity parity) {
-  auto temp = UsartRegisterBlock(usart_base_)->CR1;
-  temp = eel::util::SetOrClear(parity != usart::Parity::kNone, temp, 10);
-  UsartRegisterBlock(usart_base_)->CR1 = eel::util::SetOrClear(parity == usart::Parity::kOdd, temp, 9);
-}
-
-void Usart::SetMode(usart::Mode mode) {
-  // set Tx-Rx mode
-  auto temp = UsartRegisterBlock(usart_base_)->CR1;
-  //temp = eel::util::SetBit(temp, 2); // RX Enable
-  temp = eel::util::SetBit(temp, 3); // TX Enable
-  UsartRegisterBlock(usart_base_)->CR1 = temp;
-}
-
 void Usart::SetUartEnable(eel::util::U32 *cr1, bool status) {
   *cr1 = eel::util::SetOrClear(status, *cr1, 13);
 }

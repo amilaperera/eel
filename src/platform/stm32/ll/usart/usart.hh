@@ -44,10 +44,7 @@ class Usart {
   ll::Gpio tx_;
   ll::Gpio rx_;
 
-  void SetBaudRate(util::U32 value);
-  void SetWordLength(usart::WordLength word_length);
-  void SetParity(usart::Parity parity);
-  void SetMode(usart::Mode mode);
+  EEL_ALWAYS_INLINE void SetBaudRate(util::U32 value);
   EEL_ALWAYS_INLINE void SetWordLength(util::U32 *cr1, usart::WordLength word_length);
   EEL_ALWAYS_INLINE void SetParity(util::U32 *cr1, usart::Parity parity);
   EEL_ALWAYS_INLINE void SetMode(util::U32 *cr1, usart::Mode mode);
