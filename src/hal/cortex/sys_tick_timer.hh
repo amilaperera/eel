@@ -1,25 +1,27 @@
 #pragma once
+
 #include "util/types.hh"
 #include "stm32f446xx.h"
 
-extern "C" void SysTick_Handler(void);
+//extern "C" void SysTick_Handler(void);
 
 namespace eel {
 namespace hal {
 
 class Tick {
  public:
-  static void Increment() {
+   static void Increment() {
     ++tick_count;
   }
   static eel::util::U32 Count() {
     return tick_count;
   }
   static void Delay(eel::util::U32 ticks) {
-    auto now{Count()};
-    while (Count() < (now + ticks)) { }
+    auto start_tick_count{Count()};
+
+    while (Count() - start_tick_count < ticks) { }
   }
- private:
+ public:
   static eel::util::IO_U32 tick_count;
 };
 
