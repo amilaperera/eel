@@ -59,9 +59,9 @@ void Usart::Configure(eel::util::U32 baud_rate, usart::WordLength word_length, u
   UsartRegisterBlock(usart_base_)->CR1 = cr1;
 }
 
-void Usart::Send(const util::U8 *buffer, util::U32 size) {
+void Usart::Write(const util::U8 *buffer, util::U32 size) {
   for (auto i = 0UL; i < size; ++i) {
-    Send(buffer[i]);
+    Write(buffer[i]);
   }
   // Wait for TC
   while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit6) == 0);
@@ -100,7 +100,7 @@ void Usart::SetMode(eel::util::U32 *cr1, usart::Mode mode) {
   *cr1 = temp;
 }
 
-void Usart::Send(eel::util::U8 data) {
+void Usart::Write(eel::util::U8 data) {
   // Wait for TXE
   while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit7) == 0);
   // Now write to DR

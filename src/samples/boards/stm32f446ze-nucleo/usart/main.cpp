@@ -24,7 +24,7 @@ int main() {
 
   const char *str{"................ Welcome to STM32 Programming ................\r\n"};
   for (;;) {
-    serial.Send(reinterpret_cast<const eel::util::U8 *>(str), std::strlen(str));
+    serial.Write(reinterpret_cast<const eel::util::U8 *>(str), std::strlen(str));
     eel::hal::Tick::Delay(500);
   }
 }
