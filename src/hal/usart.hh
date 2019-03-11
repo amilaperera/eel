@@ -17,7 +17,7 @@ class Usart {
   void Configure(util::U32 baud_rate,
       usart::WordLength word_length = usart::WordLength::k8DataBits,
       usart::Parity parity = usart::Parity::kNone);
-  void Send(util::U8 data);
+  void Send(const util::U8 *buffer, util::U32 size);
 
  private:
   ll::Usart usart_ll;

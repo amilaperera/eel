@@ -26,8 +26,8 @@ void Usart::Configure(util::U32 baud_rate, usart::WordLength word_length, usart:
   usart_ll.Configure(baud_rate, word_length, parity);
 }
 
-void Usart::Send(util::U8 data) {
-  usart_ll.Send(data);
+void Usart::Send(const util::U8 *buffer, util::U32 size) {
+  usart_ll.Send(buffer, size);
 }
 
 }

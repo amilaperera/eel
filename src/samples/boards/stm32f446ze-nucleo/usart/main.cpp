@@ -2,6 +2,7 @@
 #include "hal/cortex/lock.hh"
 #include "hal/gpio.hh"
 #include "hal/usart.hh"
+#include <cstring>
 
 using eel::hal::gpio::Pin;
 using eel::hal::gpio::Mode;
@@ -24,16 +25,10 @@ int main() {
                      eel::hal::gpio::OutputType::PushPull,
                      eel::hal::gpio::OutputSpeed::Medium);
   serial.Configure(115200, eel::hal::usart::WordLength::k8DataBits);
+
+  const char *str{"................ Welcome to STM32 Programming ................\r\n"};
   for (;;) {
-    serial.Send('S');
-    eel::hal::Tick::Delay(500);
-    serial.Send('T');
-    eel::hal::Tick::Delay(500);
-    serial.Send('M');
-    eel::hal::Tick::Delay(500);
-    serial.Send('3');
-    eel::hal::Tick::Delay(500);
-    serial.Send('2');
+    serial.Send(reinterpret_cast<const eel::util::U8 *>(str), std::strlen(str));
     eel::hal::Tick::Delay(500);
   }
 }
