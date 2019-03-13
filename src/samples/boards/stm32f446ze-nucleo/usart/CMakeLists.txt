@@ -14,16 +14,29 @@ include_directories(${CMSIS_INCLUDE_DIRS}
         #${CMAKE_CURRENT_SOURCE_DIR}/config
         )
 
-add_executable(${PROJECT_NAME}.elf
-        main.cpp
+add_executable(usart.elf
+        usart.cpp
         ${EelHal_SOURCES}
         ${EelUtil_SOURCES}
         #${STM32HAL_SOURCES}
         #${CMSIS_SOURCES}
         #config/stm32f4xx_it.c
         #config/stm32f4xx_hal_msp.c
-        )
+)
+EelSetTargetProperties(usart.elf)
+ADD_POST_BUILD_COPY(usart)
+ADD_OPENOCD_TARGETS(usart)
 
-EelSetTargetProperties(${PROJECT_NAME}.elf)
-ADD_POST_BUILD_COPY(${PROJECT_NAME})
-ADD_OPENOCD_TARGETS(${PROJECT_NAME})
+add_executable(io_stream.elf
+        io_stream.cc
+        ${EelHal_SOURCES}
+        ${EelUtil_SOURCES}
+        #${STM32HAL_SOURCES}
+        #${CMSIS_SOURCES}
+        #config/stm32f4xx_it.c
+        #config/stm32f4xx_hal_msp.c
+)
+EelSetTargetProperties(io_stream.elf)
+ADD_POST_BUILD_COPY(io_stream)
+ADD_OPENOCD_TARGETS(io_stream)
+
