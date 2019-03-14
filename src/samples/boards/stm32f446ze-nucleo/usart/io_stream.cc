@@ -29,7 +29,7 @@ int main() {
 
   auto i{0};
   for (;;) {
-    //io_stream.Print("Welcome to STM32 Programming : %d", i++);
+    io_stream.Print("Welcome to STM32 Programming : %d\r\n", i++);
     io_stream << "Welcome to STM32 Programming " << true << "\r\n";
     eel::hal::Tick::Delay(500);
   }
