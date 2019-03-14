@@ -32,5 +32,14 @@ IOStream& IOStream::operator<<(bool b) {
   return *this;
 }
 
+IOStream& IOStream::operator<<(Manipulator manip) {
+  return manip(*this);
+}
+
+IOStream& IOStream::Endl(IOStream &ios) {
+  ios << "\r\n";
+  return ios;
+}
+
 }
 }

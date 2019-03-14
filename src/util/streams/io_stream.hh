@@ -8,11 +8,19 @@ namespace util {
 class IODeviceInterface;
 
 class IOStream {
+ private:
+  // private type aliasing
+  using Manipulator = IOStream& (*)(IOStream&);
+
  public:
   explicit IOStream(IODeviceInterface *io_device);
   void Print(const char *fmt, ...);
   IOStream& operator<<(const char *str);
   IOStream& operator<<(bool b);
+  IOStream& operator<<(Manipulator manip);
+
+  // Manipulators
+  static IOStream& Endl(IOStream &ios);
 
  private:
   IODeviceInterface *io_device_;

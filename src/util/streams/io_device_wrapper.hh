@@ -16,6 +16,12 @@ class IODeviceWrapper : public IODeviceInterface {
   T *device_;
 };
 
+template <typename T>
+auto MakeIODeviceWrapper(T *device) {
+  return eel::util::IODeviceWrapper<T>(device);
+}
+
+
 }
 }
 

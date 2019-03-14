@@ -12,6 +12,8 @@ using eel::hal::gpio::PullUpDown;
 using eel::hal::gpio::OutputType;
 using eel::hal::gpio::OutputSpeed;
 
+using eel::util::IOStream;
+
 int main() {
   // tick per 1ms
   eel::hal::SysTickTimer::Enable<eel::hal::SysTickTimer::Frequency::k1kHz, 0xf>();
@@ -24,13 +26,14 @@ int main() {
                        eel::hal::gpio::OutputSpeed::Medium);
   serial.Configure(115200, eel::hal::usart::WordLength::k8DataBits);
 
-  eel::util::IODeviceWrapper<eel::hal::Usart> io_device{&serial};
-  eel::util::IOStream io_stream{&io_device};
+  auto io_device = eel::util::MakeIODeviceWrapper(&serial);
+  IOStream io_stream{&io_device};
 
   auto i{0};
   for (;;) {
     io_stream.Print("Welcome to STM32 Programming : %d\r\n", i++);
     io_stream << "Welcome to STM32 Programming " << true << "\r\n";
+    io_stream << "Hi IOStream" << IOStream::Endl;
     eel::hal::Tick::Delay(500);
   }
 }
