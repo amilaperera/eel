@@ -20,6 +20,7 @@ void IOStream::Print(const char *fmt, ...) {
   if (std::vsnprintf(buffer, kMaxPrintBufferSize, fmt, argp) > 0) {
     io_device_->Write(reinterpret_cast<const U8 *>(buffer), std::strlen(buffer));
   }
+  va_end(argp);
 }
 
 IOStream& IOStream::operator<<(const char *str) {

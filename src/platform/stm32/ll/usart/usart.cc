@@ -55,7 +55,7 @@ void Usart::Configure(eel::util::U32 baud_rate, usart::WordLength word_length, u
   SetUartEnable(&cr1, true);
   SetWordLength(&cr1, word_length);
   SetParity(&cr1, parity);
-  SetMode(&cr1, usart::Mode::kTxOnly);
+  SetMode(&cr1, usart::Mode::kTxRx);
   UsartRegisterBlock(usart_base_)->CR1 = cr1;
 }
 
@@ -65,6 +65,13 @@ void Usart::Write(const util::U8 *buffer, util::U32 size) {
   }
   // Wait for TC
   while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit6) == 0);
+}
+
+void Usart::Read(util::U8 *buffer, util::U32 size) {
+  for (auto i = 0UL; i < size; ++i) {
+    auto data = Read();
+    buffer[i] = data;
+  }
 }
 
 // private implementation
@@ -105,6 +112,13 @@ void Usart::Write(eel::util::U8 data) {
   while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit7) == 0);
   // Now write to DR
   UsartRegisterBlock(usart_base_)->DR = data & static_cast<eel::util::U8>(0xff);
+}
+
+util::U8 Usart::Read() {
+  // Wait for RXNE
+  while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit5) == 0);
+  // Now write to DR
+  return static_cast<util::U8>(UsartRegisterBlock(usart_base_)->DR & static_cast<eel::util::U8>(0xff));
 }
 
 }

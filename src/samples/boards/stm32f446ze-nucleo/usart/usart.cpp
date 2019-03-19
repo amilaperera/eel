@@ -22,10 +22,13 @@ int main() {
       eel::hal::gpio::OutputSpeed::Medium);
   serial.Configure(115200, eel::hal::usart::WordLength::k8DataBits);
 
-  const char *str{"................ Welcome to STM32 Programming ................\r\n"};
+  const char *str{"\r\n" "Simple echo server" "\r\n"};
+  serial.Write(reinterpret_cast<const eel::util::U8*>(str), std::strlen(str));
+
   for (;;) {
-    serial.Write(reinterpret_cast<const eel::util::U8 *>(str), std::strlen(str));
-    eel::hal::Tick::Delay(500);
+    eel::util::U8 ch{};
+    serial.Read(&ch, 1);
+    serial.Write(&ch, 1);
   }
 }
 

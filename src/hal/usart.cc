@@ -30,5 +30,9 @@ void Usart::Write(const util::U8 *buffer, util::U32 size) {
   usart_ll.Write(buffer, size);
 }
 
+void Usart::Read(util::U8 *buffer, util::U32 size) {
+  usart_ll.Read(buffer, size);
+}
+
 }
 }

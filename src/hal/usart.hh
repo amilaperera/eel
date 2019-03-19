@@ -18,6 +18,7 @@ class Usart {
       usart::WordLength word_length = usart::WordLength::k8DataBits,
       usart::Parity parity = usart::Parity::kNone);
   void Write(const util::U8 *buffer, util::U32 size);
+  void Read(util::U8 *buffer, util::U32 size);
 
  private:
   ll::Usart usart_ll;

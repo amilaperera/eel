@@ -38,6 +38,7 @@ class Usart {
                    gpio::OutputSpeed speed);
   void Configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity = usart::Parity::kNone);
   void Write(const util::U8 *buffer, util::U32 size);
+  void Read(util::U8 *buffer, util::U32 size);
 
  private:
   usart::Peripheral peripheral_;
@@ -51,6 +52,7 @@ class Usart {
   EEL_ALWAYS_INLINE void SetMode(util::U32 *cr1, usart::Mode mode);
   EEL_ALWAYS_INLINE void SetUartEnable(util::U32 *cr1, bool status);
   EEL_ALWAYS_INLINE void Write(util::U8 data);
+  EEL_ALWAYS_INLINE util::U8 Read();
 };
 
 }
