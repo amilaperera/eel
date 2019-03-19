@@ -15,9 +15,14 @@ class IOStream {
  public:
   explicit IOStream(IODeviceInterface *io_device);
   void Print(const char *fmt, ...);
+  // stream insertion
   IOStream& operator<<(const char *str);
+  IOStream& operator<<(char ch);
   IOStream& operator<<(bool b);
   IOStream& operator<<(Manipulator manip);
+
+  // stream extraction
+  IOStream& operator>>(char &ch);
 
   // Manipulators
   static IOStream& Endl(IOStream &ios);

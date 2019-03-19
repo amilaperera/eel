@@ -28,6 +28,11 @@ IOStream& IOStream::operator<<(const char *str) {
   return *this;
 }
 
+IOStream& IOStream::operator<<(char ch) {
+  io_device_->Write(reinterpret_cast<const U8 *>(&ch), 1);
+  return *this;
+}
+
 IOStream& IOStream::operator<<(bool b) {
   *this << (b ? "true" : "false");
   return *this;
@@ -35,6 +40,11 @@ IOStream& IOStream::operator<<(bool b) {
 
 IOStream& IOStream::operator<<(Manipulator manip) {
   return manip(*this);
+}
+
+IOStream& IOStream::operator>>(char &ch) {
+  io_device_->Read(reinterpret_cast<U8*>(&ch), 1);
+  return *this;
 }
 
 IOStream& IOStream::Endl(IOStream &ios) {

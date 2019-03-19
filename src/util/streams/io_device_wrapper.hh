@@ -11,6 +11,9 @@ class IODeviceWrapper : public IODeviceInterface {
   void Write(const U8 *buffer, U32 size) override {
     device_->Write(buffer, size);
   }
+  void Read(U8 *buffer, U32 size) override {
+    device_->Read(buffer, size);
+  }
 
  private:
   T *device_;

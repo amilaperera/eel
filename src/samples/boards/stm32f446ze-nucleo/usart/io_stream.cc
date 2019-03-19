@@ -29,12 +29,13 @@ int main() {
   auto io_device = eel::util::MakeIODeviceWrapper(&serial);
   IOStream io_stream{&io_device};
 
-  auto i{0};
+  io_stream << IOStream::Endl << "Serial echo server with IOStream" << IOStream::Endl;
+  io_stream << "prompt > ";
+
   for (;;) {
-    io_stream.Print("Welcome to STM32 Programming : %d\r\n", i++);
-    io_stream << "Welcome to STM32 Programming " << true << "\r\n";
-    io_stream << "Hi IOStream" << IOStream::Endl;
-    eel::hal::Tick::Delay(500);
+    char ch;
+    io_stream >> ch;
+    io_stream << ch;
   }
 }
 
