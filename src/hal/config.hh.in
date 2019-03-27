@@ -1,0 +1,4 @@
+#pragma once
+
+#define EEL_STM32@EEL_MCU_NAME@
+#define EEL_STM32@EEL_MCU_NAME_XX@

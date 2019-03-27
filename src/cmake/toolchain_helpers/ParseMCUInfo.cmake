@@ -25,6 +25,15 @@ function(ParseStm32McuInfo)
       unset(STM32_DEV_NUM)
     endif ()
 
+    # Parse last 2 digits of device number
+    # Eg: STM32F446ZETx - the device number is 46
+    string(REGEX MATCH "^[sS][tT][mM]32[fFlL][0-47][0-9][0-9].*$" STM32_DEV_NUM_LAST_2_DIGITS ${EEL_MCU})
+    if (STM32_DEV_NUM_LAST_2_DIGITS)
+      string(REGEX REPLACE "^[sS][tT][mM]32[fFlL][0-47]([0-9][0-9]).*$" "\\1" STM32_DEV_NUM_LAST_2_DIGITS ${EEL_MCU})
+    else ()
+      unset(STM32_DEV_NUM_LAST_2_DIGITS)
+    endif ()
+
     # Parse the device letters.
     # Eg: STM32F446ZETx - the device letters are ZE
     string(REGEX MATCH "^[sS][tT][mM]32[fFlL][0-47][0-9][0-9][A-Za-z][A-Za-z].*$" STM32_DEV_LETTERS ${EEL_MCU})
@@ -50,6 +59,7 @@ function(ParseStm32McuInfo)
       message(FATAL_ERROR "Unsupported ${STM32_FAMILY_UPPER} device.")
     else ()
       set(STM32_DEV_NUM ${STM32_DEV_NUM} CACHE INTERNAL "stm32 dev num")
+      set(STM32_DEV_NUM_LAST_2_DIGITS ${STM32_DEV_NUM_LAST_2_DIGITS} CACHE INTERNAL "stm32 dev last 2 digits")
 
       # Set a device letters
       string(TOLOWER "${STM32_DEV_LETTERS}" STM32_DEV_LETTERS_LOWER)
@@ -59,6 +69,10 @@ function(ParseStm32McuInfo)
       set(STM32_DEV_LETTERS_UPPER ${STM32_DEV_LETTERS_UPPER} CACHE INTERNAL "stm32 dev letters upper")
       message(STATUS "STM32 device number: ${STM32_DEV_NUM}")
       message(STATUS "STM32 device letters: ${STM32_DEV_LETTERS_UPPER}")
+
+      set(EEL_MCU_NAME ${STM32_FAMILY_UPPER}${STM32_DEV_NUM_LAST_2_DIGITS}${STM32_DEV_LETTERS_UPPER})
+      set(EEL_MCU_NAME_XX ${STM32_FAMILY_UPPER}${STM32_DEV_NUM_LAST_2_DIGITS}XX)
+      CreateConfigurationFile()
     endif ()
   endif ()
 endfunction()
@@ -66,6 +80,11 @@ endfunction()
 # MCU particular linker script paths
 set(STM32F1_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../ots/stm32_cube/f1/linker_scripts)
 set(STM32F4_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../ots/stm32_cube/f4/linker_scripts)
+
+function(CreateConfigurationFile)
+  configure_file(${CMAKE_CURRENT_LIST_DIR}/../../hal/config.hh.in config.hh)
+  FILE(COPY ${CMAKE_BINARY_DIR}/config.hh DESTINATION ${CMAKE_CURRENT_LIST_DIR}/../../hal)
+endfunction()
 
 # Set linker script
 function(SetLinkerScriptPath)

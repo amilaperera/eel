@@ -508,3 +508,5 @@ build/
 cmake-build-*/
 
 # End of https://www.gitignore.io/api/c,vim,c++,cmake,eclipse,visualstudio
+
+src/hal/config.hh
