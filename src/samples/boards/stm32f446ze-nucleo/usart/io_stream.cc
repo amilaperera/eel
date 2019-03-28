@@ -20,22 +20,27 @@ int main() {
 
   // output pin
   eel::hal::Usart serial{eel::hal::usart::Peripheral::kUsart3, eel::hal::gpio::Pin::D8, eel::hal::gpio::Pin::D9};
-  serial.ConfigureTxRx(eel::hal::gpio::Af::k7,
-                       eel::hal::gpio::PullUpDown::Up,
-                       eel::hal::gpio::OutputType::PushPull,
-                       eel::hal::gpio::OutputSpeed::Medium);
-  serial.Configure(115200, eel::hal::usart::WordLength::k8DataBits);
+  serial.configure_tx_rx(eel::hal::gpio::Af::k7,
+                         eel::hal::gpio::PullUpDown::Up,
+                         eel::hal::gpio::OutputType::PushPull,
+                         eel::hal::gpio::OutputSpeed::Medium);
+  serial.configure(115200, eel::hal::usart::WordLength::k8DataBits);
 
-  auto io_device = eel::util::MakeIODeviceWrapper(&serial);
-  IOStream io_stream{&io_device};
+  auto io_device = eel::util::make_io_device(&serial);
+  IOStream ios{&io_device};
 
-  io_stream << IOStream::Endl << "Serial echo server with IOStream" << IOStream::Endl;
-  io_stream << "prompt > ";
+  ios << IOStream::endl << "Serial echo server with IOStream" << IOStream::endl;
+  ios << IOStream::err << "This is an error....\r\n" << IOStream::noerr;
+  ios << IOStream::warn << "This is a warning....\r\n" << IOStream::nowarn;
+  ios << IOStream::info << "This is an info....\r\n" << IOStream::noinfo;
+  ios << IOStream::err << "This " << IOStream::warn << "is a " << IOStream::info << "mix" << IOStream::reset << IOStream::endl;
+
+  ios << "prompt > ";
 
   for (;;) {
     char ch;
-    io_stream >> ch;
-    io_stream << ch;
+    ios >> ch;
+    ios << ch;
   }
 }
 

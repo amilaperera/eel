@@ -6,8 +6,8 @@ namespace util {
 
 class IODeviceInterface {
  public:
-  virtual void Write(const U8 *buffer, U32 size) = 0;
-  virtual void Read(U8 *buffer, U32 size) = 0;
+  virtual void write(const U8 *buffer, U32 size) = 0;
+  virtual void read(U8 *buffer, U32 size) = 0;
 };
 
 }

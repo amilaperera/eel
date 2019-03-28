@@ -38,50 +38,50 @@ Gpio::Gpio(eel::hal::gpio::Pin pin) : port_{static_cast<eel::hal::gpio::Port>(ut
       break;
   }
 
-  ll::Rcc::EnableGpioPort(port_, true);
+  ll::Rcc::enable_port(port_, true);
 }
 
-void Gpio::ConfigureOutput(gpio::PullUpDown pud,
-                           gpio::OutputType type,
-                           gpio::OutputSpeed speed) {
-  ll::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Output);
-  Configure(pud, type, speed);
+void Gpio::configure_output(gpio::PullUpDown pud,
+                            gpio::OutputType type,
+                            gpio::OutputSpeed speed) {
+  ll::set_mode(port_base_, pin_, eel::hal::gpio::Mode::Output);
+  configure(pud, type, speed);
 }
 
-void Gpio::ConfigureInput(gpio::PullUpDown pud) {
-  ll::SetMode(port_base_, pin_, gpio::Mode::Input);
-  SetPud(port_base_, pin_, pud);
+void Gpio::configure_input(gpio::PullUpDown pud) {
+  ll::set_mode(port_base_, pin_, gpio::Mode::Input);
+  set_pud(port_base_, pin_, pud);
 }
 
-void Gpio::ConfigureAf(gpio::Af af,
-                       gpio::PullUpDown pud,
-                       gpio::OutputType type,
-                       gpio::OutputSpeed speed) {
-  ll::SetMode(port_base_, pin_, eel::hal::gpio::Mode::Alternate);
-  SetAf(port_base_, pin_, af);
-  Configure(pud, type, speed);
+void Gpio::configure_af(gpio::Af af,
+                        gpio::PullUpDown pud,
+                        gpio::OutputType type,
+                        gpio::OutputSpeed speed) {
+  ll::set_mode(port_base_, pin_, eel::hal::gpio::Mode::Alternate);
+  set_af(port_base_, pin_, af);
+  configure(pud, type, speed);
 }
 
-void Gpio::Write(bool status) {
+void Gpio::write(bool status) {
   GpioRegisterBlock(port_base_)->BSRR = status ? (1U << pin_) : (1 << (pin_ + 16U));
 }
 
-bool Gpio::Read() const {
+bool Gpio::read() const {
   return (GpioRegisterBlock(port_base_)->IDR & (1U << pin_)) != 0;
 }
 
-void Gpio::Toggle() {
+void Gpio::toggle() {
   bool status = (GpioRegisterBlock(port_base_)->ODR & (1U << pin_)) != 0;
-  Write(!status);
+  write(!status);
 }
 
 // private implementation
-void Gpio::Configure(gpio::PullUpDown pud,
-               gpio::OutputType type,
-               gpio::OutputSpeed speed) {
-  SetPud(port_base_, pin_, pud);
-  SetOType(port_base_, pin_, type);
-  SetOSpeed(port_base_, pin_, speed);
+void Gpio::configure(gpio::PullUpDown pud,
+                     gpio::OutputType type,
+                     gpio::OutputSpeed speed) {
+  set_pud(port_base_, pin_, pud);
+  set_otype(port_base_, pin_, type);
+  set_ospeed(port_base_, pin_, speed);
 }
 
 }

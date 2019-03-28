@@ -13,23 +13,23 @@ namespace util {
 IOStream::IOStream(IODeviceInterface *io_device) : io_device_{io_device} {
 }
 
-void IOStream::Print(const char *fmt, ...) {
+void IOStream::print(const char *fmt, ...) {
   char buffer[kMaxPrintBufferSize] = {0};
   va_list argp;
   va_start(argp, fmt);
   if (std::vsnprintf(buffer, kMaxPrintBufferSize, fmt, argp) > 0) {
-    io_device_->Write(reinterpret_cast<const U8 *>(buffer), std::strlen(buffer));
+    io_device_->write(reinterpret_cast<const U8 *>(buffer), std::strlen(buffer));
   }
   va_end(argp);
 }
 
 IOStream& IOStream::operator<<(const char *str) {
-  io_device_->Write(reinterpret_cast<const U8 *>(str), std::strlen(str));
+  io_device_->write(reinterpret_cast<const U8 *>(str), std::strlen(str));
   return *this;
 }
 
 IOStream& IOStream::operator<<(char ch) {
-  io_device_->Write(reinterpret_cast<const U8 *>(&ch), 1);
+  io_device_->write(reinterpret_cast<const U8 *>(&ch), 1);
   return *this;
 }
 
@@ -43,12 +43,62 @@ IOStream& IOStream::operator<<(Manipulator manip) {
 }
 
 IOStream& IOStream::operator>>(char &ch) {
-  io_device_->Read(reinterpret_cast<U8*>(&ch), 1);
+  io_device_->read(reinterpret_cast<U8 *>(&ch), 1);
   return *this;
 }
 
-IOStream& IOStream::Endl(IOStream &ios) {
+IOStream& IOStream::endl(IOStream &ios) {
   ios << "\r\n";
+  return ios;
+}
+
+IOStream& IOStream::err(IOStream &ios) {
+  ios << "\033[31m";
+  return ios;
+}
+
+IOStream& IOStream::noerr(IOStream &ios) {
+  return reset(ios);
+}
+
+IOStream& IOStream::warn(IOStream &ios) {
+  ios << "\033[33m";
+  return ios;
+}
+
+IOStream& IOStream::nowarn(IOStream &ios) {
+  return reset(ios);
+}
+
+IOStream& IOStream::info(IOStream &ios) {
+  ios << "\033[36m";
+  return ios;
+}
+
+IOStream& IOStream::noinfo(IOStream &ios) {
+  return reset(ios);
+}
+
+IOStream& IOStream::debug(IOStream &ios) {
+  ios << "";
+  return ios;
+}
+
+IOStream& IOStream::nodebug(IOStream &ios) {
+  return reset(ios);
+}
+
+IOStream& IOStream::trace(IOStream &ios) {
+  ios << "";
+  return ios;
+}
+
+IOStream& IOStream::notrace(IOStream &ios) {
+  return reset(ios);
+}
+
+IOStream& IOStream::reset(IOStream &ios) {
+  ios << "\033[0m";
   return ios;
 }
 

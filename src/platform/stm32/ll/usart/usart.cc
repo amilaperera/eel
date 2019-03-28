@@ -34,86 +34,86 @@ Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) :
       break;
   }
   // TODO: Enable clock
-  ll::Rcc::EnableUsart(peripheral);
+  ll::Rcc::enable_usart(peripheral);
 }
 
-void Usart::ConfigureTx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  tx_.ConfigureAf(af, pud, type, speed);
+void Usart::configure_tx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  tx_.configure_af(af, pud, type, speed);
 }
 
-void Usart::ConfigureRx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  rx_.ConfigureAf(af, pud, type, speed);
+void Usart::configure_rx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  rx_.configure_af(af, pud, type, speed);
 }
 
-void Usart::Configure(eel::util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {
+void Usart::configure(eel::util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {
   // First the baud rate in BRR
-  SetBaudRate(baud_rate);
+  set_baud_rate(baud_rate);
 
   // Set all the CR1 register bits
   auto cr1 = UsartRegisterBlock(usart_base_)->CR1;
-  SetUartEnable(&cr1, true);
-  SetWordLength(&cr1, word_length);
-  SetParity(&cr1, parity);
-  SetMode(&cr1, usart::Mode::kTxRx);
+  set_uart_enable(&cr1, true);
+  set_word_length(&cr1, word_length);
+  set_parity(&cr1, parity);
+  set_mode(&cr1, usart::Mode::kTxRx);
   UsartRegisterBlock(usart_base_)->CR1 = cr1;
 }
 
-void Usart::Write(const util::U8 *buffer, util::U32 size) {
+void Usart::write(const util::U8 *buffer, util::U32 size) {
   for (auto i = 0UL; i < size; ++i) {
-    Write(buffer[i]);
+    write(buffer[i]);
   }
   // Wait for TC
   while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit6) == 0);
 }
 
-void Usart::Read(util::U8 *buffer, util::U32 size) {
+void Usart::read(util::U8 *buffer, util::U32 size) {
   for (auto i = 0UL; i < size; ++i) {
-    auto data = Read();
+    auto data = read();
     buffer[i] = data;
   }
 }
 
 // private implementation
-void Usart::SetBaudRate(eel::util::U32 value) {
+void Usart::set_baud_rate(eel::util::U32 value) {
   auto fclk{0UL};
   if (peripheral_ == usart::Peripheral::kUsart1 || peripheral_ == usart::Peripheral::kUsart6) {
-    fclk = ll::Rcc::APB2Frequency();
+    fclk = ll::Rcc::apb2_frequency();
   } else {
-    fclk = ll::Rcc::APB1Frequency();
+    fclk = ll::Rcc::apb1_frequency();
   }
   // TODO: have to revisit this calculation
   UsartRegisterBlock(usart_base_)->BRR = (fclk + value/2) / value;
 }
 
-void Usart::SetUartEnable(eel::util::U32 *cr1, bool status) {
+void Usart::set_uart_enable(eel::util::U32 *cr1, bool status) {
   *cr1 = eel::util::SetOrClear(status, *cr1, 13);
 }
 
-void Usart::SetWordLength(eel::util::U32 *cr1, usart::WordLength word_length) {
+void Usart::set_word_length(eel::util::U32 *cr1, usart::WordLength word_length) {
   *cr1 = eel::util::SetOrClear(word_length == usart::WordLength::k9DataBits, *cr1, 12);
 }
 
-void Usart::SetParity(eel::util::U32 *cr1, usart::Parity parity) {
+void Usart::set_parity(eel::util::U32 *cr1, usart::Parity parity) {
   // Parity enable/disable
   *cr1 = eel::util::SetOrClear(parity != usart::Parity::kNone, *cr1, 10);
   // Paridy odd/even
   *cr1 = eel::util::SetOrClear(parity == usart::Parity::kOdd, *cr1, 9);
 }
 
-void Usart::SetMode(eel::util::U32 *cr1, usart::Mode mode) {
+void Usart::set_mode(eel::util::U32 *cr1, usart::Mode mode) {
   auto temp = *cr1 & ~(0x3U << 2);
   temp |= (eel::util::ToInt(mode) << 2);
   *cr1 = temp;
 }
 
-void Usart::Write(eel::util::U8 data) {
+void Usart::write(eel::util::U8 data) {
   // Wait for TXE
   while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit7) == 0);
   // Now write to DR
   UsartRegisterBlock(usart_base_)->DR = data & static_cast<eel::util::U8>(0xff);
 }
 
-util::U8 Usart::Read() {
+util::U8 Usart::read() {
   // Wait for RXNE
   while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit5) == 0);
   // Now write to DR

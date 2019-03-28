@@ -28,17 +28,17 @@ EEL_ALWAYS_INLINE auto UsartRegisterBlock(eel::util::U32 peripheral) {
 class Usart {
  public:
   explicit Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx);
-  void ConfigureTx(gpio::Af af,
-                   gpio::PullUpDown pud,
-                   gpio::OutputType type,
-                   gpio::OutputSpeed speed);
-  void ConfigureRx(gpio::Af af,
-                   gpio::PullUpDown pud,
-                   gpio::OutputType type,
-                   gpio::OutputSpeed speed);
-  void Configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity = usart::Parity::kNone);
-  void Write(const util::U8 *buffer, util::U32 size);
-  void Read(util::U8 *buffer, util::U32 size);
+  void configure_tx(gpio::Af af,
+                    gpio::PullUpDown pud,
+                    gpio::OutputType type,
+                    gpio::OutputSpeed speed);
+  void configure_rx(gpio::Af af,
+                    gpio::PullUpDown pud,
+                    gpio::OutputType type,
+                    gpio::OutputSpeed speed);
+  void configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity = usart::Parity::kNone);
+  void write(const util::U8 *buffer, util::U32 size);
+  void read(util::U8 *buffer, util::U32 size);
 
  private:
   usart::Peripheral peripheral_;
@@ -46,13 +46,13 @@ class Usart {
   ll::Gpio tx_;
   ll::Gpio rx_;
 
-  EEL_ALWAYS_INLINE void SetBaudRate(util::U32 value);
-  EEL_ALWAYS_INLINE void SetWordLength(util::U32 *cr1, usart::WordLength word_length);
-  EEL_ALWAYS_INLINE void SetParity(util::U32 *cr1, usart::Parity parity);
-  EEL_ALWAYS_INLINE void SetMode(util::U32 *cr1, usart::Mode mode);
-  EEL_ALWAYS_INLINE void SetUartEnable(util::U32 *cr1, bool status);
-  EEL_ALWAYS_INLINE void Write(util::U8 data);
-  EEL_ALWAYS_INLINE util::U8 Read();
+  EEL_ALWAYS_INLINE void set_baud_rate(util::U32 value);
+  EEL_ALWAYS_INLINE void set_word_length(util::U32 *cr1, usart::WordLength word_length);
+  EEL_ALWAYS_INLINE void set_parity(util::U32 *cr1, usart::Parity parity);
+  EEL_ALWAYS_INLINE void set_mode(util::U32 *cr1, usart::Mode mode);
+  EEL_ALWAYS_INLINE void set_uart_enable(util::U32 *cr1, bool status);
+  EEL_ALWAYS_INLINE void write(util::U8 data);
+  EEL_ALWAYS_INLINE util::U8 read();
 };
 
 }

@@ -14,13 +14,13 @@ int main() {
 
   // output pin
   eel::hal::Gpio pin{Pin::B7};
-  pin.ConfigureOutput(PullUpDown::None, OutputType::PushPull, OutputSpeed::High);
-  pin.Write(false);
+  pin.configure_output(PullUpDown::None, OutputType::PushPull, OutputSpeed::High);
+  pin.write(false);
 
   for (;;) {
     {
       eel::hal::Lock lk;
-      pin.Toggle();
+      pin.toggle();
     }
     eel::hal::Tick::Delay(500);
   }

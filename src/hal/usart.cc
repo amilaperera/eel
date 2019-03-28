@@ -6,32 +6,32 @@
 namespace eel {
 namespace hal {
 
-Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) : usart_ll{peripheral, tx, rx} {
+Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) : usart_ll_{peripheral, tx, rx} {
 }
 
-void Usart::ConfigureTx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  usart_ll.ConfigureTx(af, pud, type, speed);
+void Usart::configure_tx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  usart_ll_.configure_tx(af, pud, type, speed);
 }
 
-void Usart::ConfigureRx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  usart_ll.ConfigureRx(af, pud, type, speed);
+void Usart::configure_rx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  usart_ll_.configure_rx(af, pud, type, speed);
 }
 
-void Usart::ConfigureTxRx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  ConfigureTx(af, pud, type, speed);
-  ConfigureRx(af, pud, type, speed);
+void Usart::configure_tx_rx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  configure_tx(af, pud, type, speed);
+  configure_rx(af, pud, type, speed);
 }
 
-void Usart::Configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {
-  usart_ll.Configure(baud_rate, word_length, parity);
+void Usart::configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {
+  usart_ll_.configure(baud_rate, word_length, parity);
 }
 
-void Usart::Write(const util::U8 *buffer, util::U32 size) {
-  usart_ll.Write(buffer, size);
+void Usart::write(const util::U8 *buffer, util::U32 size) {
+  usart_ll_.write(buffer, size);
 }
 
-void Usart::Read(util::U8 *buffer, util::U32 size) {
-  usart_ll.Read(buffer, size);
+void Usart::read(util::U8 *buffer, util::U32 size) {
+  usart_ll_.read(buffer, size);
 }
 
 }

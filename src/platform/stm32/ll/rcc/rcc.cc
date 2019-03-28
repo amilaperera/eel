@@ -6,7 +6,7 @@ namespace eel {
 namespace hal {
 namespace ll {
 
-void Rcc::EnableGpioPort(gpio::Port port, bool status) {
+void Rcc::enable_port(gpio::Port port, bool status) {
   auto temp = RCCRegisterBlock()->RCC_AHB1ENR;
   if (status) {
     temp |= (1U << eel::util::ToInt(port));
@@ -16,7 +16,7 @@ void Rcc::EnableGpioPort(gpio::Port port, bool status) {
   RCCRegisterBlock()->RCC_AHB1ENR = temp;
 }
 
-void Rcc::EnableUsart(usart::Peripheral peripheral, bool status) {
+void Rcc::enable_usart(usart::Peripheral peripheral, bool status) {
   // usart2, usart3, uart4, uart5
   eel::util::IO_U32 temp{};
   switch (peripheral) {
@@ -53,34 +53,34 @@ void Rcc::EnableUsart(usart::Peripheral peripheral, bool status) {
   }
 }
 
-eel::util::U32 Rcc::AHBPrescalar() {
+eel::util::U32 Rcc::ahb_prescalar() {
   // TODO: table is set for shifting
   //return ahb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 4) & 0xEU];
   return 0;
 }
 
-eel::util::U32 Rcc::APB1Prescalar() {
+eel::util::U32 Rcc::apb1_prescalar() {
   // TODO: table is set for shifting
   //return apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 10) & 0x7U];
   return 0;
 }
 
-eel::util::U32 Rcc::APB2Prescalar() {
+eel::util::U32 Rcc::apb2_prescalar() {
   // TODO: table is set for shifting
   //return apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 13) & 0x7U];
   return 0;
 }
 
-eel::util::U32 Rcc::AHBFrequency() {
+eel::util::U32 Rcc::ahb_frequency() {
   return SystemCoreClock >> ahb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 4) & 0xEU];
 }
 
-eel::util::U32 Rcc::APB1Frequency() {
-  return AHBFrequency() >> apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 10) & 0x7U];
+eel::util::U32 Rcc::apb1_frequency() {
+  return ahb_frequency() >> apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 10) & 0x7U];
 }
 
-eel::util::U32 Rcc::APB2Frequency() {
-  return AHBFrequency() >> apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 13) & 0x7U];
+eel::util::U32 Rcc::apb2_frequency() {
+  return ahb_frequency() >> apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 13) & 0x7U];
 }
 
 }

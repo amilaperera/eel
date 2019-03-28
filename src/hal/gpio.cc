@@ -15,29 +15,29 @@ namespace hal {
 Gpio::Gpio(gpio::Pin pin) : gpio_ll_{pin} {
 }
 
-void Gpio::ConfigureOutput(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  gpio_ll_.ConfigureOutput(pud, type, speed);
+void Gpio::configure_output(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  gpio_ll_.configure_output(pud, type, speed);
 }
 
-void Gpio::ConfigureInput(gpio::PullUpDown pud) {
-  gpio_ll_.ConfigureInput(pud);
+void Gpio::configure_input(gpio::PullUpDown pud) {
+  gpio_ll_.configure_input(pud);
 }
 
-bool Gpio::Read() const {
-  return gpio_ll_.Read();
+bool Gpio::read() const {
+  return gpio_ll_.read();
 }
 
 Gpio::operator bool() const {
-  return gpio_ll_.Read();
+  return gpio_ll_.read();
 }
 
 
-void Gpio::Write(bool status) {
-  gpio_ll_.Write(status);
+void Gpio::write(bool status) {
+  gpio_ll_.write(status);
 }
 
 Gpio & Gpio::operator=(bool status) {
-  gpio_ll_.Write(status);
+  gpio_ll_.write(status);
   return *this;
 }
 
@@ -46,8 +46,8 @@ Gpio & Gpio::operator=(int status) {
   return *this;
 }
 
-void Gpio::Toggle() {
-  gpio_ll_.Toggle();
+void Gpio::toggle() {
+  gpio_ll_.toggle();
 }
 
 }

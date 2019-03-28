@@ -7,14 +7,14 @@ namespace hal {
 class Gpio {
  public:
   explicit Gpio(gpio::Pin pin);
-  void ConfigureOutput(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
-  void ConfigureInput(gpio::PullUpDown pud);
-  bool Read() const;
+  void configure_output(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
+  void configure_input(gpio::PullUpDown pud);
+  bool read() const;
   explicit operator bool() const;
-  void Write(bool status);
+  void write(bool status);
   Gpio & operator=(bool status);
   Gpio & operator=(int status);
-  void Toggle();
+  void toggle();
 
  private:
   ll::Gpio gpio_ll_;

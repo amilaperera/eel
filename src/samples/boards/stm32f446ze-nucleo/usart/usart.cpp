@@ -16,19 +16,19 @@ int main() {
 
   // output pin
   eel::hal::Usart serial{eel::hal::usart::Peripheral::kUsart3, eel::hal::gpio::Pin::D8, eel::hal::gpio::Pin::D9};
-  serial.ConfigureTxRx(eel::hal::gpio::Af::k7,
-      eel::hal::gpio::PullUpDown::Up,
-      eel::hal::gpio::OutputType::PushPull,
-      eel::hal::gpio::OutputSpeed::Medium);
-  serial.Configure(115200, eel::hal::usart::WordLength::k8DataBits);
+  serial.configure_tx_rx(eel::hal::gpio::Af::k7,
+                         eel::hal::gpio::PullUpDown::Up,
+                         eel::hal::gpio::OutputType::PushPull,
+                         eel::hal::gpio::OutputSpeed::Medium);
+  serial.configure(115200, eel::hal::usart::WordLength::k8DataBits);
 
   const char *str{"\r\n" "Simple echo server" "\r\n"};
-  serial.Write(reinterpret_cast<const eel::util::U8*>(str), std::strlen(str));
+  serial.write(reinterpret_cast<const eel::util::U8 *>(str), std::strlen(str));
 
   for (;;) {
     eel::util::U8 ch{};
-    serial.Read(&ch, 1);
-    serial.Write(&ch, 1);
+    serial.read(&ch, 1);
+    serial.write(&ch, 1);
   }
 }
 

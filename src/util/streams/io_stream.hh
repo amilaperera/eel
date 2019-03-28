@@ -14,7 +14,7 @@ class IOStream {
 
  public:
   explicit IOStream(IODeviceInterface *io_device);
-  void Print(const char *fmt, ...);
+  void print(const char *fmt, ...);
   // stream insertion
   IOStream& operator<<(const char *str);
   IOStream& operator<<(char ch);
@@ -25,7 +25,18 @@ class IOStream {
   IOStream& operator>>(char &ch);
 
   // Manipulators
-  static IOStream& Endl(IOStream &ios);
+  static IOStream& endl(IOStream &ios);
+  static IOStream& err(IOStream &ios);
+  static IOStream& noerr(IOStream &ios);
+  static IOStream& warn(IOStream &ios);
+  static IOStream& nowarn(IOStream &ios);
+  static IOStream& info(IOStream &ios);
+  static IOStream& noinfo(IOStream &ios);
+  static IOStream& debug(IOStream &ios);
+  static IOStream& nodebug(IOStream &ios);
+  static IOStream& trace(IOStream &ios);
+  static IOStream& notrace(IOStream &ios);
+  static IOStream& reset(IOStream &ios);
 
  private:
   IODeviceInterface *io_device_;
