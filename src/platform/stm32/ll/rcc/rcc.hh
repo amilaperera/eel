@@ -2,8 +2,8 @@
 
 #include "util/preprocessor.hh"
 #include "util/types.hh"
-#include "platform/stm32/f4/common_defs.hh"
-#include "platform/stm32/f4/memory_map.hh"
+#include "platform/common_defs.hh"
+#include "platform/memory_map.hh"
 
 namespace eel {
 namespace hal {

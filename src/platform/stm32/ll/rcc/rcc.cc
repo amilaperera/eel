@@ -1,6 +1,6 @@
 #include "platform/stm32/ll/rcc/rcc.hh"
 #include "util/bit_manip.hh"
-#include "stm32f446xx.h"
+#include "platform/mcu.hh"
 
 namespace eel {
 namespace hal {

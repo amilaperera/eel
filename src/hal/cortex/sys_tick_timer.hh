@@ -1,7 +1,7 @@
 #pragma once
 
 #include "util/types.hh"
-#include "stm32f446xx.h"
+#include "platform/mcu.hh"
 
 //extern "C" void SysTick_Handler(void);
 
