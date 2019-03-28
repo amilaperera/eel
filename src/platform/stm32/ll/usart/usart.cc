@@ -50,12 +50,12 @@ void Usart::configure(eel::util::U32 baud_rate, usart::WordLength word_length, u
   set_baud_rate(baud_rate);
 
   // Set all the CR1 register bits
-  auto cr1 = UsartRegisterBlock(usart_base_)->CR1;
+  auto cr1 = usart_reg(usart_base_)->CR1;
   set_uart_enable(&cr1, true);
   set_word_length(&cr1, word_length);
   set_parity(&cr1, parity);
   set_mode(&cr1, usart::Mode::kTxRx);
-  UsartRegisterBlock(usart_base_)->CR1 = cr1;
+  usart_reg(usart_base_)->CR1 = cr1;
 }
 
 void Usart::write(const util::U8 *buffer, util::U32 size) {
@@ -63,7 +63,7 @@ void Usart::write(const util::U8 *buffer, util::U32 size) {
     write(buffer[i]);
   }
   // Wait for TC
-  while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit6) == 0);
+  while ((usart_reg(usart_base_)->SR & eel::util::kBit6) == 0);
 }
 
 void Usart::read(util::U8 *buffer, util::U32 size) {
@@ -82,7 +82,7 @@ void Usart::set_baud_rate(eel::util::U32 value) {
     fclk = ll::Rcc::apb1_frequency();
   }
   // TODO: have to revisit this calculation
-  UsartRegisterBlock(usart_base_)->BRR = (fclk + value/2) / value;
+  usart_reg(usart_base_)->BRR = (fclk + value/2) / value;
 }
 
 void Usart::set_uart_enable(eel::util::U32 *cr1, bool status) {
@@ -108,16 +108,16 @@ void Usart::set_mode(eel::util::U32 *cr1, usart::Mode mode) {
 
 void Usart::write(eel::util::U8 data) {
   // Wait for TXE
-  while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit7) == 0);
+  while ((usart_reg(usart_base_)->SR & eel::util::kBit7) == 0);
   // Now write to DR
-  UsartRegisterBlock(usart_base_)->DR = data & static_cast<eel::util::U8>(0xff);
+  usart_reg(usart_base_)->DR = data & static_cast<eel::util::U8>(0xff);
 }
 
 util::U8 Usart::read() {
   // Wait for RXNE
-  while ((UsartRegisterBlock(usart_base_)->SR & eel::util::kBit5) == 0);
+  while ((usart_reg(usart_base_)->SR & eel::util::kBit5) == 0);
   // Now write to DR
-  return static_cast<util::U8>(UsartRegisterBlock(usart_base_)->DR & static_cast<eel::util::U8>(0xff));
+  return static_cast<util::U8>(usart_reg(usart_base_)->DR & static_cast<eel::util::U8>(0xff));
 }
 
 }

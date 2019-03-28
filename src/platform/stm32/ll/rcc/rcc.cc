@@ -7,13 +7,13 @@ namespace hal {
 namespace ll {
 
 void Rcc::enable_port(gpio::Port port, bool status) {
-  auto temp = RCCRegisterBlock()->RCC_AHB1ENR;
+  auto temp = rcc_reg()->RCC_AHB1ENR;
   if (status) {
     temp |= (1U << eel::util::ToInt(port));
   } else {
     temp &= ~(1U << eel::util::ToInt(port));
   }
-  RCCRegisterBlock()->RCC_AHB1ENR = temp;
+  rcc_reg()->RCC_AHB1ENR = temp;
 }
 
 void Rcc::enable_usart(usart::Peripheral peripheral, bool status) {
@@ -21,34 +21,34 @@ void Rcc::enable_usart(usart::Peripheral peripheral, bool status) {
   eel::util::IO_U32 temp{};
   switch (peripheral) {
     case usart::Peripheral::kUsart1:
-      temp = RCCRegisterBlock()->RCC_APB2ENR;
+      temp = rcc_reg()->RCC_APB2ENR;
       temp = eel::util::SetOrClear(status, temp, 4);
-      RCCRegisterBlock()->RCC_APB2ENR = temp;
+      rcc_reg()->RCC_APB2ENR = temp;
       break;
     case usart::Peripheral::kUsart2:
-      temp = RCCRegisterBlock()->RCC_APB1ENR;
+      temp = rcc_reg()->RCC_APB1ENR;
       temp = eel::util::SetOrClear(status, temp, 17);
-      RCCRegisterBlock()->RCC_APB1ENR = temp;
+      rcc_reg()->RCC_APB1ENR = temp;
       break;
     case usart::Peripheral::kUsart3:
-      temp = RCCRegisterBlock()->RCC_APB1ENR;
+      temp = rcc_reg()->RCC_APB1ENR;
       temp = eel::util::SetOrClear(status, temp, 18);
-      RCCRegisterBlock()->RCC_APB1ENR = temp;
+      rcc_reg()->RCC_APB1ENR = temp;
       break;
     case usart::Peripheral::kUart4:
-      temp = RCCRegisterBlock()->RCC_APB1ENR;
+      temp = rcc_reg()->RCC_APB1ENR;
       temp = eel::util::SetOrClear(status, temp, 19);
-      RCCRegisterBlock()->RCC_APB1ENR = temp;
+      rcc_reg()->RCC_APB1ENR = temp;
       break;
     case usart::Peripheral::kUart5:
-      temp = RCCRegisterBlock()->RCC_APB1ENR;
+      temp = rcc_reg()->RCC_APB1ENR;
       temp = eel::util::SetOrClear(status, temp, 20);
-      RCCRegisterBlock()->RCC_APB1ENR = temp;
+      rcc_reg()->RCC_APB1ENR = temp;
       break;
     case usart::Peripheral::kUsart6:
-      temp = RCCRegisterBlock()->RCC_APB2ENR;
+      temp = rcc_reg()->RCC_APB2ENR;
       temp = eel::util::SetOrClear(status, temp, 5);
-      RCCRegisterBlock()->RCC_APB2ENR = temp;
+      rcc_reg()->RCC_APB2ENR = temp;
       break;
   }
 }
@@ -72,15 +72,15 @@ eel::util::U32 Rcc::apb2_prescalar() {
 }
 
 eel::util::U32 Rcc::ahb_frequency() {
-  return SystemCoreClock >> ahb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 4) & 0xEU];
+  return SystemCoreClock >> ahb_prescaler[(rcc_reg()->RCC_CFGR >> 4) & 0xEU];
 }
 
 eel::util::U32 Rcc::apb1_frequency() {
-  return ahb_frequency() >> apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 10) & 0x7U];
+  return ahb_frequency() >> apb_prescaler[(rcc_reg()->RCC_CFGR >> 10) & 0x7U];
 }
 
 eel::util::U32 Rcc::apb2_frequency() {
-  return ahb_frequency() >> apb_prescaler[(RCCRegisterBlock()->RCC_CFGR >> 13) & 0x7U];
+  return ahb_frequency() >> apb_prescaler[(rcc_reg()->RCC_CFGR >> 13) & 0x7U];
 }
 
 }

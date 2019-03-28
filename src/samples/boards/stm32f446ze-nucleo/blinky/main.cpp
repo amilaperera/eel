@@ -10,7 +10,7 @@ using eel::hal::gpio::OutputSpeed;
 
 int main() {
   // tick per 1ms
-  eel::hal::SysTickTimer::Enable<eel::hal::SysTickTimer::Frequency::k1kHz, 0xf>();
+  eel::hal::SysTickTimer::enable<eel::hal::SysTickTimer::Frequency::k1kHz, 0xf>();
 
   // output pin
   eel::hal::Gpio pin{Pin::B7};
@@ -22,7 +22,7 @@ int main() {
       eel::hal::Lock lk;
       pin.toggle();
     }
-    eel::hal::Tick::Delay(500);
+    eel::hal::Tick::delay(500);
   }
 }
 

@@ -21,7 +21,7 @@ struct UsartRCB {
   eel::util::IO_U32 GTPR;
 };
 
-EEL_ALWAYS_INLINE auto UsartRegisterBlock(eel::util::U32 peripheral) {
+EEL_ALWAYS_INLINE auto usart_reg(eel::util::U32 peripheral) {
   return reinterpret_cast<UsartRCB *>(peripheral);
 }
 

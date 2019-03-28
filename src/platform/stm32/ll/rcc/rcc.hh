@@ -50,7 +50,7 @@ struct RccRCB {
   eel::util::IO_U32 RCC_DCKCFGR2;
 };
 
-EEL_ALWAYS_INLINE auto RCCRegisterBlock() {
+EEL_ALWAYS_INLINE auto rcc_reg() {
   return reinterpret_cast<ll::RccRCB*>(EEL_RCC_BASE);
 }
 

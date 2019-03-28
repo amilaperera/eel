@@ -21,36 +21,36 @@ struct GpioRCB {
   eel::util::IO_U32 AFR[2]; // AFLR & AFHR - collectively called AFR
 };
 
-EEL_ALWAYS_INLINE auto GpioRegisterBlock(eel::util::U32 port) {
+EEL_ALWAYS_INLINE auto gpio_reg(eel::util::U32 port) {
   return reinterpret_cast<GpioRCB*>(port);
 }
 
 EEL_ALWAYS_INLINE void set_mode(util::U32 port_base, util::U32 pin, gpio::Mode mode) {
-  eel::util::IO_U32 temp = GpioRegisterBlock(port_base)->MODER;
+  eel::util::IO_U32 temp = gpio_reg(port_base)->MODER;
   temp &= ~(3U << (pin * 2U));
   temp |= (util::ToInt(mode) << (pin * 2U));
-  GpioRegisterBlock(port_base)->MODER = temp;
+  gpio_reg(port_base)->MODER = temp;
 }
 
 EEL_ALWAYS_INLINE void set_pud(util::U32 port_base, util::U32 pin, gpio::PullUpDown pud) {
-  auto temp = GpioRegisterBlock(port_base)->PUPDR;
+  auto temp = gpio_reg(port_base)->PUPDR;
   temp &= ~(3U << (pin * 2U));
   temp |= (util::ToInt(pud) << (pin * 2U));
-  GpioRegisterBlock(port_base)->PUPDR = temp;
+  gpio_reg(port_base)->PUPDR = temp;
 }
 
 EEL_ALWAYS_INLINE void set_otype(util::U32 port_base, util::U32 pin, gpio::OutputType type) {
-  auto temp = GpioRegisterBlock(port_base)->OTYPER;
+  auto temp = gpio_reg(port_base)->OTYPER;
   temp &= ~(1U << pin);
   temp |= (util::ToInt(type) << pin);
-  GpioRegisterBlock(port_base)->OTYPER = temp;
+  gpio_reg(port_base)->OTYPER = temp;
 }
 
 EEL_ALWAYS_INLINE void set_ospeed(util::U32 port_base, util::U32 pin, gpio::OutputSpeed speed) {
-  auto temp = GpioRegisterBlock(port_base)->OSPEEDR;
+  auto temp = gpio_reg(port_base)->OSPEEDR;
   temp &= ~(3U << (pin * 2U));
   temp |= (util::ToInt(speed) << (pin * 2U));
-  GpioRegisterBlock(port_base)->OSPEEDR = temp;
+  gpio_reg(port_base)->OSPEEDR = temp;
 }
 
 EEL_ALWAYS_INLINE void set_af(util::U32 port_base, util::U32 pin, gpio::Af af) {
@@ -60,10 +60,10 @@ EEL_ALWAYS_INLINE void set_af(util::U32 port_base, util::U32 pin, gpio::Af af) {
     afr_idx = 1;
     pin_position = pin - 8;
   }
-  auto temp = GpioRegisterBlock(port_base)->AFR[afr_idx];
+  auto temp = gpio_reg(port_base)->AFR[afr_idx];
   temp &= ~(0xFU << (pin_position * 4U));
   temp |= (util::ToInt(af) << (pin_position * 4U));
-  GpioRegisterBlock(port_base)->AFR[afr_idx] = temp;
+  gpio_reg(port_base)->AFR[afr_idx] = temp;
 }
 
 class Gpio {
