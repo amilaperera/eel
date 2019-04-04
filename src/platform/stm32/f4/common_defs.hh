@@ -1,8 +1,7 @@
 #pragma once
 #include "util/types.hh"
 
-namespace eel {
-namespace hal {
+namespace eel::hal {
 namespace gpio {
 enum class Port : eel::util::U8 {
   A = 0,
@@ -65,7 +64,6 @@ enum class Mode : eel::util::U8 {
   kTxRx,
 };
 
-}
 }
 }
 

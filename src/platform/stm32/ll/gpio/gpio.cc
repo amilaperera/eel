@@ -63,7 +63,7 @@ void Gpio::configure_af(gpio::Af af,
 }
 
 void Gpio::write(bool status) {
-  gpio_reg(port_base_)->BSRR = status ? (1U << pin_) : (1 << (pin_ + 16U));
+  gpio_reg(port_base_)->BSRR = status ? (1U << pin_) : (1U << (pin_ + 16U));
 }
 
 bool Gpio::read() const {

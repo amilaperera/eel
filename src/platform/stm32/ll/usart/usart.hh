@@ -7,9 +7,7 @@
 #include "platform/stm32/ll/gpio/gpio.hh"
 #include "platform/stm32/ll/rcc/rcc.hh"
 
-namespace eel {
-namespace hal {
-namespace ll {
+namespace eel::hal::ll {
 
 struct UsartRCB {
   eel::util::IO_U32 SR;
@@ -55,6 +53,4 @@ class Usart {
   EEL_ALWAYS_INLINE util::U8 read();
 };
 
-}
-}
 }

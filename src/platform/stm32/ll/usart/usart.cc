@@ -3,16 +3,20 @@
 //
 #include <util/bit_manip.hh>
 #include "platform/stm32/ll/usart/usart.hh"
+#include "platform/af_map.hh"
 
-namespace eel {
-namespace hal {
-namespace ll {
+namespace eel::hal::ll {
 
 Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) :
   peripheral_{peripheral},
   usart_base_{},
   tx_{tx},
   rx_{rx} {
+  // check validity of tx & rx
+  // TODO: do platform specific assertions
+  is_valid_usart_tx(peripheral_, tx);
+  is_valid_usart_rx(peripheral_, rx);
+
   switch (peripheral) {
     case usart::Peripheral::kUsart1:
       usart_base_ = EEL_USART1_BASE;
@@ -33,7 +37,6 @@ Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) :
       usart_base_ = EEL_USART6_BASE;
       break;
   }
-  // TODO: Enable clock
   ll::Rcc::enable_usart(peripheral);
 }
 
@@ -120,6 +123,4 @@ util::U8 Usart::read() {
   return static_cast<util::U8>(usart_reg(usart_base_)->DR & static_cast<eel::util::U8>(0xff));
 }
 
-}
-}
 }
