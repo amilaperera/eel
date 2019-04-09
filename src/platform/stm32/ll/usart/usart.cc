@@ -14,12 +14,16 @@ Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) :
   rx_{rx} {
   // check validity of tx & rx
   // TODO: do platform specific assertions
-  auto tx_ret = check_usart_tx(peripheral_, tx);
+  auto ret = check_usart_tx(peripheral_, tx);
   // assert tx_ret.first
-  tx_af = tx_ret.second;
-  auto rx_ret = check_usart_rx(peripheral_, rx);
+  if (ret.first) {
+    tx_af_ = ret.second;
+  }
+  ret = check_usart_rx(peripheral_, rx);
   // assert rx_ret.first
-  rx_af = rx_ret.second;
+  if (ret.first) {
+    rx_af_ = ret.second;
+  }
 
   switch (peripheral) {
     case usart::Peripheral::kUsart1:
@@ -45,11 +49,11 @@ Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) :
 }
 
 void Usart::configure_tx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  tx_.configure_af(tx_af, pud, type, speed);
+  tx_.configure_af(tx_af_, pud, type, speed);
 }
 
 void Usart::configure_rx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  rx_.configure_af(rx_af, pud, type, speed);
+  rx_.configure_af(rx_af_, pud, type, speed);
 }
 
 void Usart::configure(eel::util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {

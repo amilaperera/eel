@@ -10,13 +10,14 @@ set(EelHalLL_SRCS
         gpio/gpio.cc
         rcc/rcc.cc
         usart/usart.cc
+        af_map.cc
    )
 
 # TODO: Conditional enabling of platform specific drivers
 # TODO: COnditional enabling of hal parts eg: gpio, rcc, i2c etc.
 foreach(SRC ${EelHalLL_SRCS})
     find_file(FILE_${SRC} ${SRC}
-            PATH_SUFFIXES ll
+            PATH_SUFFIXES ll f4
             PATHS ${EelHalLL_ROOT_PATH}/stm32)
     list(APPEND EelHalLL_SOURCES ${FILE_${SRC}})
 endforeach ()

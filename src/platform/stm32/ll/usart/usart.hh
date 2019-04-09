@@ -41,8 +41,8 @@ class Usart {
   util::U32 usart_base_;
   ll::Gpio tx_;
   ll::Gpio rx_;
-  gpio::Af tx_af;
-  gpio::Af rx_af;
+  gpio::Af tx_af_;
+  gpio::Af rx_af_;
 
   EEL_ALWAYS_INLINE void set_baud_rate(util::U32 value);
   EEL_ALWAYS_INLINE void set_word_length(util::U32 *cr1, usart::WordLength word_length);
