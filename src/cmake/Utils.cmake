@@ -18,7 +18,6 @@ function(EelSetTargetProperties Target)
   endif()
 
   if (TARGET_DEFS)
-    message(STATUS "Target Definitions: ${TARGET_DEFS}")
     target_compile_options(${Target} PUBLIC -D${TARGET_DEFS})
   endif()
 
@@ -53,7 +52,6 @@ function(SetTargetProperties Target)
   endif()
 
   if (TARGET_DEFS)
-    message(STATUS "Target Definitions: ${TARGET_DEFS}")
     target_compile_options(${Target} PUBLIC -D${TARGET_DEFS} -DUSE_HAL_DRIVER)
   endif()
 
@@ -91,5 +89,14 @@ macro(ADD_OPENOCD_TARGETS BINARY)
       -c "program ${BINARY}.elf verify reset exit")
   endif ()
   unset(OPENOCD_TARGET_CONFIG)
+endmacro()
+
+macro(ADD_SIZE_INFO BINARY)
+  if (CMAKE_BIN_SIZE)
+    add_custom_command(
+            TARGET ${BINARY}.elf
+            POST_BUILD
+            COMMAND "${CMAKE_BIN_SIZE}" --format=berkeley ${BINARY}.elf)
+  endif ()
 endmacro()
 

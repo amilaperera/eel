@@ -1,12 +1,3 @@
-#set(EEL_UTIL_CORE_COMPONENTS core)
-#
-#if(NOT EelUtil_FIND_COMPONENTS)
-#    set(EelUtil_FIND_COMPONENTS ${EEL_UTIL_CORE_COMPONENTS})
-#    message(STATUS "No EelUtil components selected, defaulting to ${EelUtil_FIND_COMPONENTS}")
-#else()
-#    message(STATUS "EelUtil components: ${EelUtil_FIND_COMPONENTS}")
-#endif()
-
 set(EelUtil_ROOT_PATH ${CMAKE_CURRENT_LIST_DIR}/../util)
 
 set(EelStreams_SOURCES streams/io_stream.cc)
