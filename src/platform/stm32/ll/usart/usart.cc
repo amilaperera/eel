@@ -14,8 +14,12 @@ Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) :
   rx_{rx} {
   // check validity of tx & rx
   // TODO: do platform specific assertions
-  is_valid_usart_tx(peripheral_, tx);
-  is_valid_usart_rx(peripheral_, rx);
+  auto tx_ret = check_usart_tx(peripheral_, tx);
+  // assert tx_ret.first
+  tx_af = tx_ret.second;
+  auto rx_ret = check_usart_rx(peripheral_, rx);
+  // assert rx_ret.first
+  rx_af = rx_ret.second;
 
   switch (peripheral) {
     case usart::Peripheral::kUsart1:
@@ -40,12 +44,12 @@ Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) :
   ll::Rcc::enable_usart(peripheral);
 }
 
-void Usart::configure_tx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  tx_.configure_af(af, pud, type, speed);
+void Usart::configure_tx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  tx_.configure_af(tx_af, pud, type, speed);
 }
 
-void Usart::configure_rx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  rx_.configure_af(af, pud, type, speed);
+void Usart::configure_rx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  rx_.configure_af(rx_af, pud, type, speed);
 }
 
 void Usart::configure(eel::util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {

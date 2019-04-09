@@ -20,8 +20,7 @@ int main() {
 
   // output pin
   eel::hal::Usart serial{eel::hal::usart::Peripheral::kUsart3, eel::hal::gpio::Pin::D8, eel::hal::gpio::Pin::D9};
-  serial.configure_tx_rx(eel::hal::gpio::Af::k7,
-                         eel::hal::gpio::PullUpDown::Up,
+  serial.configure_tx_rx(eel::hal::gpio::PullUpDown::Up,
                          eel::hal::gpio::OutputType::PushPull,
                          eel::hal::gpio::OutputSpeed::Medium);
   serial.configure(115200, eel::hal::usart::WordLength::k8DataBits);

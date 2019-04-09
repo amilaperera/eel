@@ -1,57 +1,58 @@
 #pragma once
 
 #include "platform/stm32/f4/common_defs.hh"
+#include <utility>
 
 namespace eel::hal::ll {
 
-inline bool is_valid_usart_tx(usart::Peripheral peripheral, gpio::Pin pin) {
-  bool ret{false};
+inline std::pair<bool, gpio::Af> check_usart_tx(usart::Peripheral peripheral, gpio::Pin pin) {
+  std::pair<bool, gpio::Af> result{false, gpio::Af::k0};
   switch (peripheral) {
     case usart::Peripheral::kUsart1:
-      ret = (pin == gpio::Pin::A9 || pin == gpio::Pin::B6);
+      result = std::make_pair(pin == gpio::Pin::A9 || pin == gpio::Pin::B6, gpio::Af::k7);
       break;
     case usart::Peripheral::kUsart2:
-      ret = (pin == gpio::Pin::A2 || pin == gpio::Pin::D5);
+      result = std::make_pair(pin == gpio::Pin::A2 || pin == gpio::Pin::D5, gpio::Af::k7);
       break;
     case usart::Peripheral::kUsart3:
-      ret = (pin == gpio::Pin::B10 || pin == gpio::Pin::C10 || pin == gpio::Pin::D8);
+      result = std::make_pair(pin == gpio::Pin::B10 || pin == gpio::Pin::C10 || pin == gpio::Pin::D8, gpio::Af::k7);
       break;
     case usart::Peripheral::kUart4:
-      ret = (pin == gpio::Pin::A0 || pin == gpio::Pin::C10);
+      result = std::make_pair(pin == gpio::Pin::A0 || pin == gpio::Pin::C10, gpio::Af::k8);
       break;
     case usart::Peripheral::kUart5:
-      ret = (pin == gpio::Pin::C12 || pin == gpio::Pin::E8);
+      result = std::make_pair(pin == gpio::Pin::C12 || pin == gpio::Pin::E8, gpio::Af::k8);
       break;
     case usart::Peripheral::kUsart6:
-      ret = (pin == gpio::Pin::C6 || pin == gpio::Pin::G14);
+      result = std::make_pair(pin == gpio::Pin::C6 || pin == gpio::Pin::G14, gpio::Af::k8);
       break;
   }
-  return ret;
+  return result;
 }
 
-inline bool is_valid_usart_rx(usart::Peripheral peripheral, gpio::Pin pin) {
-  bool ret{false};
+inline std::pair<bool, gpio::Af> check_usart_rx(usart::Peripheral peripheral, gpio::Pin pin) {
+  std::pair<bool, gpio::Af> result{false, gpio::Af::k0};
   switch (peripheral) {
     case usart::Peripheral::kUsart1:
-      ret = (pin == gpio::Pin::A10 || pin == gpio::Pin::B7);
+      result = std::make_pair(pin == gpio::Pin::A10 || pin == gpio::Pin::B7, gpio::Af::k7);
       break;
     case usart::Peripheral::kUsart2:
-      ret = (pin == gpio::Pin::A3 || pin == gpio::Pin::D6);
+      result = std::make_pair(pin == gpio::Pin::A3 || pin == gpio::Pin::D6, gpio::Af::k7);
       break;
     case usart::Peripheral::kUsart3:
-      ret = (pin == gpio::Pin::B11 || pin == gpio::Pin::C5 || pin == gpio::Pin::C11  || pin == gpio::Pin::D9);
+      result = std::make_pair(pin == gpio::Pin::B11 || pin == gpio::Pin::C5 || pin == gpio::Pin::C11  || pin == gpio::Pin::D9, gpio::Af::k7);
       break;
     case usart::Peripheral::kUart4:
-      ret = (pin == gpio::Pin::A1 || pin == gpio::Pin::C11);
+      result = std::make_pair(pin == gpio::Pin::A1 || pin == gpio::Pin::C11, gpio::Af::k8);
       break;
     case usart::Peripheral::kUart5:
-      ret = (pin == gpio::Pin::D2 || pin == gpio::Pin::E7);
+      result = std::make_pair(pin == gpio::Pin::D2 || pin == gpio::Pin::E7, gpio::Af::k8);
       break;
     case usart::Peripheral::kUsart6:
-      ret = (pin == gpio::Pin::C7 || pin == gpio::Pin::G9);
+      result = std::make_pair(pin == gpio::Pin::C7 || pin == gpio::Pin::G9, gpio::Af::k8);
       break;
   }
-  return ret;
+  return result;
 }
 
 }

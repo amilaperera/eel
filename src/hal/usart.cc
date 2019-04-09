@@ -9,17 +9,17 @@ namespace hal {
 Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) : usart_ll_{peripheral, tx, rx} {
 }
 
-void Usart::configure_tx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  usart_ll_.configure_tx(af, pud, type, speed);
+void Usart::configure_tx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  usart_ll_.configure_tx(pud, type, speed);
 }
 
-void Usart::configure_rx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  usart_ll_.configure_rx(af, pud, type, speed);
+void Usart::configure_rx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  usart_ll_.configure_rx(pud, type, speed);
 }
 
-void Usart::configure_tx_rx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
-  configure_tx(af, pud, type, speed);
-  configure_rx(af, pud, type, speed);
+void Usart::configure_tx_rx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+  configure_tx(pud, type, speed);
+  configure_rx(pud, type, speed);
 }
 
 void Usart::configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {

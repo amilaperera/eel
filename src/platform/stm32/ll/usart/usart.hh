@@ -26,12 +26,10 @@ EEL_ALWAYS_INLINE auto usart_reg(eel::util::U32 peripheral) {
 class Usart {
  public:
   explicit Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx);
-  void configure_tx(gpio::Af af,
-                    gpio::PullUpDown pud,
+  void configure_tx(gpio::PullUpDown pud,
                     gpio::OutputType type,
                     gpio::OutputSpeed speed);
-  void configure_rx(gpio::Af af,
-                    gpio::PullUpDown pud,
+  void configure_rx(gpio::PullUpDown pud,
                     gpio::OutputType type,
                     gpio::OutputSpeed speed);
   void configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity = usart::Parity::kNone);
@@ -43,6 +41,8 @@ class Usart {
   util::U32 usart_base_;
   ll::Gpio tx_;
   ll::Gpio rx_;
+  gpio::Af tx_af;
+  gpio::Af rx_af;
 
   EEL_ALWAYS_INLINE void set_baud_rate(util::U32 value);
   EEL_ALWAYS_INLINE void set_word_length(util::U32 *cr1, usart::WordLength word_length);

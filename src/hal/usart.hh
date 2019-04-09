@@ -11,9 +11,9 @@ namespace hal {
 class Usart {
  public:
   explicit Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx);
-  void configure_tx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
-  void configure_rx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
-  void configure_tx_rx(gpio::Af af, gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
+  void configure_tx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
+  void configure_rx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
+  void configure_tx_rx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
   void configure(util::U32 baud_rate,
                  usart::WordLength word_length = usart::WordLength::k8DataBits,
                  usart::Parity parity = usart::Parity::kNone);
