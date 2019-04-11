@@ -7,8 +7,7 @@
 #include <cstdarg>
 #include <cstdio>
 
-namespace eel {
-namespace util {
+namespace eel::util {
 
 IOStream::IOStream(IODeviceInterface *io_device) : io_device_{io_device} {
 }
@@ -102,5 +101,4 @@ IOStream& IOStream::reset(IOStream &ios) {
   return ios;
 }
 
-}
 }

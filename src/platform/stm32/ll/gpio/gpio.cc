@@ -5,9 +5,7 @@
 #include "platform/stm32/ll/rcc/rcc.hh"
 #include "util/types.hh"
 
-namespace eel {
-namespace hal {
-namespace ll {
+namespace eel::hal::ll {
 
 Gpio::Gpio(eel::hal::gpio::Pin pin) : port_{static_cast<eel::hal::gpio::Port>(util::ToInt(pin) / 16)},
                                       pin_{util::ToInt(pin) % 16U} {
@@ -84,6 +82,4 @@ void Gpio::configure(gpio::PullUpDown pud,
   set_ospeed(port_base_, pin_, speed);
 }
 
-}
-}
 }

@@ -1,8 +1,7 @@
 #pragma once
 #include "platform/hal_ll.hh"
 
-namespace eel {
-namespace hal {
+namespace eel::hal {
 
 class Gpio {
  public:
@@ -20,5 +19,4 @@ class Gpio {
   ll::Gpio gpio_ll_;
 };
 
-}
 }

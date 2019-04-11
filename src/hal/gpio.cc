@@ -4,8 +4,7 @@
 
 #include "hal/gpio.hh"
 
-namespace eel {
-namespace hal {
+namespace eel::hal {
 /**
  * @class Gpio
  * @example
@@ -50,5 +49,4 @@ void Gpio::toggle() {
   gpio_ll_.toggle();
 }
 
-}
 }

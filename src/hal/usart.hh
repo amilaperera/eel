@@ -5,8 +5,7 @@
 #pragma once
 #include "platform/hal_ll.hh"
 
-namespace eel {
-namespace hal {
+namespace eel::hal {
 
 class Usart {
  public:
@@ -25,5 +24,3 @@ class Usart {
 };
 
 }
-}
-

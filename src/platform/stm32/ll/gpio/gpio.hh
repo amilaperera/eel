@@ -5,9 +5,7 @@
 #include "util/types.hh"
 #include "util/preprocessor.hh"
 
-namespace eel {
-namespace hal {
-namespace ll {
+namespace eel::hal::ll {
 
 struct GpioRCB {
   eel::util::IO_U32 MODER;
@@ -89,6 +87,3 @@ class Gpio {
 };
 
 }
-}
-}
-

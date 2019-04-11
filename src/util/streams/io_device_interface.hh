@@ -1,8 +1,7 @@
 #pragma once
 #include "util/types.hh"
 
-namespace eel {
-namespace util {
+namespace eel::util {
 
 class IODeviceInterface {
  public:
@@ -10,5 +9,4 @@ class IODeviceInterface {
   virtual void read(U8 *buffer, U32 size) = 0;
 };
 
-}
 }

@@ -2,9 +2,7 @@
 #include "util/bit_manip.hh"
 #include "platform/mcu.hh"
 
-namespace eel {
-namespace hal {
-namespace ll {
+namespace eel::hal::ll {
 
 void Rcc::enable_port(gpio::Port port, bool status) {
   auto temp = rcc_reg()->RCC_AHB1ENR;
@@ -83,6 +81,4 @@ eel::util::U32 Rcc::apb2_frequency() {
   return ahb_frequency() >> apb_prescaler[(rcc_reg()->RCC_CFGR >> 13) & 0x7U];
 }
 
-}
-}
 }

@@ -2,8 +2,7 @@
 #include <cstddef>
 #include "util/types.hh"
 
-namespace eel {
-namespace util {
+namespace eel::util {
 
 class IODeviceInterface;
 
@@ -44,5 +43,3 @@ class IOStream {
 };
 
 }
-}
-

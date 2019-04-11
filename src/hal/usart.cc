@@ -3,8 +3,7 @@
 //
 
 #include "hal/usart.hh"
-namespace eel {
-namespace hal {
+namespace eel::hal {
 
 Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) : usart_ll_{peripheral, tx, rx} {
 }
@@ -34,5 +33,4 @@ void Usart::read(util::U8 *buffer, util::U32 size) {
   usart_ll_.read(buffer, size);
 }
 
-}
 }

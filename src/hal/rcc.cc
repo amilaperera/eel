@@ -4,10 +4,8 @@
 
 #include "hal/rcc.hh"
 
-namespace eel {
-namespace hal {
+namespace eel::hal {
 void Rcc::enable_port(gpio::Port port, bool status) {
   ll::Rcc::enable_port(port, status);
-}
 }
 }

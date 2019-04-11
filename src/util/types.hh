@@ -2,8 +2,7 @@
 #include <cstdint>
 #include <type_traits>
 
-namespace eel {
-namespace util {
+namespace eel::util {
 using U32 = std::uint32_t;
 using IO_U32 = volatile U32;
 
@@ -18,5 +17,4 @@ constexpr auto ToInt(E e) {
   return static_cast<typename std::underlying_type<E>::type>(e);
 }
 
-}
 }

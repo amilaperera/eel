@@ -5,9 +5,7 @@
 #include "platform/common_defs.hh"
 #include "platform/memory_map.hh"
 
-namespace eel {
-namespace hal {
-namespace ll {
+namespace eel::hal::ll {
 
 struct RccRCB {
   eel::util::IO_U32 RCC_CR;
@@ -70,5 +68,4 @@ class Rcc {
 };
 
 }
-}
-}
+

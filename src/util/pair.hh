@@ -2,8 +2,7 @@
 #include <utility>
 #include <type_traits>
 
-namespace eel {
-namespace util {
+namespace eel::util {
 
 template <typename T1, typename T2>
 struct Pair {
@@ -41,5 +40,3 @@ constexpr auto MakePair(T1&& t1, T2&& t2) {
 }
 
 }
-}
-

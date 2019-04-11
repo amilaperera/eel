@@ -2,8 +2,7 @@
 
 #include "util/types.hh"
 
-namespace eel {
-namespace util {
+namespace eel::util {
 constexpr U8 kBit0 = (1UL << 0);
 constexpr U8 kBit1 = (1UL << 1);
 constexpr U8 kBit2 = (1UL << 2);
@@ -63,5 +62,4 @@ constexpr auto ClearBit(T val, U32 n) {
 }
 #endif
 
-}
 }
