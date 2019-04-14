@@ -37,17 +37,17 @@ constexpr U32 kBit30 = (1UL << 30);
 constexpr U32 kBit31 = (1UL << 31);
 
 template <typename T>
-constexpr auto SetBit(T val, eel::util::U32 n) {
+constexpr auto set_bit(T val, eel::util::U32 n) {
   return val | (1UL << n);
 }
 
 template <typename T>
-constexpr auto ClearBit(T val, eel::util::U32 n) {
+constexpr auto clear_bit(T val, eel::util::U32 n) {
   return val & ~(1UL << n);
 }
 
 template <typename T>
-constexpr auto SetOrClear(bool status, T val, eel::util::U32 n) {
+constexpr auto set_or_clear_bit(bool status, T val, eel::util::U32 n) {
   return status ? (val | (1UL << n)) : (val & ~(1UL << n));
 }
 

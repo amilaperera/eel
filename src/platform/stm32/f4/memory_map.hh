@@ -27,4 +27,7 @@
 #define EEL_UART4_BASE        (EEL_APB1_BASE + 0x4C00)
 #define EEL_UART5_BASE        (EEL_APB1_BASE + 0x5000)
 #define EEL_USART6_BASE       (EEL_APB2_BASE + 0x1400)
+// EXTI
+#define EEL_EXTI_BASE         (EEL_APB2_BASE + 0x3C00)
+
 

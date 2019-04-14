@@ -20,32 +20,32 @@ void Rcc::enable_usart(usart::Peripheral peripheral, bool status) {
   switch (peripheral) {
     case usart::Peripheral::kUsart1:
       temp = rcc_reg()->RCC_APB2ENR;
-      temp = eel::util::SetOrClear(status, temp, 4);
+      temp = eel::util::set_or_clear_bit(status, temp, 4);
       rcc_reg()->RCC_APB2ENR = temp;
       break;
     case usart::Peripheral::kUsart2:
       temp = rcc_reg()->RCC_APB1ENR;
-      temp = eel::util::SetOrClear(status, temp, 17);
+      temp = eel::util::set_or_clear_bit(status, temp, 17);
       rcc_reg()->RCC_APB1ENR = temp;
       break;
     case usart::Peripheral::kUsart3:
       temp = rcc_reg()->RCC_APB1ENR;
-      temp = eel::util::SetOrClear(status, temp, 18);
+      temp = eel::util::set_or_clear_bit(status, temp, 18);
       rcc_reg()->RCC_APB1ENR = temp;
       break;
     case usart::Peripheral::kUart4:
       temp = rcc_reg()->RCC_APB1ENR;
-      temp = eel::util::SetOrClear(status, temp, 19);
+      temp = eel::util::set_or_clear_bit(status, temp, 19);
       rcc_reg()->RCC_APB1ENR = temp;
       break;
     case usart::Peripheral::kUart5:
       temp = rcc_reg()->RCC_APB1ENR;
-      temp = eel::util::SetOrClear(status, temp, 20);
+      temp = eel::util::set_or_clear_bit(status, temp, 20);
       rcc_reg()->RCC_APB1ENR = temp;
       break;
     case usart::Peripheral::kUsart6:
       temp = rcc_reg()->RCC_APB2ENR;
-      temp = eel::util::SetOrClear(status, temp, 5);
+      temp = eel::util::set_or_clear_bit(status, temp, 5);
       rcc_reg()->RCC_APB2ENR = temp;
       break;
   }

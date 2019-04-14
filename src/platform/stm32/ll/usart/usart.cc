@@ -97,18 +97,18 @@ void Usart::set_baud_rate(eel::util::U32 value) {
 }
 
 void Usart::set_uart_enable(eel::util::U32 *cr1, bool status) {
-  *cr1 = eel::util::SetOrClear(status, *cr1, 13);
+  *cr1 = eel::util::set_or_clear_bit(status, *cr1, 13);
 }
 
 void Usart::set_word_length(eel::util::U32 *cr1, usart::WordLength word_length) {
-  *cr1 = eel::util::SetOrClear(word_length == usart::WordLength::k9DataBits, *cr1, 12);
+  *cr1 = eel::util::set_or_clear_bit(word_length == usart::WordLength::k9DataBits, *cr1, 12);
 }
 
 void Usart::set_parity(eel::util::U32 *cr1, usart::Parity parity) {
   // Parity enable/disable
-  *cr1 = eel::util::SetOrClear(parity != usart::Parity::kNone, *cr1, 10);
+  *cr1 = eel::util::set_or_clear_bit(parity != usart::Parity::kNone, *cr1, 10);
   // Paridy odd/even
-  *cr1 = eel::util::SetOrClear(parity == usart::Parity::kOdd, *cr1, 9);
+  *cr1 = eel::util::set_or_clear_bit(parity == usart::Parity::kOdd, *cr1, 9);
 }
 
 void Usart::set_mode(eel::util::U32 *cr1, usart::Mode mode) {

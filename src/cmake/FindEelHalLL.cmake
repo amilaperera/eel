@@ -10,6 +10,7 @@ set(EelHalLL_SRCS
         gpio/gpio.cc
         rcc/rcc.cc
         usart/usart.cc
+        exti/exti.cc
         af_map.cc
    )
 
