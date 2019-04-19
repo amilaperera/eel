@@ -54,5 +54,7 @@ class Exti {
   static void set_trigger(ExtiLine line, Trigger trigger);
   static void enable(ExtiLine line);
   static void disable(ExtiLine line);
+  static bool is_pending(ExtiLine line);
+  static void clear_pending(ExtiLine line);
 };
 }

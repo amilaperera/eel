@@ -51,15 +51,13 @@ constexpr auto set_or_clear_bit(bool status, T val, eel::util::U32 n) {
   return status ? (val | (1UL << n)) : (val & ~(1UL << n));
 }
 
-#if 0
 template <typename T>
-constexpr auto SetBit(T val, U32 n) {
-  return val | (1UL << n);
+constexpr bool is_set(T val, eel::util::U32 n) {
+  return (val & (1UL << n)) != 0;
 }
 
 template <typename T>
-constexpr auto ClearBit(T val, U32 n) {
+constexpr bool is_clear(T val, eel::util::U32 n) {
+  return (val & (1UL << n)) == 0;
 }
-#endif
-
 }

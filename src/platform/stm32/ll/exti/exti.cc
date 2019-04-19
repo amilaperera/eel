@@ -43,4 +43,13 @@ void Exti::disable(ExtiLine line) {
   exti_reg()->EMR = clear_bit(exti_reg()->EMR, static_cast<U32>(line));
 }
 
+bool Exti::is_pending(ExtiLine line) {
+  return eel::util::is_set(exti_reg()->PR, static_cast<U32>(line));
+}
+
+void Exti::clear_pending(ExtiLine line) {
+  // the bit is cleared by writing 1
+  exti_reg()->PR = set_bit(exti_reg()->PR, static_cast<U32>(line));
+}
+
 }

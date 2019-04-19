@@ -4,6 +4,7 @@
 #include "platform/memory_map.hh"
 #include "util/types.hh"
 #include "util/preprocessor.hh"
+#include "platform/mcu.hh"
 
 namespace eel::hal::ll {
 
@@ -75,6 +76,8 @@ class Gpio {
   void write(bool status);
   bool read() const;
   void toggle();
+  void enable_interrupt(eel::util::U32 priority);
+  void disable_interrupt();
 
  private:
   gpio::Port port_;
@@ -84,6 +87,8 @@ class Gpio {
   void configure(gpio::PullUpDown pud,
                  gpio::OutputType type,
                  gpio::OutputSpeed speed);
+
+  IRQn_Type get_irqn();
 };
 
 }

@@ -31,18 +31,10 @@ int main() {
   IOStream ios{&io_device};
 
   // some fun
-  ios << IOStream::endl << "Serial echo server with IOStream" << IOStream::endl;
-  ios << IOStream::err << "This is an error....\r\n" << IOStream::noerr;
-  ios << IOStream::warn << "This is a warning....\r\n" << IOStream::nowarn;
-  ios << IOStream::info << "This is an info....\r\n" << IOStream::noinfo;
-  ios << IOStream::err << "This " << IOStream::warn << "is a " << IOStream::info << "mix" << IOStream::reset << IOStream::endl;
-
-  ios << "prompt > ";
+  ios << IOStream::endl;
+  ios << IOStream::info << "Press button" << IOStream::endl;
 
   for (;;) {
-    char ch;
-    ios >> ch;
-    ios << ch;
   }
 }
 

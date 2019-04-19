@@ -73,6 +73,15 @@ void Gpio::toggle() {
   write(!status);
 }
 
+void Gpio::enable_interrupt(eel::util::U32 priority) {
+  NVIC_SetPriority(get_irqn(), priority);
+  NVIC_EnableIRQ(get_irqn());
+}
+
+void Gpio::disable_interrupt() {
+  NVIC_DisableIRQ(get_irqn());
+}
+
 // private implementation
 void Gpio::configure(gpio::PullUpDown pud,
                      gpio::OutputType type,
@@ -80,6 +89,37 @@ void Gpio::configure(gpio::PullUpDown pud,
   set_pud(port_base_, pin_, pud);
   set_otype(port_base_, pin_, type);
   set_ospeed(port_base_, pin_, speed);
+}
+
+IRQn_Type Gpio::get_irqn() {
+  IRQn_Type irqn{EXTI15_10_IRQn};
+  switch (pin_) {
+    case 0:
+      irqn = EXTI0_IRQn;
+      break;
+    case 1:
+      irqn = EXTI1_IRQn;
+      break;
+    case 2:
+      irqn = EXTI2_IRQn;
+      break;
+    case 3:
+      irqn = EXTI3_IRQn;
+      break;
+    case 4:
+      irqn = EXTI4_IRQn;
+      break;
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+      irqn = EXTI9_5_IRQn;
+      break;
+    default:
+      break;
+  }
+  return irqn;
 }
 
 }
