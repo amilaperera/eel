@@ -2,7 +2,6 @@
 #include "hal/cortex/lock.hh"
 #include "hal/gpio.hh"
 #include "hal/usart.hh"
-#include <cstring>
 #include "util/streams/io_device_wrapper.hh"
 #include "util/streams/io_stream.hh"
 
