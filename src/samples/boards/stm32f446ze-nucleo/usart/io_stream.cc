@@ -21,10 +21,10 @@ int main() {
 
   // debug usart configuration
   eel::hal::Usart serial{UsartPeripheral::kUsart3, Pin::D8, Pin::D9};
-  serial.configure_tx_rx(PullUpDown::Up,
-                         OutputType::PushPull,
-                         OutputSpeed::Medium);
-  serial.configure(115200, WordLength::k8DataBits);
+  serial.ConfigureTxRx(PullUpDown::Up,
+                       OutputType::PushPull,
+                       OutputSpeed::Medium);
+  serial.Configure(115200, WordLength::k8DataBits);
 
   // IO device from debug usart
   auto io_device = eel::util::make_io_device(&serial);

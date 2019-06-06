@@ -4,6 +4,6 @@
 
 namespace eel::hal {
 struct Rcc {
-  static void enable_port(Port port, bool status = true);
+  static void EnablePort(Port port, bool status = true);
 };
 }

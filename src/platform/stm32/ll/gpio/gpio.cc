@@ -36,62 +36,62 @@ Gpio::Gpio(Pin pin) : port_{static_cast<Port>(util::ToInt(pin) / 16)},
       break;
   }
 
-  ll::Rcc::enable_port(port_, true);
+  ll::Rcc::EnablePort(port_, true);
 }
 
-void Gpio::configure_output(PullUpDown pud,
-                            OutputType type,
-                            OutputSpeed speed) {
-  ll::set_mode(port_base_, pin_, eel::hal::PinMode::Output);
-  configure(pud, type, speed);
+void Gpio::ConfigureOutput(PullUpDown pud,
+                           OutputType type,
+                           OutputSpeed speed) {
+  ll::SetMode(port_base_, pin_, eel::hal::PinMode::Output);
+  Configure(pud, type, speed);
 }
 
-void Gpio::configure_input(PullUpDown pud) {
-  ll::set_mode(port_base_, pin_, PinMode::Input);
-  set_pud(port_base_, pin_, pud);
+void Gpio::ConfigureInput(PullUpDown pud) {
+  ll::SetMode(port_base_, pin_, PinMode::Input);
+  SetPullUpDown(port_base_, pin_, pud);
 }
 
-void Gpio::configure_af(AfMode af,
-                        PullUpDown pud,
-                        OutputType type,
-                        OutputSpeed speed) {
-  ll::set_mode(port_base_, pin_, eel::hal::PinMode::Alternate);
-  set_af(port_base_, pin_, af);
-  configure(pud, type, speed);
+void Gpio::ConfigureAf(AfMode af,
+                       PullUpDown pud,
+                       OutputType type,
+                       OutputSpeed speed) {
+  ll::SetMode(port_base_, pin_, eel::hal::PinMode::Alternate);
+  SetAfMode(port_base_, pin_, af);
+  Configure(pud, type, speed);
 }
 
-void Gpio::write(bool status) {
-  gpio_reg(port_base_)->BSRR = status ? (1U << pin_) : (1U << (pin_ + 16U));
+void Gpio::Write(bool status) {
+  GpioReg(port_base_)->BSRR = status ? (1U << pin_) : (1U << (pin_ + 16U));
 }
 
-bool Gpio::read() const {
-  return (gpio_reg(port_base_)->IDR & (1U << pin_)) != 0;
+bool Gpio::Read() const {
+  return (GpioReg(port_base_)->IDR & (1U << pin_)) != 0;
 }
 
-void Gpio::toggle() {
-  bool status = (gpio_reg(port_base_)->ODR & (1U << pin_)) != 0;
-  write(!status);
+void Gpio::Toggle() {
+  bool status = (GpioReg(port_base_)->ODR & (1U << pin_)) != 0;
+  Write(!status);
 }
 
-void Gpio::enable_interrupt(eel::util::U32 priority) {
-  NVIC_SetPriority(get_irqn(), priority);
-  NVIC_EnableIRQ(get_irqn());
+void Gpio::EnableInterrupt(eel::util::U32 priority) {
+  NVIC_SetPriority(GetIRQn(), priority);
+  NVIC_EnableIRQ(GetIRQn());
 }
 
-void Gpio::disable_interrupt() {
-  NVIC_DisableIRQ(get_irqn());
+void Gpio::DisableInterrupt() {
+  NVIC_DisableIRQ(GetIRQn());
 }
 
 // private implementation
-void Gpio::configure(PullUpDown pud,
+void Gpio::Configure(PullUpDown pud,
                      OutputType type,
                      OutputSpeed speed) {
-  set_pud(port_base_, pin_, pud);
-  set_otype(port_base_, pin_, type);
-  set_ospeed(port_base_, pin_, speed);
+  SetPullUpDown(port_base_, pin_, pud);
+  SetOutputType(port_base_, pin_, type);
+  SetOutputSpeed(port_base_, pin_, speed);
 }
 
-IRQn_Type Gpio::get_irqn() {
+IRQn_Type Gpio::GetIRQn() {
   IRQn_Type irqn{EXTI15_10_IRQn};
   switch (pin_) {
     case 0:

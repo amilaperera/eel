@@ -45,90 +45,90 @@ Usart::Usart(UsartPeripheral peripheral, Pin tx, Pin rx) :
       usart_base_ = EEL_USART6_BASE;
       break;
   }
-  ll::Rcc::enable_usart(peripheral);
+  ll::Rcc::EnableUsart(peripheral);
 }
 
-void Usart::configure_tx(PullUpDown pud, OutputType type, OutputSpeed speed) {
-  tx_.configure_af(tx_af_, pud, type, speed);
+void Usart::ConfigureTx(PullUpDown pud, OutputType type, OutputSpeed speed) {
+  tx_.ConfigureAf(tx_af_, pud, type, speed);
 }
 
-void Usart::configure_rx(PullUpDown pud, OutputType type, OutputSpeed speed) {
-  rx_.configure_af(rx_af_, pud, type, speed);
+void Usart::ConfigureRx(PullUpDown pud, OutputType type, OutputSpeed speed) {
+  rx_.ConfigureAf(rx_af_, pud, type, speed);
 }
 
-void Usart::configure(eel::util::U32 baud_rate, WordLength word_length, Parity parity) {
+void Usart::Configure(eel::util::U32 baud_rate, WordLength word_length, Parity parity) {
   // First the baud rate in BRR
-  set_baud_rate(baud_rate);
+  SetBaudRate(baud_rate);
 
   // Set all the CR1 register bits
-  auto cr1 = usart_reg(usart_base_)->CR1;
-  set_uart_enable(&cr1, true);
-  set_word_length(&cr1, word_length);
-  set_parity(&cr1, parity);
-  set_mode(&cr1, UsartMode::kTxRx);
-  usart_reg(usart_base_)->CR1 = cr1;
+  auto cr1 = UsartReg(usart_base_)->CR1;
+  SetUsartEnable(&cr1, true);
+  SetWordLength(&cr1, word_length);
+  SetParity(&cr1, parity);
+  SetMode(&cr1, UsartMode::kTxRx);
+  UsartReg(usart_base_)->CR1 = cr1;
 }
 
-void Usart::write(const util::U8 *buffer, util::U32 size) {
+void Usart::Write(const util::U8 *buffer, util::U32 size) {
   for (auto i = 0UL; i < size; ++i) {
-    write(buffer[i]);
+    Write(buffer[i]);
   }
   // Wait for TC
-  while ((usart_reg(usart_base_)->SR & eel::util::kBit6) == 0);
+  while ((UsartReg(usart_base_)->SR & eel::util::kBit6) == 0);
 }
 
-void Usart::read(util::U8 *buffer, util::U32 size) {
+void Usart::Read(util::U8 *buffer, util::U32 size) {
   for (auto i = 0UL; i < size; ++i) {
-    auto data = read();
+    auto data = Read();
     buffer[i] = data;
   }
 }
 
 // private implementation
-void Usart::set_baud_rate(eel::util::U32 value) {
+void Usart::SetBaudRate(eel::util::U32 value) {
   auto fclk{0UL};
   if (peripheral_ == UsartPeripheral::kUsart1 || peripheral_ == UsartPeripheral::kUsart6) {
-    fclk = ll::Rcc::apb2_frequency();
+    fclk = ll::Rcc::APB2Frequency();
   } else {
-    fclk = ll::Rcc::apb1_frequency();
+    fclk = ll::Rcc::APB1Frequency();
   }
   // TODO: have to revisit this calculation
-  usart_reg(usart_base_)->BRR = (fclk + value/2) / value;
+  UsartReg(usart_base_)->BRR = (fclk + value/2) / value;
 }
 
-void Usart::set_uart_enable(eel::util::U32 *cr1, bool status) {
-  *cr1 = eel::util::set_or_clear_bit(status, *cr1, 13);
+void Usart::SetUsartEnable(eel::util::U32 *cr1, bool status) {
+  *cr1 = eel::util::SetOrClearBit(status, *cr1, 13);
 }
 
-void Usart::set_word_length(eel::util::U32 *cr1, WordLength word_length) {
-  *cr1 = eel::util::set_or_clear_bit(word_length == WordLength::k9DataBits, *cr1, 12);
+void Usart::SetWordLength(eel::util::U32 *cr1, WordLength word_length) {
+  *cr1 = eel::util::SetOrClearBit(word_length == WordLength::k9DataBits, *cr1, 12);
 }
 
-void Usart::set_parity(eel::util::U32 *cr1, Parity parity) {
+void Usart::SetParity(eel::util::U32 *cr1, Parity parity) {
   // Parity enable/disable
-  *cr1 = eel::util::set_or_clear_bit(parity != Parity::kNone, *cr1, 10);
+  *cr1 = eel::util::SetOrClearBit(parity != Parity::kNone, *cr1, 10);
   // Paridy odd/even
-  *cr1 = eel::util::set_or_clear_bit(parity == Parity::kOdd, *cr1, 9);
+  *cr1 = eel::util::SetOrClearBit(parity == Parity::kOdd, *cr1, 9);
 }
 
-void Usart::set_mode(eel::util::U32 *cr1, UsartMode mode) {
+void Usart::SetMode(eel::util::U32 *cr1, UsartMode mode) {
   auto temp = *cr1 & ~(0x3U << 2);
   temp |= (eel::util::ToInt(mode) << 2);
   *cr1 = temp;
 }
 
-void Usart::write(eel::util::U8 data) {
+void Usart::Write(eel::util::U8 data) {
   // Wait for TXE
-  while ((usart_reg(usart_base_)->SR & eel::util::kBit7) == 0);
+  while ((UsartReg(usart_base_)->SR & eel::util::kBit7) == 0);
   // Now write to DR
-  usart_reg(usart_base_)->DR = data & static_cast<eel::util::U8>(0xff);
+  UsartReg(usart_base_)->DR = data & static_cast<eel::util::U8>(0xff);
 }
 
-util::U8 Usart::read() {
+util::U8 Usart::Read() {
   // Wait for RXNE
-  while ((usart_reg(usart_base_)->SR & eel::util::kBit5) == 0);
+  while ((UsartReg(usart_base_)->SR & eel::util::kBit5) == 0);
   // Now write to DR
-  return static_cast<util::U8>(usart_reg(usart_base_)->DR & static_cast<eel::util::U8>(0xff));
+  return static_cast<util::U8>(UsartReg(usart_base_)->DR & static_cast<eel::util::U8>(0xff));
 }
 
 }

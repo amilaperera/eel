@@ -19,22 +19,22 @@ struct UsartRCB {
   eel::util::IO_U32 GTPR;
 };
 
-EEL_ALWAYS_INLINE auto usart_reg(eel::util::U32 peripheral) {
+EEL_ALWAYS_INLINE auto UsartReg(eel::util::U32 peripheral) {
   return reinterpret_cast<UsartRCB *>(peripheral);
 }
 
 class Usart {
  public:
   explicit Usart(UsartPeripheral peripheral, Pin tx, Pin rx);
-  void configure_tx(PullUpDown pud,
-                    OutputType type,
-                    OutputSpeed speed);
-  void configure_rx(PullUpDown pud,
-                    OutputType type,
-                    OutputSpeed speed);
-  void configure(util::U32 baud_rate, WordLength word_length, Parity parity = Parity::kNone);
-  void write(const util::U8 *buffer, util::U32 size);
-  void read(util::U8 *buffer, util::U32 size);
+  void ConfigureTx(PullUpDown pud,
+                   OutputType type,
+                   OutputSpeed speed);
+  void ConfigureRx(PullUpDown pud,
+                   OutputType type,
+                   OutputSpeed speed);
+  void Configure(util::U32 baud_rate, WordLength word_length, Parity parity = Parity::kNone);
+  void Write(const util::U8 *buffer, util::U32 size);
+  void Read(util::U8 *buffer, util::U32 size);
 
  private:
   UsartPeripheral peripheral_;
@@ -44,13 +44,13 @@ class Usart {
   AfMode tx_af_;
   AfMode rx_af_;
 
-  EEL_ALWAYS_INLINE void set_baud_rate(util::U32 value);
-  EEL_ALWAYS_INLINE void set_word_length(util::U32 *cr1, WordLength word_length);
-  EEL_ALWAYS_INLINE void set_parity(util::U32 *cr1, Parity parity);
-  EEL_ALWAYS_INLINE void set_mode(util::U32 *cr1, UsartMode mode);
-  EEL_ALWAYS_INLINE void set_uart_enable(util::U32 *cr1, bool status);
-  EEL_ALWAYS_INLINE void write(util::U8 data);
-  EEL_ALWAYS_INLINE util::U8 read();
+  EEL_ALWAYS_INLINE void SetBaudRate(util::U32 value);
+  EEL_ALWAYS_INLINE void SetWordLength(util::U32 *cr1, WordLength word_length);
+  EEL_ALWAYS_INLINE void SetParity(util::U32 *cr1, Parity parity);
+  EEL_ALWAYS_INLINE void SetMode(util::U32 *cr1, UsartMode mode);
+  EEL_ALWAYS_INLINE void SetUsartEnable(util::U32 *cr1, bool status);
+  EEL_ALWAYS_INLINE void Write(util::U8 data);
+  EEL_ALWAYS_INLINE util::U8 Read();
 };
 
 }

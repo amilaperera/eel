@@ -8,10 +8,10 @@ class IODeviceWrapper : public IODeviceInterface {
  public:
   explicit IODeviceWrapper(T *d) : device_{d} {}
   void write(const U8 *buffer, U32 size) override {
-    device_->write(buffer, size);
+    device_->Write(buffer, size);
   }
   void read(U8 *buffer, U32 size) override {
-    device_->read(buffer, size);
+    device_->Read(buffer, size);
   }
 
  private:

@@ -10,14 +10,14 @@ namespace eel::hal {
 class Usart {
  public:
   explicit Usart(UsartPeripheral peripheral, Pin tx, Pin rx);
-  void configure_tx(PullUpDown pud, OutputType type, OutputSpeed speed);
-  void configure_rx(PullUpDown pud, OutputType type, OutputSpeed speed);
-  void configure_tx_rx(PullUpDown pud, OutputType type, OutputSpeed speed);
-  void configure(util::U32 baud_rate,
+  void ConfigureTx(PullUpDown pud, OutputType type, OutputSpeed speed);
+  void ConfigureRx(PullUpDown pud, OutputType type, OutputSpeed speed);
+  void ConfigureTxRx(PullUpDown pud, OutputType type, OutputSpeed speed);
+  void Configure(util::U32 baud_rate,
                  WordLength word_length = WordLength::k8DataBits,
                  Parity parity = Parity::kNone);
-  void write(const util::U8 *buffer, util::U32 size);
-  void read(util::U8 *buffer, util::U32 size);
+  void Write(const util::U8 *buffer, util::U32 size);
+  void Read(util::U8 *buffer, util::U32 size);
 
  private:
   ll::Usart usart_ll_;

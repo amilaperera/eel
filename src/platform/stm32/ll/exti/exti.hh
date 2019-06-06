@@ -46,15 +46,15 @@ struct ExtiRCB {
   eel::util::IO_U32 PR;
 };
 
-EEL_ALWAYS_INLINE auto exti_reg() {
+EEL_ALWAYS_INLINE auto ExtiReg() {
   return reinterpret_cast<ExtiRCB*>(EEL_EXTI_BASE);
 }
 
 class Exti {
-  static void set_trigger(ExtiLine line, Trigger trigger);
-  static void enable(ExtiLine line);
-  static void disable(ExtiLine line);
-  static bool is_pending(ExtiLine line);
-  static void clear_pending(ExtiLine line);
+  static void SetTrigger(ExtiLine line, Trigger trigger);
+  static void Enable(ExtiLine line);
+  static void Disable(ExtiLine line);
+  static bool IsPending(ExtiLine line);
+  static void ClearPending(ExtiLine line);
 };
 }

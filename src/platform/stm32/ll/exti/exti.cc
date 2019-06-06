@@ -5,51 +5,48 @@
 #include "platform/stm32/ll/exti/exti.hh"
 #include "util/bit_manip.hh"
 
-using eel::util::set_bit;
-using eel::util::clear_bit;
+using eel::util::SetBit;
+using eel::util::ClearBit;
 using eel::util::U32;
 
 namespace eel::hal::ll {
 
-void Exti::set_trigger(ExtiLine line, Trigger trigger) {
+void Exti::SetTrigger(ExtiLine line, Trigger trigger) {
   auto n{static_cast<U32>(line)};
   switch (trigger) {
-    case Trigger::kFalling:
-      exti_reg()->FTSR = set_bit(exti_reg()->FTSR, n);
-      exti_reg()->RTSR = clear_bit(exti_reg()->RTSR, n);
+    case Trigger::kFalling:ExtiReg()->FTSR = SetBit(ExtiReg()->FTSR, n);
+      ExtiReg()->RTSR = ClearBit(ExtiReg()->RTSR, n);
       break;
-    case Trigger::kRising:
-      exti_reg()->FTSR = clear_bit(exti_reg()->FTSR, n);
-      exti_reg()->RTSR = set_bit(exti_reg()->RTSR, n);
+    case Trigger::kRising:ExtiReg()->FTSR = ClearBit(ExtiReg()->FTSR, n);
+      ExtiReg()->RTSR = SetBit(ExtiReg()->RTSR, n);
       break;
-    case Trigger::kBoth:
-      exti_reg()->FTSR = set_bit(exti_reg()->FTSR, n);
-      exti_reg()->RTSR = set_bit(exti_reg()->RTSR, n);
+    case Trigger::kBoth:ExtiReg()->FTSR = SetBit(ExtiReg()->FTSR, n);
+      ExtiReg()->RTSR = SetBit(ExtiReg()->RTSR, n);
       break;
   }
 }
 
-void Exti::enable(ExtiLine line) {
+void Exti::Enable(ExtiLine line) {
   // enable interrupt
-  exti_reg()->IMR = set_bit(exti_reg()->IMR, static_cast<U32>(line));
+  ExtiReg()->IMR = SetBit(ExtiReg()->IMR, static_cast<U32>(line));
   // enable event
-  exti_reg()->EMR = set_bit(exti_reg()->EMR, static_cast<U32>(line));
+  ExtiReg()->EMR = SetBit(ExtiReg()->EMR, static_cast<U32>(line));
 }
 
-void Exti::disable(ExtiLine line) {
+void Exti::Disable(ExtiLine line) {
   // disable interrupt
-  exti_reg()->IMR = clear_bit(exti_reg()->IMR, static_cast<U32>(line));
+  ExtiReg()->IMR = ClearBit(ExtiReg()->IMR, static_cast<U32>(line));
   // disable event
-  exti_reg()->EMR = clear_bit(exti_reg()->EMR, static_cast<U32>(line));
+  ExtiReg()->EMR = ClearBit(ExtiReg()->EMR, static_cast<U32>(line));
 }
 
-bool Exti::is_pending(ExtiLine line) {
-  return eel::util::is_set(exti_reg()->PR, static_cast<U32>(line));
+bool Exti::IsPending(ExtiLine line) {
+  return eel::util::IsSet(ExtiReg()->PR, static_cast<U32>(line));
 }
 
-void Exti::clear_pending(ExtiLine line) {
+void Exti::ClearPending(ExtiLine line) {
   // the bit is cleared by writing 1
-  exti_reg()->PR = set_bit(exti_reg()->PR, static_cast<U32>(line));
+  ExtiReg()->PR = SetBit(ExtiReg()->PR, static_cast<U32>(line));
 }
 
 }

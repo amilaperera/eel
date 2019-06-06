@@ -5,7 +5,7 @@
 #include "hal/rcc.hh"
 
 namespace eel::hal {
-void Rcc::enable_port(Port port, bool status) {
-  ll::Rcc::enable_port(port, status);
+void Rcc::EnablePort(Port port, bool status) {
+  ll::Rcc::EnablePort(port, status);
 }
 }

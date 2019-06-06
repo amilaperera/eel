@@ -8,29 +8,29 @@ namespace eel::hal {
 Usart::Usart(UsartPeripheral peripheral, Pin tx, Pin rx) : usart_ll_{peripheral, tx, rx} {
 }
 
-void Usart::configure_tx(PullUpDown pud, OutputType type, OutputSpeed speed) {
-  usart_ll_.configure_tx(pud, type, speed);
+void Usart::ConfigureTx(PullUpDown pud, OutputType type, OutputSpeed speed) {
+  usart_ll_.ConfigureTx(pud, type, speed);
 }
 
-void Usart::configure_rx(PullUpDown pud, OutputType type, OutputSpeed speed) {
-  usart_ll_.configure_rx(pud, type, speed);
+void Usart::ConfigureRx(PullUpDown pud, OutputType type, OutputSpeed speed) {
+  usart_ll_.ConfigureRx(pud, type, speed);
 }
 
-void Usart::configure_tx_rx(PullUpDown pud, OutputType type, OutputSpeed speed) {
-  configure_tx(pud, type, speed);
-  configure_rx(pud, type, speed);
+void Usart::ConfigureTxRx(PullUpDown pud, OutputType type, OutputSpeed speed) {
+  ConfigureTx(pud, type, speed);
+  ConfigureRx(pud, type, speed);
 }
 
-void Usart::configure(util::U32 baud_rate, WordLength word_length, Parity parity) {
-  usart_ll_.configure(baud_rate, word_length, parity);
+void Usart::Configure(util::U32 baud_rate, WordLength word_length, Parity parity) {
+  usart_ll_.Configure(baud_rate, word_length, parity);
 }
 
-void Usart::write(const util::U8 *buffer, util::U32 size) {
-  usart_ll_.write(buffer, size);
+void Usart::Write(const util::U8 *buffer, util::U32 size) {
+  usart_ll_.Write(buffer, size);
 }
 
-void Usart::read(util::U8 *buffer, util::U32 size) {
-  usart_ll_.read(buffer, size);
+void Usart::Read(util::U8 *buffer, util::U32 size) {
+  usart_ll_.Read(buffer, size);
 }
 
 }

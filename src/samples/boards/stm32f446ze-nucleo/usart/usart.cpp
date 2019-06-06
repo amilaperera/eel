@@ -18,18 +18,18 @@ int main() {
 
   // debug usart configuration
   eel::hal::Usart serial{UsartPeripheral::kUsart3, Pin::D8, Pin::D9};
-  serial.configure_tx_rx(PullUpDown::Up,
-                         OutputType::PushPull,
-                         OutputSpeed::Medium);
-  serial.configure(115200, WordLength::k8DataBits);
+  serial.ConfigureTxRx(PullUpDown::Up,
+                       OutputType::PushPull,
+                       OutputSpeed::Medium);
+  serial.Configure(115200, WordLength::k8DataBits);
 
   const char *str{"\r\n" "Simple echo server" "\r\n"};
-  serial.write(reinterpret_cast<const eel::util::U8 *>(str), std::strlen(str));
+  serial.Write(reinterpret_cast<const eel::util::U8 *>(str), std::strlen(str));
 
   for (;;) {
     eel::util::U8 ch{};
-    serial.read(&ch, 1);
-    serial.write(&ch, 1);
+    serial.Read(&ch, 1);
+    serial.Write(&ch, 1);
   }
 }
 

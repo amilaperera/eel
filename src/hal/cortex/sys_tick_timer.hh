@@ -9,7 +9,7 @@ namespace eel::hal {
 
 class Tick {
  public:
-   static void increment() {
+   static void Increment() {
     ++tick_count;
   }
   static eel::util::U32 count() {
@@ -29,10 +29,10 @@ struct SysTickTimer {
     k1kHz = 1000,
     k10kHz = 10000,
   };
-  static void set_reload(eel::util::U32 val);
-  static eel::util::U32 get_reload();
-  static void suspend();
-  static void resume();
+  static void SetReload(eel::util::U32 val);
+  static eel::util::U32 GetReload();
+  static void Suspend();
+  static void Resume();
 
   template <SysTickTimer::Frequency Frequency, eel::util::U8 Priority>
   static bool enable() {

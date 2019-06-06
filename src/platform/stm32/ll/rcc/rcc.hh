@@ -48,20 +48,20 @@ struct RccRCB {
   eel::util::IO_U32 RCC_DCKCFGR2;
 };
 
-EEL_ALWAYS_INLINE auto rcc_reg() {
+EEL_ALWAYS_INLINE auto RccReg() {
   return reinterpret_cast<ll::RccRCB*>(EEL_RCC_BASE);
 }
 
 class Rcc {
  public:
-  static void enable_port(Port port, bool status = true);
-  static void enable_usart(UsartPeripheral peripheral, bool status = true);
-  static eel::util::U32 ahb_frequency();
-  static eel::util::U32 apb1_frequency();
-  static eel::util::U32 apb2_frequency();
-  static eel::util::U32 ahb_prescalar();
-  static eel::util::U32 apb1_prescalar();
-  static eel::util::U32 apb2_prescalar();
+  static void EnablePort(Port port, bool status = true);
+  static void EnableUsart(UsartPeripheral peripheral, bool status = true);
+  static eel::util::U32 AHBFrequency();
+  static eel::util::U32 APB1Frequency();
+  static eel::util::U32 APB2Frequency();
+  static eel::util::U32 AHBPrescalar();
+  static eel::util::U32 APB1Prescalar();
+  static eel::util::U32 APB2Prescalar();
  private:
   static constexpr eel::util::U16 ahb_prescaler[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
   static constexpr eel::util::U8 apb_prescaler[8] = {0, 0, 0, 0, 1, 2, 3, 4}; // for bit shifting

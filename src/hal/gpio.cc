@@ -14,29 +14,29 @@ namespace eel::hal {
 Gpio::Gpio(Pin pin) : gpio_ll_{pin} {
 }
 
-void Gpio::configure_output(PullUpDown pud, OutputType type, OutputSpeed speed) {
-  gpio_ll_.configure_output(pud, type, speed);
+void Gpio::ConfigureOutput(PullUpDown pud, OutputType type, OutputSpeed speed) {
+  gpio_ll_.ConfigureOutput(pud, type, speed);
 }
 
-void Gpio::configure_input(PullUpDown pud) {
-  gpio_ll_.configure_input(pud);
+void Gpio::ConfigureInput(PullUpDown pud) {
+  gpio_ll_.ConfigureInput(pud);
 }
 
-bool Gpio::read() const {
-  return gpio_ll_.read();
+bool Gpio::Read() const {
+  return gpio_ll_.Read();
 }
 
 Gpio::operator bool() const {
-  return gpio_ll_.read();
+  return gpio_ll_.Read();
 }
 
 
-void Gpio::write(bool status) {
-  gpio_ll_.write(status);
+void Gpio::Write(bool status) {
+  gpio_ll_.Write(status);
 }
 
 Gpio & Gpio::operator=(bool status) {
-  gpio_ll_.write(status);
+  gpio_ll_.Write(status);
   return *this;
 }
 
@@ -45,8 +45,8 @@ Gpio & Gpio::operator=(int status) {
   return *this;
 }
 
-void Gpio::toggle() {
-  gpio_ll_.toggle();
+void Gpio::Toggle() {
+  gpio_ll_.Toggle();
 }
 
 }
