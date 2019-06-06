@@ -11,14 +11,14 @@ namespace eel::hal {
  *
  * @param pin
  */
-Gpio::Gpio(gpio::Pin pin) : gpio_ll_{pin} {
+Gpio::Gpio(Pin pin) : gpio_ll_{pin} {
 }
 
-void Gpio::configure_output(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+void Gpio::configure_output(PullUpDown pud, OutputType type, OutputSpeed speed) {
   gpio_ll_.configure_output(pud, type, speed);
 }
 
-void Gpio::configure_input(gpio::PullUpDown pud) {
+void Gpio::configure_input(PullUpDown pud) {
   gpio_ll_.configure_input(pud);
 }
 

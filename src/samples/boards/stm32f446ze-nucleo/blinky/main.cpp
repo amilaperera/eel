@@ -2,11 +2,11 @@
 #include "hal/cortex/lock.hh"
 #include "hal/gpio.hh"
 
-using eel::hal::gpio::Pin;
-using eel::hal::gpio::Mode;
-using eel::hal::gpio::PullUpDown;
-using eel::hal::gpio::OutputType;
-using eel::hal::gpio::OutputSpeed;
+using eel::hal::Pin;
+using eel::hal::PinMode;
+using eel::hal::PullUpDown;
+using eel::hal::OutputType;
+using eel::hal::OutputSpeed;
 
 int main() {
   // tick per 1ms

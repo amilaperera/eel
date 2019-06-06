@@ -54,8 +54,8 @@ EEL_ALWAYS_INLINE auto rcc_reg() {
 
 class Rcc {
  public:
-  static void enable_port(gpio::Port port, bool status = true);
-  static void enable_usart(usart::Peripheral peripheral, bool status = true);
+  static void enable_port(Port port, bool status = true);
+  static void enable_usart(UsartPeripheral peripheral, bool status = true);
   static eel::util::U32 ahb_frequency();
   static eel::util::U32 apb1_frequency();
   static eel::util::U32 apb2_frequency();

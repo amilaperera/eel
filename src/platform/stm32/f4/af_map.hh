@@ -5,7 +5,7 @@
 
 namespace eel::hal::ll {
 
-std::pair<bool, gpio::Af> check_usart_tx(usart::Peripheral peripheral, gpio::Pin pin);
-std::pair<bool, gpio::Af> check_usart_rx(usart::Peripheral peripheral, gpio::Pin pin);
+std::pair<bool, AfMode> check_usart_tx(UsartPeripheral peripheral, Pin pin);
+std::pair<bool, AfMode> check_usart_rx(UsartPeripheral peripheral, Pin pin);
 
 }

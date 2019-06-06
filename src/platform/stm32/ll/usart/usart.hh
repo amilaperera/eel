@@ -25,29 +25,29 @@ EEL_ALWAYS_INLINE auto usart_reg(eel::util::U32 peripheral) {
 
 class Usart {
  public:
-  explicit Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx);
-  void configure_tx(gpio::PullUpDown pud,
-                    gpio::OutputType type,
-                    gpio::OutputSpeed speed);
-  void configure_rx(gpio::PullUpDown pud,
-                    gpio::OutputType type,
-                    gpio::OutputSpeed speed);
-  void configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity = usart::Parity::kNone);
+  explicit Usart(UsartPeripheral peripheral, Pin tx, Pin rx);
+  void configure_tx(PullUpDown pud,
+                    OutputType type,
+                    OutputSpeed speed);
+  void configure_rx(PullUpDown pud,
+                    OutputType type,
+                    OutputSpeed speed);
+  void configure(util::U32 baud_rate, WordLength word_length, Parity parity = Parity::kNone);
   void write(const util::U8 *buffer, util::U32 size);
   void read(util::U8 *buffer, util::U32 size);
 
  private:
-  usart::Peripheral peripheral_;
+  UsartPeripheral peripheral_;
   util::U32 usart_base_;
   ll::Gpio tx_;
   ll::Gpio rx_;
-  gpio::Af tx_af_;
-  gpio::Af rx_af_;
+  AfMode tx_af_;
+  AfMode rx_af_;
 
   EEL_ALWAYS_INLINE void set_baud_rate(util::U32 value);
-  EEL_ALWAYS_INLINE void set_word_length(util::U32 *cr1, usart::WordLength word_length);
-  EEL_ALWAYS_INLINE void set_parity(util::U32 *cr1, usart::Parity parity);
-  EEL_ALWAYS_INLINE void set_mode(util::U32 *cr1, usart::Mode mode);
+  EEL_ALWAYS_INLINE void set_word_length(util::U32 *cr1, WordLength word_length);
+  EEL_ALWAYS_INLINE void set_parity(util::U32 *cr1, Parity parity);
+  EEL_ALWAYS_INLINE void set_mode(util::U32 *cr1, UsartMode mode);
   EEL_ALWAYS_INLINE void set_uart_enable(util::U32 *cr1, bool status);
   EEL_ALWAYS_INLINE void write(util::U8 data);
   EEL_ALWAYS_INLINE util::U8 read();

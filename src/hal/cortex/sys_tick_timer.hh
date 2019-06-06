@@ -5,8 +5,7 @@
 
 //extern "C" void SysTick_Handler(void);
 
-namespace eel {
-namespace hal {
+namespace eel::hal {
 
 class Tick {
  public:
@@ -47,5 +46,4 @@ struct SysTickTimer {
   }
 };
 
-}
 }

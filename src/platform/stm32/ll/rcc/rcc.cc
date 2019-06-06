@@ -4,7 +4,7 @@
 
 namespace eel::hal::ll {
 
-void Rcc::enable_port(gpio::Port port, bool status) {
+void Rcc::enable_port(Port port, bool status) {
   auto temp = rcc_reg()->RCC_AHB1ENR;
   if (status) {
     temp |= (1U << eel::util::ToInt(port));
@@ -14,36 +14,36 @@ void Rcc::enable_port(gpio::Port port, bool status) {
   rcc_reg()->RCC_AHB1ENR = temp;
 }
 
-void Rcc::enable_usart(usart::Peripheral peripheral, bool status) {
+void Rcc::enable_usart(UsartPeripheral peripheral, bool status) {
   // usart2, usart3, uart4, uart5
   eel::util::IO_U32 temp{};
   switch (peripheral) {
-    case usart::Peripheral::kUsart1:
+    case UsartPeripheral::kUsart1:
       temp = rcc_reg()->RCC_APB2ENR;
       temp = eel::util::set_or_clear_bit(status, temp, 4);
       rcc_reg()->RCC_APB2ENR = temp;
       break;
-    case usart::Peripheral::kUsart2:
+    case UsartPeripheral::kUsart2:
       temp = rcc_reg()->RCC_APB1ENR;
       temp = eel::util::set_or_clear_bit(status, temp, 17);
       rcc_reg()->RCC_APB1ENR = temp;
       break;
-    case usart::Peripheral::kUsart3:
+    case UsartPeripheral::kUsart3:
       temp = rcc_reg()->RCC_APB1ENR;
       temp = eel::util::set_or_clear_bit(status, temp, 18);
       rcc_reg()->RCC_APB1ENR = temp;
       break;
-    case usart::Peripheral::kUart4:
+    case UsartPeripheral::kUart4:
       temp = rcc_reg()->RCC_APB1ENR;
       temp = eel::util::set_or_clear_bit(status, temp, 19);
       rcc_reg()->RCC_APB1ENR = temp;
       break;
-    case usart::Peripheral::kUart5:
+    case UsartPeripheral::kUart5:
       temp = rcc_reg()->RCC_APB1ENR;
       temp = eel::util::set_or_clear_bit(status, temp, 20);
       rcc_reg()->RCC_APB1ENR = temp;
       break;
-    case usart::Peripheral::kUsart6:
+    case UsartPeripheral::kUsart6:
       temp = rcc_reg()->RCC_APB2ENR;
       temp = eel::util::set_or_clear_bit(status, temp, 5);
       rcc_reg()->RCC_APB2ENR = temp;

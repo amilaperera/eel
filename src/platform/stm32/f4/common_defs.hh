@@ -2,7 +2,6 @@
 #include "util/types.hh"
 
 namespace eel::hal {
-namespace gpio {
 enum class Port : eel::util::U8 {
   A = 0,
   B,
@@ -24,15 +23,13 @@ enum class Pin : eel::util::U32 {
   G0, G1, G2, G3, G4, G5, G6, G7, G8, G9, G10, G11, G12, G13, G14, G15,
 };
 
-enum class Mode : eel::util::U8 { Input = 0x00, Output, Alternate, Analog };
+enum class PinMode : eel::util::U8 { Input = 0x00, Output, Alternate, Analog };
 enum class PullUpDown : eel::util::U8 { None = 0x00, Up, Down };
 enum class OutputSpeed : eel::util::U8 { Low = 0x00, Medium, Fast, High };
 enum class OutputType : eel::util::U8 { PushPull = 0x00, OpenDrain };
-enum class Af : eel::util::U8 {k0 = 0x00, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15};
-}
+enum class AfMode : eel::util::U8 {k0 = 0x00, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15};
 
-namespace usart {
-enum class Peripheral {
+enum class UsartPeripheral {
  kUsart1,
  kUsart2,
  kUsart3,
@@ -57,13 +54,12 @@ enum class Parity : eel::util::U8 {
   kOdd
 };
 
-enum class Mode : eel::util::U8 {
+enum class UsartMode : eel::util::U8 {
   kNone = 0,
   kRxOnly,
   kTxOnly,
   kTxRx,
 };
 
-}
 }
 

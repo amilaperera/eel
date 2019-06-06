@@ -5,23 +5,23 @@
 #include "hal/usart.hh"
 namespace eel::hal {
 
-Usart::Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx) : usart_ll_{peripheral, tx, rx} {
+Usart::Usart(UsartPeripheral peripheral, Pin tx, Pin rx) : usart_ll_{peripheral, tx, rx} {
 }
 
-void Usart::configure_tx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+void Usart::configure_tx(PullUpDown pud, OutputType type, OutputSpeed speed) {
   usart_ll_.configure_tx(pud, type, speed);
 }
 
-void Usart::configure_rx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+void Usart::configure_rx(PullUpDown pud, OutputType type, OutputSpeed speed) {
   usart_ll_.configure_rx(pud, type, speed);
 }
 
-void Usart::configure_tx_rx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed) {
+void Usart::configure_tx_rx(PullUpDown pud, OutputType type, OutputSpeed speed) {
   configure_tx(pud, type, speed);
   configure_rx(pud, type, speed);
 }
 
-void Usart::configure(util::U32 baud_rate, usart::WordLength word_length, usart::Parity parity) {
+void Usart::configure(util::U32 baud_rate, WordLength word_length, Parity parity) {
   usart_ll_.configure(baud_rate, word_length, parity);
 }
 

@@ -9,13 +9,13 @@ namespace eel::hal {
 
 class Usart {
  public:
-  explicit Usart(usart::Peripheral peripheral, gpio::Pin tx, gpio::Pin rx);
-  void configure_tx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
-  void configure_rx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
-  void configure_tx_rx(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
+  explicit Usart(UsartPeripheral peripheral, Pin tx, Pin rx);
+  void configure_tx(PullUpDown pud, OutputType type, OutputSpeed speed);
+  void configure_rx(PullUpDown pud, OutputType type, OutputSpeed speed);
+  void configure_tx_rx(PullUpDown pud, OutputType type, OutputSpeed speed);
   void configure(util::U32 baud_rate,
-                 usart::WordLength word_length = usart::WordLength::k8DataBits,
-                 usart::Parity parity = usart::Parity::kNone);
+                 WordLength word_length = WordLength::k8DataBits,
+                 Parity parity = Parity::kNone);
   void write(const util::U8 *buffer, util::U32 size);
   void read(util::U8 *buffer, util::U32 size);
 

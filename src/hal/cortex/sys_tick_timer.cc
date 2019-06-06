@@ -9,8 +9,7 @@ extern "C" void SysTick_Handler(void) {
   eel::hal::Tick::increment();
 }
 
-namespace eel {
-namespace hal {
+namespace eel::hal {
 
 void SysTickTimer::set_reload(eel::util::U32 val) {
   SysTick->LOAD = (val & 0x00FFFFFFU);
@@ -30,5 +29,4 @@ void SysTickTimer::resume() {
   SysTick->CTRL  |= SysTick_CTRL_TICKINT_Msk;
 }
 
-}
 }

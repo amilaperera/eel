@@ -24,35 +24,35 @@ EEL_ALWAYS_INLINE auto gpio_reg(eel::util::U32 port) {
   return reinterpret_cast<GpioRCB*>(port);
 }
 
-EEL_ALWAYS_INLINE void set_mode(util::U32 port_base, util::U32 pin, gpio::Mode mode) {
+EEL_ALWAYS_INLINE void set_mode(util::U32 port_base, util::U32 pin, PinMode mode) {
   eel::util::IO_U32 temp = gpio_reg(port_base)->MODER;
   temp &= ~(3U << (pin * 2U));
   temp |= (util::ToInt(mode) << (pin * 2U));
   gpio_reg(port_base)->MODER = temp;
 }
 
-EEL_ALWAYS_INLINE void set_pud(util::U32 port_base, util::U32 pin, gpio::PullUpDown pud) {
+EEL_ALWAYS_INLINE void set_pud(util::U32 port_base, util::U32 pin, PullUpDown pud) {
   auto temp = gpio_reg(port_base)->PUPDR;
   temp &= ~(3U << (pin * 2U));
   temp |= (util::ToInt(pud) << (pin * 2U));
   gpio_reg(port_base)->PUPDR = temp;
 }
 
-EEL_ALWAYS_INLINE void set_otype(util::U32 port_base, util::U32 pin, gpio::OutputType type) {
+EEL_ALWAYS_INLINE void set_otype(util::U32 port_base, util::U32 pin, OutputType type) {
   auto temp = gpio_reg(port_base)->OTYPER;
   temp &= ~(1U << pin);
   temp |= (util::ToInt(type) << pin);
   gpio_reg(port_base)->OTYPER = temp;
 }
 
-EEL_ALWAYS_INLINE void set_ospeed(util::U32 port_base, util::U32 pin, gpio::OutputSpeed speed) {
+EEL_ALWAYS_INLINE void set_ospeed(util::U32 port_base, util::U32 pin, OutputSpeed speed) {
   auto temp = gpio_reg(port_base)->OSPEEDR;
   temp &= ~(3U << (pin * 2U));
   temp |= (util::ToInt(speed) << (pin * 2U));
   gpio_reg(port_base)->OSPEEDR = temp;
 }
 
-EEL_ALWAYS_INLINE void set_af(util::U32 port_base, util::U32 pin, gpio::Af af) {
+EEL_ALWAYS_INLINE void set_af(util::U32 port_base, util::U32 pin, AfMode af) {
   auto pin_position{pin}, afr_idx{0UL};
   if (pin >= 8) {
     // We should write to AFHR, not AFLR. Therefore increment idx
@@ -67,12 +67,12 @@ EEL_ALWAYS_INLINE void set_af(util::U32 port_base, util::U32 pin, gpio::Af af) {
 
 class Gpio {
  public:
-  explicit Gpio(gpio::Pin pin);
-  void configure_output(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
-  void configure_input(gpio::PullUpDown pud);
-  void configure_af(gpio::Af af, gpio::PullUpDown pud,
-                    gpio::OutputType type,
-                    gpio::OutputSpeed speed);
+  explicit Gpio(Pin pin);
+  void configure_output(PullUpDown pud, OutputType type, OutputSpeed speed);
+  void configure_input(PullUpDown pud);
+  void configure_af(AfMode af, PullUpDown pud,
+                    OutputType type,
+                    OutputSpeed speed);
   void write(bool status);
   bool read() const;
   void toggle();
@@ -80,13 +80,13 @@ class Gpio {
   void disable_interrupt();
 
  private:
-  gpio::Port port_;
+  Port port_;
   util::U32 pin_;
   util::U32 port_base_;
 
-  void configure(gpio::PullUpDown pud,
-                 gpio::OutputType type,
-                 gpio::OutputSpeed speed);
+  void configure(PullUpDown pud,
+                 OutputType type,
+                 OutputSpeed speed);
 
   IRQn_Type get_irqn();
 };

@@ -5,11 +5,13 @@
 #include "util/streams/io_device_wrapper.hh"
 #include "util/streams/io_stream.hh"
 
-using eel::hal::gpio::Pin;
-using eel::hal::gpio::Mode;
-using eel::hal::gpio::PullUpDown;
-using eel::hal::gpio::OutputType;
-using eel::hal::gpio::OutputSpeed;
+using eel::hal::Pin;
+using eel::hal::PinMode;
+using eel::hal::PullUpDown;
+using eel::hal::OutputType;
+using eel::hal::OutputSpeed;
+using eel::hal::UsartPeripheral;
+using eel::hal::WordLength;
 
 using eel::util::IOStream;
 
@@ -18,11 +20,11 @@ int main() {
   eel::hal::SysTickTimer::enable<eel::hal::SysTickTimer::Frequency::k1kHz, 0xf>();
 
   // debug usart configuration
-  eel::hal::Usart serial{eel::hal::usart::Peripheral::kUsart3, eel::hal::gpio::Pin::D8, eel::hal::gpio::Pin::D9};
-  serial.configure_tx_rx(eel::hal::gpio::PullUpDown::Up,
-                         eel::hal::gpio::OutputType::PushPull,
-                         eel::hal::gpio::OutputSpeed::Medium);
-  serial.configure(115200, eel::hal::usart::WordLength::k8DataBits);
+  eel::hal::Usart serial{UsartPeripheral::kUsart3, Pin::D8, Pin::D9};
+  serial.configure_tx_rx(PullUpDown::Up,
+                         OutputType::PushPull,
+                         OutputSpeed::Medium);
+  serial.configure(115200, WordLength::k8DataBits);
 
   // IO device from debug usart
   auto io_device = eel::util::make_io_device(&serial);

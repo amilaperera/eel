@@ -5,9 +5,9 @@ namespace eel::hal {
 
 class Gpio {
  public:
-  explicit Gpio(gpio::Pin pin);
-  void configure_output(gpio::PullUpDown pud, gpio::OutputType type, gpio::OutputSpeed speed);
-  void configure_input(gpio::PullUpDown pud);
+  explicit Gpio(Pin pin);
+  void configure_output(PullUpDown pud, OutputType type, OutputSpeed speed);
+  void configure_input(PullUpDown pud);
   bool read() const;
   explicit operator bool() const;
   void write(bool status);

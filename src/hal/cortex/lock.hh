@@ -7,8 +7,7 @@
 #include "util/types.hh"
 #include "cmsis/common/include/core_cm4.h"
 
-namespace eel {
-namespace hal{
+namespace eel::hal{
 
 // This supports nesting
 class Lock {
@@ -24,7 +23,6 @@ class Lock {
   eel::util::U32 cpsr;
 };
 
-}
 }
 
 
