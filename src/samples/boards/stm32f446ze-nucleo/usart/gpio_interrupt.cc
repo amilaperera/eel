@@ -27,13 +27,13 @@ int main() {
   serial.Configure(115200, WordLength::k8DataBits);
 
   // IO device from debug usart
-  auto io_device = eel::util::make_io_device(&serial);
+  auto io_device = eel::util::MakeIODevice(&serial);
   // Creating an IO stream from an IO device
   IOStream ios{&io_device};
 
   // some fun
-  ios << IOStream::endl;
-  ios << IOStream::info << "Press button" << IOStream::endl;
+  ios << IOStream::Endl;
+  ios << IOStream::Info << "Press button" << IOStream::Endl;
 
   for (;;) {
   }

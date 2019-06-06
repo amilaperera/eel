@@ -7,10 +7,10 @@ template <typename T>
 class IODeviceWrapper : public IODeviceInterface {
  public:
   explicit IODeviceWrapper(T *d) : device_{d} {}
-  void write(const U8 *buffer, U32 size) override {
+  void Write(const U8 *buffer, U32 size) override {
     device_->Write(buffer, size);
   }
-  void read(U8 *buffer, U32 size) override {
+  void Read(U8 *buffer, U32 size) override {
     device_->Read(buffer, size);
   }
 
@@ -19,7 +19,7 @@ class IODeviceWrapper : public IODeviceInterface {
 };
 
 template <typename T>
-auto make_io_device(T *device) {
+auto MakeIODevice(T *device) {
   return eel::util::IODeviceWrapper<T>(device);
 }
 
