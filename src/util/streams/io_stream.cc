@@ -79,8 +79,7 @@ IOStream& IOStream::NoInfo(IOStream &ios) {
 }
 
 IOStream& IOStream::Debug(IOStream &ios) {
-  ios << "";
-  return ios;
+  return Reset(ios);
 }
 
 IOStream& IOStream::NoDebug(IOStream &ios) {
@@ -88,8 +87,7 @@ IOStream& IOStream::NoDebug(IOStream &ios) {
 }
 
 IOStream& IOStream::Trace(IOStream &ios) {
-  ios << "";
-  return ios;
+  return Reset(ios);
 }
 
 IOStream& IOStream::NoTrace(IOStream &ios) {
