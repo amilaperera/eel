@@ -21,8 +21,7 @@ add_executable(${PROJECT_NAME}.elf
   ${ChibiOS_SOURCES}
   ${CMSIS_SOURCES}
   # config/stm32f4xx_it.c
-  config/stm32f4xx_hal_msp.c
-        ../../../../hal/usart.cc ../../../../hal/usart.hh)
+  config/stm32f4xx_hal_msp.c)
 
 SetTargetProperties(${PROJECT_NAME}.elf)
 ADD_POST_BUILD_COPY(${PROJECT_NAME})
