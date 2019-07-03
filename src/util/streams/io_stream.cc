@@ -47,56 +47,59 @@ IOStream& IOStream::operator>>(char &ch) {
 }
 
 IOStream& IOStream::Endl(IOStream &ios) {
-  ios << "\r\n";
+  ios << kCrLf;
   return ios;
 }
 
-IOStream& IOStream::Err(IOStream &ios) {
-  ios << "\033[31m";
+IOStream& IOStream::Red(IOStream& ios) {
+  ios << kColorRed;
   return ios;
 }
 
-IOStream& IOStream::NoErr(IOStream &ios) {
-  return Reset(ios);
-}
-
-IOStream& IOStream::Warn(IOStream &ios) {
-  ios << "\033[33m";
+IOStream& IOStream::Green(IOStream& ios) {
+  ios << kColorGreen;
   return ios;
 }
 
-IOStream& IOStream::NoWarn(IOStream &ios) {
-  return Reset(ios);
-}
-
-IOStream& IOStream::Info(IOStream &ios) {
-  ios << "\033[36m";
+IOStream& IOStream::Yellow(IOStream& ios) {
+  ios << kColorYellow;
   return ios;
 }
 
-IOStream& IOStream::NoInfo(IOStream &ios) {
-  return Reset(ios);
+IOStream& IOStream::Blue(IOStream& ios) {
+  ios << kColorBlue;
+  return ios;
 }
 
-IOStream& IOStream::Debug(IOStream &ios) {
-  return Reset(ios);
+IOStream& IOStream::Magenta(IOStream& ios) {
+  ios << kColorMagenta;
+  return ios;
 }
 
-IOStream& IOStream::NoDebug(IOStream &ios) {
-  return Reset(ios);
+IOStream& IOStream::Cyan(IOStream& ios) {
+  ios << kColorCyan;
+  return ios;
 }
 
-IOStream& IOStream::Trace(IOStream &ios) {
-  return Reset(ios);
-}
-
-IOStream& IOStream::NoTrace(IOStream &ios) {
-  return Reset(ios);
+IOStream& IOStream::White(IOStream& ios) {
+  ios << kColorWhite;
+  return ios;
 }
 
 IOStream& IOStream::Reset(IOStream &ios) {
-  ios << "\033[0m";
+  ios << kColorReset;
   return ios;
 }
+
+IOStream& IOStream::Err(IOStream &ios) { return Red(ios); }
+IOStream& IOStream::NoErr(IOStream& ios) { return Reset(ios); }
+IOStream& IOStream::Warn(IOStream &ios) { return Yellow(ios); }
+IOStream& IOStream::NoWarn(IOStream &ios) { return Reset(ios); }
+IOStream& IOStream::Info(IOStream& ios) { return Cyan(ios); }
+IOStream& IOStream::NoInfo(IOStream &ios) { return Reset(ios); }
+IOStream& IOStream::Debug(IOStream& ios) { return Green(ios); }
+IOStream& IOStream::NoDebug(IOStream &ios) { return Reset(ios); }
+IOStream& IOStream::Trace(IOStream &ios) { return White(ios); }
+IOStream& IOStream::NoTrace(IOStream &ios) { return Reset(ios); }
 
 }

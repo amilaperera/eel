@@ -1,9 +1,13 @@
 set(EelUtil_ROOT_PATH ${CMAKE_CURRENT_LIST_DIR}/../util)
 
 set(EelStreams_SOURCES streams/io_stream.cc)
+if (WIN32)
+    set(EelPorts_SOURCES ports/pc/console_device.cc)
+endif()
 
 set(EelUtil_SRCS
     ${EelStreams_SOURCES}
+    ${EelPorts_SOURCES}
    )
 set(EelUtil_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 

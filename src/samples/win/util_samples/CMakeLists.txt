@@ -2,8 +2,7 @@ project(util_samples C CXX ASM)
 
 find_package(EelUtil REQUIRED)
 
-include_directories(${CMSIS_INCLUDE_DIRS}
-        ${EelUtil_INCLUDE_DIR})
+include_directories(${EelUtil_INCLUDE_DIR})
 
 add_executable(io_stream_sample io_stream_sample.cc ${EelUtil_SOURCES})
 
