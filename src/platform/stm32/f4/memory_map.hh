@@ -29,5 +29,6 @@
 #define EEL_USART6_BASE       (EEL_APB2_BASE + 0x1400)
 // EXTI
 #define EEL_EXTI_BASE         (EEL_APB2_BASE + 0x3C00)
-
+// SYSCFG
+#define EEL_SYSCFG_BASE       (EEL_APB2_BASE + 0x3800)
 

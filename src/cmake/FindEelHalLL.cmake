@@ -11,6 +11,7 @@ set(EelHalLL_SRCS
         rcc/rcc.cc
         usart/usart.cc
         exti/exti.cc
+        syscfg/syscfg.cc
         af_map.cc
    )
 

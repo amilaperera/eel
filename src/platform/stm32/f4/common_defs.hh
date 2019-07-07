@@ -28,6 +28,7 @@ enum class PullUpDown : eel::util::U8 { None = 0x00, Up, Down };
 enum class OutputSpeed : eel::util::U8 { Low = 0x00, Medium, Fast, High };
 enum class OutputType : eel::util::U8 { PushPull = 0x00, OpenDrain };
 enum class AfMode : eel::util::U8 {k0 = 0x00, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15};
+enum class PinInterrupt : eel::util::U8 { kRising, kFalling, kRisingFalling };
 
 enum class UsartPeripheral {
  kUsart1,

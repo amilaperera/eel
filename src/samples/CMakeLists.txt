@@ -10,6 +10,7 @@ if(EEL_F4_SAMPLES)
 
     # eel hal projects
     add_subdirectory(boards/stm32f446ze-nucleo/blinky)
+    add_subdirectory(boards/stm32f446ze-nucleo/gpio_interrupt)
     add_subdirectory(boards/stm32f446ze-nucleo/usart)
   endif()
   if(EEL_USE_OS_CHIBIOS)

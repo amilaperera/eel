@@ -5,6 +5,15 @@
 #include "hal/gpio.hh"
 
 namespace eel::hal {
+
+bool Gpio::IsInterruptSet(Pin pin) {
+  return ll::Gpio::IsInterruptSet(pin);
+}
+
+void Gpio::ClearInterrupt(Pin pin) {
+  ll::Gpio::ClearInterrupt(pin);
+}
+
 /**
  * @class Gpio
  * @example
@@ -20,6 +29,10 @@ void Gpio::ConfigureOutput(PullUpDown pud, OutputType type, OutputSpeed speed) {
 
 void Gpio::ConfigureInput(PullUpDown pud) {
   gpio_ll_.ConfigureInput(pud);
+}
+
+void Gpio::ConfigureInterrupt(PinInterrupt interrupt) {
+  gpio_ll_.ConfigureInterrupt(interrupt);
 }
 
 bool Gpio::Read() const {
@@ -47,6 +60,13 @@ Gpio & Gpio::operator=(int status) {
 
 void Gpio::Toggle() {
   gpio_ll_.Toggle();
+}
+
+void Gpio::EnableInterrupt(eel::util::U32 priority) {
+  gpio_ll_.EnableInterrupt(priority);
+}
+void Gpio::DisableInterrupt() {
+  gpio_ll_.DisableInterrupt();
 }
 
 }

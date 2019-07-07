@@ -2,15 +2,10 @@
 
 #include <util/types.hh>
 #include <util/preprocessor.hh>
+#include <platform/common_defs.hh>
 #include "platform/stm32/f4/memory_map.hh"
 
 namespace eel::hal::ll {
-enum class Trigger {
-  kRising,
-  kFalling,
-  kBoth
-};
-
 enum class ExtiLine : eel::util::U32 {
   kLine0,
   kLine1,
@@ -50,8 +45,8 @@ EEL_ALWAYS_INLINE auto ExtiReg() {
   return reinterpret_cast<ExtiRCB*>(EEL_EXTI_BASE);
 }
 
-class Exti {
-  static void SetTrigger(ExtiLine line, Trigger trigger);
+struct Exti {
+  static void SetTrigger(ExtiLine line, eel::hal::PinInterrupt trigger);
   static void Enable(ExtiLine line);
   static void Disable(ExtiLine line);
   static bool IsPending(ExtiLine line);

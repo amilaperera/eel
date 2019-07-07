@@ -67,6 +67,9 @@ EEL_ALWAYS_INLINE void SetAfMode(util::U32 port_base, util::U32 pin, AfMode af) 
 
 class Gpio {
  public:
+  static bool IsInterruptSet(Pin pin);
+  static void ClearInterrupt(Pin pin);
+
   explicit Gpio(Pin pin);
   void ConfigureOutput(PullUpDown pud, OutputType type, OutputSpeed speed);
   void ConfigureInput(PullUpDown pud);
@@ -76,6 +79,7 @@ class Gpio {
   void Write(bool status);
   bool Read() const;
   void Toggle();
+  void ConfigureInterrupt(eel::hal::PinInterrupt interrupt_event);
   void EnableInterrupt(eel::util::U32 priority);
   void DisableInterrupt();
 

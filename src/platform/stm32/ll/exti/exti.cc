@@ -11,16 +11,19 @@ using eel::util::U32;
 
 namespace eel::hal::ll {
 
-void Exti::SetTrigger(ExtiLine line, Trigger trigger) {
+void Exti::SetTrigger(ExtiLine line, eel::hal::PinInterrupt trigger) {
   auto n{static_cast<U32>(line)};
   switch (trigger) {
-    case Trigger::kFalling:ExtiReg()->FTSR = SetBit(ExtiReg()->FTSR, n);
+    case eel::hal::PinInterrupt::kFalling:
+      ExtiReg()->FTSR = SetBit(ExtiReg()->FTSR, n);
       ExtiReg()->RTSR = ClearBit(ExtiReg()->RTSR, n);
       break;
-    case Trigger::kRising:ExtiReg()->FTSR = ClearBit(ExtiReg()->FTSR, n);
+    case eel::hal::PinInterrupt::kRising:
+      ExtiReg()->FTSR = ClearBit(ExtiReg()->FTSR, n);
       ExtiReg()->RTSR = SetBit(ExtiReg()->RTSR, n);
       break;
-    case Trigger::kBoth:ExtiReg()->FTSR = SetBit(ExtiReg()->FTSR, n);
+    case eel::hal::PinInterrupt::kRisingFalling:
+      ExtiReg()->FTSR = SetBit(ExtiReg()->FTSR, n);
       ExtiReg()->RTSR = SetBit(ExtiReg()->RTSR, n);
       break;
   }

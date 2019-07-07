@@ -3,9 +3,19 @@
 //
 #include "platform/stm32/ll/gpio/gpio.hh"
 #include "platform/stm32/ll/rcc/rcc.hh"
+#include "platform/stm32/ll/exti/exti.hh"
+#include "platform/stm32/ll/syscfg/syscfg.hh"
 #include "util/types.hh"
 
 namespace eel::hal::ll {
+
+bool Gpio::IsInterruptSet(Pin pin) {
+  return Exti::IsPending(static_cast<ExtiLine>(pin));
+}
+
+void Gpio::ClearInterrupt(Pin pin) {
+  Exti::ClearPending(static_cast<ExtiLine>(pin));
+}
 
 Gpio::Gpio(Pin pin) : port_{static_cast<Port>(util::ToInt(pin) / 16)},
                                       pin_{util::ToInt(pin) % 16U} {
@@ -71,6 +81,12 @@ bool Gpio::Read() const {
 void Gpio::Toggle() {
   bool status = (GpioReg(port_base_)->ODR & (1U << pin_)) != 0;
   Write(!status);
+}
+
+void Gpio::ConfigureInterrupt(eel::hal::PinInterrupt interrupt_event) {
+  ll::Exti::SetTrigger(static_cast<ExtiLine>(pin_), interrupt_event);
+  ll::Exti::Enable(static_cast<ExtiLine>(pin_));
+  ll::SysCfg::SetExtiConfiguration(static_cast<ExtiLine>(pin_), port_);
 }
 
 void Gpio::EnableInterrupt(eel::util::U32 priority) {
