@@ -1,5 +1,4 @@
 #include "hal/cortex/sys_tick_timer.hh"
-#include "hal/cortex/lock.hh"
 #include "hal/gpio.hh"
 #include "hal/usart.hh"
 #include "util/streams/io_device_wrapper.hh"

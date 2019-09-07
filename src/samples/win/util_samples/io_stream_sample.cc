@@ -5,7 +5,6 @@
 #include "util/streams/io_device_wrapper.hh"
 #include "util/streams/io_stream.hh"
 #include "util/ports/pc/console_device.hh"
-#include <iostream>
 
 using namespace eel::util;
 
