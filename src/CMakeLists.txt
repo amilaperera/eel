@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
+project(eel)
 
 option(EEL_USE_OS_CHIBIOS "Use ChibiOS" OFF)
 option(EEL_USE_OS_NONE "Do not use an OS" ON)
