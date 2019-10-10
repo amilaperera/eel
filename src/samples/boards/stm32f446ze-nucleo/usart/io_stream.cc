@@ -26,17 +26,17 @@ int main() {
   serial.Configure(115200, WordLength::k8DataBits);
 
   // IO device from debug usart
-  auto io_device = eel::util::MakeIODevice(&serial);
+  auto io_device = eel::util::make_io_device(&serial);
   // Creating an IO stream from an IO device
   IOStream ios{&io_device};
 
   // some fun
-  ios << IOStream::Endl << "Serial echo server with IOStream" << IOStream::Endl;
-  ios << IOStream::Err << "This is an error....\r\n" << IOStream::NoErr;
-  ios << IOStream::Warn << "This is a warning....\r\n" << IOStream::NoWarn;
-  ios << IOStream::Info << "This is an info....\r\n" << IOStream::NoInfo;
-  ios << IOStream::Err << "This " << IOStream::Warn << "is a " << IOStream::Info << "mix" << IOStream::Reset
-      << IOStream::Endl;
+  ios << IOStream::endl << "Serial echo server with IOStream" << IOStream::endl;
+  ios << IOStream::error << "This is an error....\r\n" << IOStream::no_error;
+  ios << IOStream::warn << "This is a warning....\r\n" << IOStream::no_warn;
+  ios << IOStream::info << "This is an info....\r\n" << IOStream::no_info;
+  ios << IOStream::error << "This " << IOStream::warn << "is a " << IOStream::info << "mix" << IOStream::reset
+      << IOStream::endl;
 
   ios << "prompt > ";
 

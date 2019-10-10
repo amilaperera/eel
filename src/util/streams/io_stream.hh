@@ -35,28 +35,28 @@ class IOStream {
   IOStream& operator>>(char &ch);
 
   // Manipulators
-  static IOStream& Endl(IOStream &ios);
+  static IOStream& endl(IOStream &ios);
 
-  static IOStream& Red(IOStream& ios);
-  static IOStream& Green(IOStream& ios);
-  static IOStream& Yellow(IOStream& ios);
-  static IOStream& Blue(IOStream& ios);
-  static IOStream& Magenta(IOStream& ios);
-  static IOStream& Cyan(IOStream& ios);
-  static IOStream& White(IOStream& ios);
+  static IOStream& red(IOStream& ios);
+  static IOStream& green(IOStream& ios);
+  static IOStream& yellow(IOStream& ios);
+  static IOStream& blue(IOStream& ios);
+  static IOStream& magenta(IOStream& ios);
+  static IOStream& cyan(IOStream& ios);
+  static IOStream& white(IOStream& ios);
 
-  static IOStream& Err(IOStream &ios);
-  static IOStream& NoErr(IOStream &ios);
-  static IOStream& Warn(IOStream &ios);
-  static IOStream& NoWarn(IOStream &ios);
-  static IOStream& Info(IOStream &ios);
-  static IOStream& NoInfo(IOStream &ios);
-  static IOStream& Debug(IOStream &ios);
-  static IOStream& NoDebug(IOStream &ios);
-  static IOStream& Trace(IOStream &ios);
-  static IOStream& NoTrace(IOStream &ios);
+  static IOStream& error(IOStream &ios);
+  static IOStream& no_error(IOStream &ios);
+  static IOStream& warn(IOStream &ios);
+  static IOStream& no_warn(IOStream &ios);
+  static IOStream& info(IOStream &ios);
+  static IOStream& no_info(IOStream &ios);
+  static IOStream& debug(IOStream &ios);
+  static IOStream& no_debug(IOStream &ios);
+  static IOStream& trace(IOStream &ios);
+  static IOStream& no_trace(IOStream &ios);
 
-  static IOStream& Reset(IOStream &ios);
+  static IOStream& reset(IOStream &ios);
 };
 
 }

@@ -1,5 +1,7 @@
-#include <iostream>
-#include "util/os/task.hh"
+#include "util/os_wrapper/task.hh"
+#include "util/streams/io_device_wrapper.hh"
+#include "util/streams/io_stream.hh"
+#include "util/ports/pc/console_device.hh"
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,17 +15,24 @@ void vAssertCalled( unsigned long ulLine, const char * const pcFileName )
 
 using namespace eel::util;
 
-struct MyTask : os::TaskInterface {
-  MyTask() : TaskInterface{100, 100, "MyTask"} {}
+struct MyTask : os_wrapper::Task {
+  explicit MyTask(IOStream *s) : Task{100, 10, "MyTask"}, stream_{s} {}
   void run() override {
     for (;;) {
-      std::cout << "Task\n";
+      *stream_ << IOStream::blue << "Hi from thread\n" << IOStream::reset;
+      vTaskDelay(10);
     }
   }
+  IOStream *stream_;
 };
 
 int main() {
-  MyTask task;
+  ConsoleDevice console;
+  auto io_device = make_io_device(&console);
+  IOStream io_stream{&io_device};
+
+  io_stream << IOStream::yellow << "Basic task test\n" << IOStream::reset;
+  MyTask task{&io_stream};
   task.start();
-  os::start();
+  os_wrapper::start_scheduler();
 }

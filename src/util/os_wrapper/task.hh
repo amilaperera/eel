@@ -12,19 +12,25 @@ void task_func(void *arg);
 }
 #endif
 
-namespace eel::util::os {
+namespace eel::util::os_wrapper {
 
-inline void start() {
+inline void start_scheduler() {
   vTaskStartScheduler();
 }
 
-class TaskInterface {
+class Task {
  public:
-  TaskInterface(UBaseType_t priority, unsigned short stack_depth = configMINIMAL_STACK_SIZE, const char *n = "UnNamedTask") : task_handle_{}, priority_{priority}, stack_depth_{stack_depth}, name_{}  {
+  explicit Task(UBaseType_t priority,
+      unsigned short stack_depth = configMINIMAL_STACK_SIZE,
+      const char *n = "UnNamedTask") :
+    task_handle_{},
+    priority_{priority},
+    stack_depth_{stack_depth},
+    name_{}  {
     std::strncpy(name_, n, sizeof(name_) - 1);
   }
 
-  ~TaskInterface() {
+  ~Task() {
 #ifdef INCLUDE_vTaskDelete
     if (task_handle_) {
       vTaskDelete(task_handle_);
@@ -32,9 +38,17 @@ class TaskInterface {
 #endif
   }
 
+  Task(const Task&) = delete;
+  Task& operator=(const Task&) = delete;
+
   bool start() {
     return xTaskCreate(task_func, name_, stack_depth_, this, priority_, &task_handle_) == pdPASS;
   }
+
+  TaskHandle_t native_handle() {
+    return task_handle_;
+  }
+
   virtual void run() = 0;
 
  private:

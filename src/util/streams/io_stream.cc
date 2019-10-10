@@ -46,60 +46,60 @@ IOStream& IOStream::operator>>(char &ch) {
   return *this;
 }
 
-IOStream& IOStream::Endl(IOStream &ios) {
+IOStream& IOStream::endl(IOStream &ios) {
   ios << kCrLf;
   return ios;
 }
 
-IOStream& IOStream::Red(IOStream& ios) {
+IOStream& IOStream::red(IOStream& ios) {
   ios << kColorRed;
   return ios;
 }
 
-IOStream& IOStream::Green(IOStream& ios) {
+IOStream& IOStream::green(IOStream& ios) {
   ios << kColorGreen;
   return ios;
 }
 
-IOStream& IOStream::Yellow(IOStream& ios) {
+IOStream& IOStream::yellow(IOStream& ios) {
   ios << kColorYellow;
   return ios;
 }
 
-IOStream& IOStream::Blue(IOStream& ios) {
+IOStream& IOStream::blue(IOStream& ios) {
   ios << kColorBlue;
   return ios;
 }
 
-IOStream& IOStream::Magenta(IOStream& ios) {
+IOStream& IOStream::magenta(IOStream& ios) {
   ios << kColorMagenta;
   return ios;
 }
 
-IOStream& IOStream::Cyan(IOStream& ios) {
+IOStream& IOStream::cyan(IOStream& ios) {
   ios << kColorCyan;
   return ios;
 }
 
-IOStream& IOStream::White(IOStream& ios) {
+IOStream& IOStream::white(IOStream& ios) {
   ios << kColorWhite;
   return ios;
 }
 
-IOStream& IOStream::Reset(IOStream &ios) {
+IOStream& IOStream::reset(IOStream &ios) {
   ios << kColorReset;
   return ios;
 }
 
-IOStream& IOStream::Err(IOStream &ios) { return Red(ios); }
-IOStream& IOStream::NoErr(IOStream& ios) { return Reset(ios); }
-IOStream& IOStream::Warn(IOStream &ios) { return Yellow(ios); }
-IOStream& IOStream::NoWarn(IOStream &ios) { return Reset(ios); }
-IOStream& IOStream::Info(IOStream& ios) { return Cyan(ios); }
-IOStream& IOStream::NoInfo(IOStream &ios) { return Reset(ios); }
-IOStream& IOStream::Debug(IOStream& ios) { return Green(ios); }
-IOStream& IOStream::NoDebug(IOStream &ios) { return Reset(ios); }
-IOStream& IOStream::Trace(IOStream &ios) { return White(ios); }
-IOStream& IOStream::NoTrace(IOStream &ios) { return Reset(ios); }
+IOStream& IOStream::error(IOStream &ios) { return red(ios); }
+IOStream& IOStream::no_error(IOStream& ios) { return reset(ios); }
+IOStream& IOStream::warn(IOStream &ios) { return yellow(ios); }
+IOStream& IOStream::no_warn(IOStream &ios) { return reset(ios); }
+IOStream& IOStream::info(IOStream& ios) { return cyan(ios); }
+IOStream& IOStream::no_info(IOStream &ios) { return reset(ios); }
+IOStream& IOStream::debug(IOStream& ios) { return green(ios); }
+IOStream& IOStream::no_debug(IOStream &ios) { return reset(ios); }
+IOStream& IOStream::trace(IOStream &ios) { return white(ios); }
+IOStream& IOStream::no_trace(IOStream &ios) { return reset(ios); }
 
 }
