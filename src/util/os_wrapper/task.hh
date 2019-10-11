@@ -3,6 +3,7 @@
 #include <cstring>
 #include "ots/FreeRTOS/Source/include/FreeRTOS.h"
 #include "ots/FreeRTOS/Source/include/task.h"
+#include "util/os_wrapper/ticks.hh"
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,13 +14,33 @@ void task_func(void *arg);
 #endif
 
 namespace eel::util::os_wrapper {
+using literals::Ticks;
 
 inline void start_scheduler() {
   vTaskStartScheduler();
 }
 
+#ifdef INCLUDE_vTaskDelay
+inline void task_delay(Ticks ticks) {
+  vTaskDelay(ticks.ticks_);
+}
+
+inline void task_delay_until() {
+
+}
+#endif
+
+#ifdef INCLUDE_vTaskSuspend
+inline void suspend() {
+  // self-suspend
+  vTaskSuspend(0);
+}
+#endif
+
 class Task {
  public:
+  friend void ::task_func(void *);
+
   explicit Task(UBaseType_t priority,
       unsigned short stack_depth = configMINIMAL_STACK_SIZE,
       const char *n = "UnNamedTask") :
@@ -44,6 +65,16 @@ class Task {
   bool start() {
     return xTaskCreate(task_func, name_, stack_depth_, this, priority_, &task_handle_) == pdPASS;
   }
+
+#ifdef INCLUDE_vTaskSuspend
+  void suspend() {
+    vTaskSuspend(task_handle_);
+  }
+
+  void resume() {
+    vTaskResume(task_handle_);
+  }
+#endif
 
   TaskHandle_t native_handle() {
     return task_handle_;

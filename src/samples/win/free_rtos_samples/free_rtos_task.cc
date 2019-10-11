@@ -14,13 +14,14 @@ void vAssertCalled( unsigned long ulLine, const char * const pcFileName )
 #endif
 
 using namespace eel::util;
+using namespace eel::util::os_wrapper::literals;
 
 struct MyTask : os_wrapper::Task {
   explicit MyTask(IOStream *s) : Task{100, 10, "MyTask"}, stream_{s} {}
   void run() override {
     for (;;) {
       *stream_ << IOStream::blue << "Hi from thread\n" << IOStream::reset;
-      vTaskDelay(10);
+      os_wrapper::task_delay(1_s);
     }
   }
   IOStream *stream_;
