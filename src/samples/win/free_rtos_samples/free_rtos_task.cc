@@ -21,7 +21,7 @@ struct MyTask : os_wrapper::Task {
   void run() override {
     for (;;) {
       *stream_ << IOStream::blue << "Hi from thread\n" << IOStream::reset;
-      os_wrapper::task_delay(1_s);
+      os_wrapper::task_delay(100_ticks);
     }
   }
   IOStream *stream_;

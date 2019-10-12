@@ -14,7 +14,6 @@ void task_func(void *arg);
 #endif
 
 namespace eel::util::os_wrapper {
-using literals::Ticks;
 
 inline void start_scheduler() {
   vTaskStartScheduler();
