@@ -19,9 +19,11 @@ using namespace eel::util::os_wrapper::literals;
 struct MyTask : os_wrapper::Task {
   explicit MyTask(IOStream *s) : Task{100, 10, "MyTask"}, stream_{s} {}
   void run() override {
+    auto last_wakeup_time = os_wrapper::tick_count();
     for (;;) {
+      os_wrapper::task_delay_until(&last_wakeup_time, 1_s);
+      stream_->Print("tick_count: %u\n", last_wakeup_time);
       *stream_ << IOStream::blue << "Hi from thread\n" << IOStream::reset;
-      os_wrapper::task_delay(100_ticks);
     }
   }
   IOStream *stream_;
