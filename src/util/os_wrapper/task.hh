@@ -20,12 +20,13 @@ inline void start_scheduler() {
 }
 
 #ifdef INCLUDE_vTaskDelay
-inline void task_delay(Ticks ticks) {
-  vTaskDelay(ticks.ticks_);
+inline void task_delay(Ticks t) {
+  vTaskDelay(t.ticks_);
 }
+#endif
 
-inline void task_delay_until() {
-
+#ifdef INCLUDE_vTaskDelayUntil
+inline void task_delay_until(Ticks *prev_wake_time, Ticks time_increment) {
 }
 #endif
 
