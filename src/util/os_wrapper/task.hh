@@ -93,7 +93,7 @@ class Task {
 
 #ifdef INCLUDE_uxTaskPriorityGet
   UBaseType_t priority() const {
-    uxTaskPriorityGet(task_handle_);
+    return uxTaskPriorityGet(task_handle_);
   }
 #endif
 
