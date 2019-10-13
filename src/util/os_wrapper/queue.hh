@@ -8,7 +8,20 @@ namespace eel::util::os_wrapper {
 namespace detail {
 
 class QueueCommon {
-  protected:
+  public:
+  UBaseType_t messages_waiting() const {
+    return uxQueueMessagesWaiting(handle_);
+  }
+  UBaseType_t messages_waiting_from_isr() const {
+    return uxQueueMessagesWaitingFromISR(handle_);
+  }
+  UBaseType_t spaces_available() const {
+    return uxQueueSpacesAvailable(handle_);
+  }
+  void reset() {
+    xQueueReset(handle_);
+  }
+ protected:
   QueueCommon() : handle_{} {}
   QueueHandle_t handle_;
 };
@@ -28,10 +41,25 @@ struct QueueBase : public QueueCommon {
     return xQueueReceive(handle_, item, ticks_to_wait) == pdTRUE;
   }
   bool send_to_back_from_isr(const ItemType& item, bool* is_higher_priority_task_woken) {
-    return xQueueSendToBackFromISR(handle_, &item, is_higher_priority_task_woken) == pdPASS;
+    UBaseType_t is_woken{pdFALSE};
+    auto ret = xQueueSendToBackFromISR(handle_, &item, is_higher_priority_task_woken);
+    *is_higher_priority_task_woken = (is_woken == pdTRUE);
+    return ret == pdPASS;
   }
   bool send_to_front_from_isr(const ItemType& item, bool* is_higher_priority_task_woken) {
-    return xQueueSendToFrontFromISR(handle_, &item, is_higher_priority_task_woken) == pdPASS;
+    UBaseType_t is_woken{pdFALSE};
+    auto ret = xQueueSendToFrontFromISR(handle_, &item, &is_woken);
+    *is_higher_priority_task_woken = (is_woken == pdTRUE);
+    return ret == pdPASS;
+  }
+  bool over_write(const ItemType& item) {
+    return xQueueOverwrite(handle_, &item) == pdPASS;
+  }
+  bool over_write_from_isr(const ItemType& item, bool *is_higher_priority_task_woken) {
+    UBaseType_t is_woken{pdFALSE};
+    auto ret = xQueueOverwriteFromISR(handle_, &item, &is_woken) == pdPASS;
+    *is_higher_priority_task_woken = (is_woken == pdTRUE);
+    return ret == pdPASS;
   }
 };
 }
