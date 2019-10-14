@@ -15,7 +15,7 @@ void task_func(void *arg) {
   // If it ever returns here, the task should be deleted here i.e.
   // we don't need to wait until the destructor is called
   vTaskDelete(0); // self deletion
-  task->task_handle_ = {}; // this will avoid issues with subsequent destruction
+  task->handle_ = {}; // this will avoid issues with subsequent destruction
 #endif
 }
 #ifdef __cplusplus
