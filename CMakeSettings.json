@@ -1,0 +1,27 @@
+﻿{
+  "configurations": [
+    {
+      "name": "all-win-samples-x86-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x86" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "EnableRtos",
+          "value": "True",
+          "type": "BOOL"
+        },
+        {
+          "name": "EnableSamples",
+          "value": "true",
+          "type": "BOOL"
+        }
+      ]
+    }
+  ]
+}

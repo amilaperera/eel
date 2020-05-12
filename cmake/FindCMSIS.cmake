@@ -34,14 +34,14 @@ elseif(${STM32_FAMILY_UPPER} STREQUAL "F4")
 endif()
 
 # include dirs
-set(CMSIS_INCLUDE_DIRS ${CMAKE_CURRENT_LIST_DIR}/../ots/stm32_cube/common/CMSIS/Include)
+set(CMSIS_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/src/ots/stm32_cube/common/CMSIS/Include)
 set(CMSIS_INCLUDE_DIRS ${CMSIS_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_LIST_DIR}/../ots/stm32_cube/${STM32_FAMILY_LOWER}/CMSIS/Device/ST/STM32${STM32_FAMILY_UPPER}xx/Include)
+  ${CMAKE_SOURCE_DIR}/src/ots/stm32_cube/${STM32_FAMILY_LOWER}/CMSIS/Device/ST/STM32${STM32_FAMILY_UPPER}xx/Include)
 
 # export all the sources
 foreach(SRC ${CMSIS_DEVICE_SOURCES} ${CMSIS_STARTUP_SOURCE})
   find_file(FILE_${SRC} ${SRC}
-    PATHS ${CMAKE_CURRENT_LIST_DIR}/../ots/stm32_cube/${STM32_FAMILY_LOWER}/CMSIS/Device/ST/STM32${STM32_FAMILY_UPPER}xx
+    PATHS ${CMAKE_SOURCE_DIR}/src/ots/stm32_cube/${STM32_FAMILY_LOWER}/CMSIS/Device/ST/STM32${STM32_FAMILY_UPPER}xx
     PATH_SUFFIXES Source/Templates Source/Templates/gcc)
   list(APPEND CMSIS_SOURCES ${FILE_${SRC}})
 endforeach ()

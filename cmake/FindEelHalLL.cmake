@@ -2,9 +2,9 @@
 # according to the hal components that are requested by the
 # high level driver.
 # This cmake file is used by the high level EelHal package.
-set(EelHalLL_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+set(EelHalLL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src)
 
-set(EelHalLL_ROOT_PATH ${CMAKE_CURRENT_LIST_DIR}/../platform)
+set(EelHalLL_ROOT_PATH ${CMAKE_SOURCE_DIR}/src/platform)
 
 set(EelHalLL_SRCS
         gpio/gpio.cc

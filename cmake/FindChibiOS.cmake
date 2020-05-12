@@ -1,7 +1,7 @@
 # Select ChibiOS components.
 # Currently HAL & RT
 # TODO: NIL
-set(CHIBIOS_ROOT_PATH ${CMAKE_CURRENT_LIST_DIR}/../ots/ChibiOS_18.2.1)
+set(CHIBIOS_ROOT_PATH ${CMAKE_SOURCE_DIR}/src/ots/ChibiOS_18.2.1)
 
 if(NOT ChibiOS_FIND_COMPONENTS)
   set(ChibiOS_FIND_COMPONENTS HAL RT)
