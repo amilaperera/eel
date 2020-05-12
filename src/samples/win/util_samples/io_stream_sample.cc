@@ -9,22 +9,22 @@
 using namespace eel::utils;
 
 int main() {
-  ConsoleDevice console;
+  console_device console;
   auto io_device = make_io_device(&console);
-  IOStream io_stream{&io_device};
+  io_stream io_stream{&io_device};
   io_stream << "Test Program\n";
-  io_stream << IOStream::info << "This is an Info level log\n" << IOStream::no_info;
-  io_stream << IOStream::error << "This is an Error level log\n" << IOStream::no_error;
-  io_stream << IOStream::warn << "This is " << IOStream::trace
-            << "a multi-colored " << IOStream::info << "log " << IOStream::error
-            << "line\n" << IOStream::trace << "Have a good day\n" << IOStream::debug << "Bye!!!\n" << IOStream::reset;
+  io_stream << io_stream::info << "This is an Info level log\n" << io_stream::no_info;
+  io_stream << io_stream::error << "This is an Error level log\n" << io_stream::no_error;
+  io_stream << io_stream::warn << "This is " << io_stream::trace
+            << "a multi-colored " << io_stream::info << "log " << io_stream::error
+            << "line\n" << io_stream::trace << "Have a good day\n" << io_stream::debug << "Bye!!!\n" << io_stream::reset;
 
-  io_stream << IOStream::red << "This is a red line\n";
-  io_stream << IOStream::blue << "This is a blue line\n";
-  io_stream << IOStream::yellow << "This is a yellow line\n";
-  io_stream << IOStream::green << "This is a green line\n";
-  io_stream << IOStream::cyan << "This is a cyan line\n";
-  io_stream << IOStream::magenta << "This is a magenta line\n";
-  io_stream << IOStream::white << "This is a white line\n";
+  io_stream << io_stream::red << "This is a red line\n";
+  io_stream << io_stream::blue << "This is a blue line\n";
+  io_stream << io_stream::yellow << "This is a yellow line\n";
+  io_stream << io_stream::green << "This is a green line\n";
+  io_stream << io_stream::cyan << "This is a cyan line\n";
+  io_stream << io_stream::magenta << "This is a magenta line\n";
+  io_stream << io_stream::white << "This is a white line\n";
   return 0;
 }

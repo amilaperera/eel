@@ -52,11 +52,11 @@ inline void set_priority(UBaseType_t new_value) {
 }
 #endif
 
-class Task {
+class task {
  public:
   friend void ::task_func(void *);
 
-  explicit Task(UBaseType_t priority,
+  explicit task(UBaseType_t priority,
       unsigned short stack_depth = configMINIMAL_STACK_SIZE,
       const char *name = "UnNamedTask") :
       handle_{} {
@@ -64,7 +64,7 @@ class Task {
     auto ret = xTaskCreate(task_func, name, stack_depth, this, priority, &handle_);
   }
 
-  ~Task() {
+  ~task() {
 #ifdef INCLUDE_vTaskDelete
     if (handle_) {
       vTaskDelete(handle_);
@@ -72,8 +72,8 @@ class Task {
 #endif
   }
 
-  Task(const Task&) = delete;
-  Task& operator=(const Task&) = delete;
+  task(const task&) = delete;
+  task& operator=(const task&) = delete;
   // TODO: can make it movable
 
 #ifdef INCLUDE_vTaskSuspend

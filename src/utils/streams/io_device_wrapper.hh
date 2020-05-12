@@ -4,7 +4,7 @@
 namespace eel::utils {
 
 template <typename T>
-class IODeviceWrapper : public IODeviceInterface {
+class IODeviceWrapper : public io_device_interface {
  public:
   explicit IODeviceWrapper(T *d) : device_{d} {}
   void Write(const U8 *buffer, U32 size) override {

@@ -3,7 +3,7 @@
 
 namespace eel::utils {
 
-class IODeviceInterface {
+class io_device_interface {
  public:
   virtual void Write(const U8 *buffer, U32 size) = 0;
   virtual void Read(U8 *buffer, U32 size) = 0;

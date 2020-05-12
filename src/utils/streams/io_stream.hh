@@ -4,13 +4,13 @@
 
 namespace eel::utils {
 
-class IODeviceInterface;
+class io_device_interface;
 
-class IOStream {
+class io_stream {
  private:
   // private type aliasing
-  using Manipulator = IOStream& (*)(IOStream&);
-  IODeviceInterface *io_device_;
+  using Manipulator = io_stream& (*)(io_stream&);
+  io_device_interface *io_device_;
   static constexpr std::size_t kMaxPrintBufferSize{128 + 1};
   static constexpr const char* kCrLf = "\r\n";
   static constexpr const char* kColorRed = "\033[31m";
@@ -23,40 +23,40 @@ class IOStream {
   static constexpr const char* kColorReset = "\033[0m";
 
  public:
-  explicit IOStream(IODeviceInterface *io_device);
-  void Print(const char *fmt, ...);
+  explicit io_stream(io_device_interface *io_device);
+  void print(const char *fmt, ...);
   // stream insertion
-  IOStream& operator<<(const char *str);
-  IOStream& operator<<(char ch);
-  IOStream& operator<<(bool b);
-  IOStream& operator<<(Manipulator manip);
+  io_stream& operator<<(const char *str);
+  io_stream& operator<<(char ch);
+  io_stream& operator<<(bool b);
+  io_stream& operator<<(Manipulator manip);
 
   // stream extraction
-  IOStream& operator>>(char &ch);
+  io_stream& operator>>(char &ch);
 
   // Manipulators
-  static IOStream& endl(IOStream &ios);
+  static io_stream& endl(io_stream &ios);
 
-  static IOStream& red(IOStream& ios);
-  static IOStream& green(IOStream& ios);
-  static IOStream& yellow(IOStream& ios);
-  static IOStream& blue(IOStream& ios);
-  static IOStream& magenta(IOStream& ios);
-  static IOStream& cyan(IOStream& ios);
-  static IOStream& white(IOStream& ios);
+  static io_stream& red(io_stream& ios);
+  static io_stream& green(io_stream& ios);
+  static io_stream& yellow(io_stream& ios);
+  static io_stream& blue(io_stream& ios);
+  static io_stream& magenta(io_stream& ios);
+  static io_stream& cyan(io_stream& ios);
+  static io_stream& white(io_stream& ios);
 
-  static IOStream& error(IOStream &ios);
-  static IOStream& no_error(IOStream &ios);
-  static IOStream& warn(IOStream &ios);
-  static IOStream& no_warn(IOStream &ios);
-  static IOStream& info(IOStream &ios);
-  static IOStream& no_info(IOStream &ios);
-  static IOStream& debug(IOStream &ios);
-  static IOStream& no_debug(IOStream &ios);
-  static IOStream& trace(IOStream &ios);
-  static IOStream& no_trace(IOStream &ios);
+  static io_stream& error(io_stream &ios);
+  static io_stream& no_error(io_stream &ios);
+  static io_stream& warn(io_stream &ios);
+  static io_stream& no_warn(io_stream &ios);
+  static io_stream& info(io_stream &ios);
+  static io_stream& no_info(io_stream &ios);
+  static io_stream& debug(io_stream &ios);
+  static io_stream& no_debug(io_stream &ios);
+  static io_stream& trace(io_stream &ios);
+  static io_stream& no_trace(io_stream &ios);
 
-  static IOStream& reset(IOStream &ios);
+  static io_stream& reset(io_stream &ios);
 };
 
 }

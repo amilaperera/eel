@@ -6,7 +6,7 @@
 #include "utils/types.hh"
 
 namespace eel::utils {
-struct ConsoleDevice {
+struct console_device {
   void Write(const eel::utils::U8 *buffer, eel::utils::U32 size);
   void Read(eel::utils::U8 *buffer, eel::utils::U32 size);
 };

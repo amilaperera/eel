@@ -7,7 +7,7 @@
 namespace eel::utils::os_wrapper {
 namespace detail {
 
-class QueueCommon {
+class queue_common {
  public:
   [[nodiscard]]
   UBaseType_t messages_waiting() const {
@@ -25,16 +25,16 @@ class QueueCommon {
     xQueueReset(handle_);
   }
 
-  QueueCommon(const QueueCommon&) = delete;
-  QueueCommon& operator=(const QueueCommon&) = delete;
+  queue_common(const queue_common&) = delete;
+  queue_common& operator=(const queue_common&) = delete;
   // TODO: Can make movable
  protected:
-  QueueCommon() : handle_{} {}
+  queue_common() : handle_{} {}
   QueueHandle_t handle_;
 };
 
 template <typename ItemType>
-struct QueueBase : public QueueCommon {
+struct queue_base : public queue_common {
  public:
   using Type = ItemType;
 
@@ -75,20 +75,20 @@ struct QueueBase : public QueueCommon {
     return ret == pdPASS;
   }
  protected:
-  QueueBase() : QueueCommon{} {}
+  queue_base() : queue_common{} {}
 };
 }
 
 template <typename ItemType, size_t Size>
-class Queue : public detail::QueueBase<ItemType> {
+class queue : public detail::queue_base<ItemType> {
   public:
   static_assert(std::is_trivially_copyable_v<ItemType>, "ItemType must be trivially copyable");
-  Queue() : QueueBase{} {
+  queue() : queue_base{} {
     // TODO: configSUPPORT_DYNAMIC_ALLOCATION must be set to 1
     // return should be hooked to assert
     handle_ = xQueueCreate(Size, sizeof(ItemType));
   }
-  ~Queue() {
+  ~queue() {
     if (handle_) {
       vQueueDelete(handle_);
     }

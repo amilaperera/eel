@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 void task_func(void *arg) {
-  auto *task = reinterpret_cast<eel::utils::os_wrapper::Task *>(arg);
+  auto *task = reinterpret_cast<eel::utils::os_wrapper::task *>(arg);
   task->run();
 #ifdef INCLUDE_vTaskDelete
   // Ideally Task::run() should never return.
