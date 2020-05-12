@@ -1,7 +1,7 @@
 #pragma once
 #include "ots/FreeRTOS/Source/include/FreeRTOS.h"
 
-namespace eel::util::os_wrapper {
+namespace eel::utils::os_wrapper {
 
 constexpr TickType_t max_ticks() {
   return portMAX_DELAY;

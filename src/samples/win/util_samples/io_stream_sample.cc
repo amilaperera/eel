@@ -6,7 +6,7 @@
 #include "utils/streams/io_stream.hh"
 #include "utils/ports/pc/console_device.hh"
 
-using namespace eel::util;
+using namespace eel::utils;
 
 int main() {
   ConsoleDevice console;

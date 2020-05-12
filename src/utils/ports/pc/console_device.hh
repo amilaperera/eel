@@ -5,10 +5,10 @@
 #pragma once
 #include "utils/types.hh"
 
-namespace eel::util {
+namespace eel::utils {
 struct ConsoleDevice {
-  void Write(const eel::util::U8 *buffer, eel::util::U32 size);
-  void Read(eel::util::U8 *buffer, eel::util::U32 size);
+  void Write(const eel::utils::U8 *buffer, eel::utils::U32 size);
+  void Read(eel::utils::U8 *buffer, eel::utils::U32 size);
 };
 }
 

@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <type_traits>
 
-namespace eel::util {
+namespace eel::utils {
 using U32 = std::uint32_t;
 using IO_U32 = volatile U32;
 

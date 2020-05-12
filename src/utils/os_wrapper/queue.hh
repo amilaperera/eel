@@ -4,7 +4,7 @@
 #include "ots/FreeRTOS/Source/include/queue.h"
 #include <type_traits>
 
-namespace eel::util::os_wrapper {
+namespace eel::utils::os_wrapper {
 namespace detail {
 
 class QueueCommon {

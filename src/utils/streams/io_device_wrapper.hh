@@ -1,7 +1,7 @@
 #pragma once
 #include "utils/streams/io_device_interface.hh"
 
-namespace eel::util {
+namespace eel::utils {
 
 template <typename T>
 class IODeviceWrapper : public IODeviceInterface {
@@ -20,7 +20,7 @@ class IODeviceWrapper : public IODeviceInterface {
 
 template <typename T>
 auto make_io_device(T *device) {
-  return eel::util::IODeviceWrapper<T>(device);
+  return eel::utils::IODeviceWrapper<T>(device);
 }
 
 

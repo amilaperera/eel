@@ -13,7 +13,7 @@ void task_func(void *arg);
 }
 #endif
 
-namespace eel::util::os_wrapper {
+namespace eel::utils::os_wrapper {
 
 inline void start_scheduler() {
   vTaskStartScheduler();

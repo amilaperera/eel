@@ -7,7 +7,7 @@
 #include <cstdarg>
 #include <cstdio>
 
-namespace eel::util {
+namespace eel::utils {
 
 IOStream::IOStream(IODeviceInterface *io_device) : io_device_{io_device} {
 }

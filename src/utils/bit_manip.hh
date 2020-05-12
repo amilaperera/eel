@@ -2,7 +2,7 @@
 
 #include "utils/types.hh"
 
-namespace eel::util {
+namespace eel::utils {
 constexpr U8 kBit0 = (1UL << 0);
 constexpr U8 kBit1 = (1UL << 1);
 constexpr U8 kBit2 = (1UL << 2);
@@ -37,27 +37,27 @@ constexpr U32 kBit30 = (1UL << 30);
 constexpr U32 kBit31 = (1UL << 31);
 
 template <typename T>
-constexpr auto SetBit(T val, eel::util::U32 n) {
+constexpr auto SetBit(T val, eel::utils::U32 n) {
   return val | (1UL << n);
 }
 
 template <typename T>
-constexpr auto ClearBit(T val, eel::util::U32 n) {
+constexpr auto ClearBit(T val, eel::utils::U32 n) {
   return val & ~(1UL << n);
 }
 
 template <typename T>
-constexpr auto SetOrClearBit(bool status, T val, eel::util::U32 n) {
+constexpr auto SetOrClearBit(bool status, T val, eel::utils::U32 n) {
   return status ? (val | (1UL << n)) : (val & ~(1UL << n));
 }
 
 template <typename T>
-constexpr bool IsSet(T val, eel::util::U32 n) {
+constexpr bool IsSet(T val, eel::utils::U32 n) {
   return (val & (1UL << n)) != 0;
 }
 
 template <typename T>
-constexpr bool IsClear(T val, eel::util::U32 n) {
+constexpr bool IsClear(T val, eel::utils::U32 n) {
   return (val & (1UL << n)) == 0;
 }
 }

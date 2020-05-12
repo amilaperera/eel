@@ -2,7 +2,7 @@
 #include <utility>
 #include <type_traits>
 
-namespace eel::util {
+namespace eel::utils {
 
 template <typename T1, typename T2>
 struct Pair {

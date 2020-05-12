@@ -2,7 +2,7 @@
 #include <cstddef>
 #include "utils/types.hh"
 
-namespace eel::util {
+namespace eel::utils {
 
 class IODeviceInterface;
 

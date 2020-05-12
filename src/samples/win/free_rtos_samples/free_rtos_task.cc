@@ -14,8 +14,8 @@ void vAssertCalled( unsigned long ulLine, const char * const pcFileName )
 }
 #endif
 
-using namespace eel::util;
-using namespace eel::util::os_wrapper::literals;
+using namespace eel::utils;
+using namespace eel::utils::os_wrapper::literals;
 
 using MyQueue = os_wrapper::Queue<size_t, 10>;
 
