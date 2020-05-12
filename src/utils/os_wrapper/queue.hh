@@ -3,6 +3,7 @@
 #include "ots/FreeRTOS/Source/include/FreeRTOS.h"
 #include "ots/FreeRTOS/Source/include/queue.h"
 #include <type_traits>
+#include "utils/os_wrapper/free_rtos_types.hh"
 
 namespace eel::utils::os_wrapper {
 namespace detail {
@@ -10,15 +11,15 @@ namespace detail {
 class queue_common {
  public:
   [[nodiscard]]
-  UBaseType_t messages_waiting() const {
+  base_t messages_waiting() const {
     return uxQueueMessagesWaiting(handle_);
   }
   [[nodiscard]]
-  UBaseType_t messages_waiting_from_isr() const {
+  base_t messages_waiting_from_isr() const {
     return uxQueueMessagesWaitingFromISR(handle_);
   }
   [[nodiscard]]
-  UBaseType_t spaces_available() const {
+  base_t spaces_available() const {
     return uxQueueSpacesAvailable(handle_);
   }
   void reset() {
@@ -36,29 +37,29 @@ class queue_common {
 template <typename ItemType>
 struct queue_base : public queue_common {
  public:
-  using Type = ItemType;
+  using item_type = ItemType;
 
-  bool send_to_back(const ItemType& item, TickType_t ticks_to_wait = max_ticks()) {
+  bool send_to_back(const ItemType& item, tick_t ticks_to_wait = max_ticks()) {
     return xQueueSendToBack(handle_, &item, ticks_to_wait) == pdTRUE;
   }
 
-  bool send_to_front(const ItemType& item, TickType_t ticks_to_wait = max_ticks()) {
+  bool send_to_front(const ItemType& item, tick_t ticks_to_wait = max_ticks()) {
     return xQueueSendToFront(handle_, &item, ticks_to_wait) == pdTRUE;
   }
 
-  bool receive(ItemType* item, TickType_t ticks_to_wait = max_ticks()) {
+  bool receive(ItemType* item, tick_t ticks_to_wait = max_ticks()) {
     return xQueueReceive(handle_, item, ticks_to_wait) == pdTRUE;
   }
 
   bool send_to_back_from_isr(const ItemType& item, bool* is_higher_priority_task_woken) {
-    UBaseType_t is_woken{pdFALSE};
+    base_t is_woken{pdFALSE};
     auto ret = xQueueSendToBackFromISR(handle_, &item, is_higher_priority_task_woken);
     *is_higher_priority_task_woken = (is_woken == pdTRUE);
     return ret == pdPASS;
   }
 
   bool send_to_front_from_isr(const ItemType& item, bool* is_higher_priority_task_woken) {
-    UBaseType_t is_woken{pdFALSE};
+    base_t is_woken{pdFALSE};
     auto ret = xQueueSendToFrontFromISR(handle_, &item, &is_woken);
     *is_higher_priority_task_woken = (is_woken == pdTRUE);
     return ret == pdPASS;
@@ -69,7 +70,7 @@ struct queue_base : public queue_common {
   }
 
   bool over_write_from_isr(const ItemType& item, bool *is_higher_priority_task_woken) {
-    UBaseType_t is_woken{pdFALSE};
+    base_t is_woken{pdFALSE};
     auto ret = xQueueOverwriteFromISR(handle_, &item, &is_woken) == pdPASS;
     *is_higher_priority_task_woken = (is_woken == pdTRUE);
     return ret == pdPASS;

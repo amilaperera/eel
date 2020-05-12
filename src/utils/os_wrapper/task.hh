@@ -4,6 +4,7 @@
 #include "ots/FreeRTOS/Source/include/FreeRTOS.h"
 #include "ots/FreeRTOS/Source/include/task.h"
 #include "utils/os_wrapper/ticks.hh"
+#include "utils/os_wrapper/free_rtos_types.hh"
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,13 +21,13 @@ inline void start_scheduler() {
 }
 
 #ifdef INCLUDE_vTaskDelay
-inline void task_delay(TickType_t t) {
+inline void task_delay(tick_t t) {
   vTaskDelay(t);
 }
 #endif
 
 #ifdef INCLUDE_vTaskDelayUntil
-inline void task_delay_until(TickType_t *prev_wakeup_time, TickType_t time_increment) {
+inline void task_delay_until(tick_t *prev_wakeup_time, tick_t time_increment) {
   vTaskDelayUntil(prev_wakeup_time, time_increment);
 }
 #endif
@@ -39,14 +40,14 @@ inline void suspend() {
 #endif
 
 #ifdef INCLUDE_uxTaskPriorityGet
-inline UBaseType_t priority() {
+inline base_t priority() {
   // get priority of the calling task
   return uxTaskPriorityGet(0);
 }
 #endif
 
 #ifdef INCLUDE_vTaskPrioritySet
-inline void set_priority(UBaseType_t new_value) {
+inline void set_priority(base_t new_value) {
   // set priority of the calling task
   vTaskPrioritySet(0, new_value);
 }
@@ -56,7 +57,7 @@ class task {
  public:
   friend void ::task_func(void *);
 
-  explicit task(UBaseType_t priority,
+  explicit task(base_t priority,
       unsigned short stack_depth = configMINIMAL_STACK_SIZE,
       const char *name = "UnNamedTask") :
       handle_{} {
@@ -88,13 +89,13 @@ class task {
 
 #ifdef INCLUDE_uxTaskPriorityGet
   [[nodiscard]]
-  UBaseType_t priority() const {
+  base_t priority() const {
     return uxTaskPriorityGet(handle_);
   }
 #endif
 
 #ifdef INCLUDE_vTaskPrioritySet
-  void set_priority(UBaseType_t new_value) {
+  void set_priority(base_t new_value) {
     vTaskPrioritySet(handle_, new_value);
   }
 #endif

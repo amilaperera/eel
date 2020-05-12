@@ -13,7 +13,7 @@ using U8 = std::uint8_t;
 using IO_U8 = volatile U8;
 
 template <typename E>
-constexpr auto ToInt(E e) {
+constexpr auto to_integral(E e) {
   return static_cast<typename std::underlying_type<E>::type>(e);
 }
 

@@ -38,7 +38,7 @@ struct recv_task : os_wrapper::task {
   explicit recv_task(io_stream *s, my_queue *queue) : task{100, 11, "recv_task"}, stream_{s}, queue_{queue} {}
   void run() override {
     for (;;) {
-      my_queue::Type item{};
+      my_queue::item_type item{};
       queue_->receive(&item);
       stream_->print("Item received by Receiving task: %u\n", item);
     }
