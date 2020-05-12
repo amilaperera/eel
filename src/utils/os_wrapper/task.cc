@@ -2,7 +2,7 @@
 // Created by Amila Perera on 9/10/2019.
 //
 
-#include "util/os_wrapper/task.hh"
+#include "utils/os_wrapper/task.hh"
 
 #ifdef __cplusplus
 extern "C" {

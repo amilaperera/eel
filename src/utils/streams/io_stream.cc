@@ -1,8 +1,8 @@
 //
 // Created by Amila Perera on 12/03/2019.
 //
-#include "util/streams/io_stream.hh"
-#include "util/streams/io_device_interface.hh"
+#include "utils/streams/io_stream.hh"
+#include "utils/streams/io_device_interface.hh"
 #include <cstring>
 #include <cstdarg>
 #include <cstdio>

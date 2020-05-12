@@ -3,7 +3,7 @@
 #include <cstring>
 #include "ots/FreeRTOS/Source/include/FreeRTOS.h"
 #include "ots/FreeRTOS/Source/include/task.h"
-#include "util/os_wrapper/ticks.hh"
+#include "utils/os_wrapper/ticks.hh"
 
 #ifdef __cplusplus
 extern "C" {

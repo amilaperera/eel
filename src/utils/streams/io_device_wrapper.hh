@@ -1,5 +1,5 @@
 #pragma once
-#include "util/streams/io_device_interface.hh"
+#include "utils/streams/io_device_interface.hh"
 
 namespace eel::util {
 
