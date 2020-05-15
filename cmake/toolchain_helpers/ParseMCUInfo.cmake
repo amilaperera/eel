@@ -72,14 +72,14 @@ function(ParseStm32McuInfo)
 
       set(EEL_MCU_NAME ${STM32_FAMILY_UPPER}${STM32_DEV_NUM_LAST_2_DIGITS}${STM32_DEV_LETTERS_UPPER})
       set(EEL_MCU_NAME_XX ${STM32_FAMILY_UPPER}${STM32_DEV_NUM_LAST_2_DIGITS}XX)
-      CreateConfigurationFile()
+      #CreateConfigurationFile()
     endif ()
   endif ()
 endfunction()
 
 # MCU particular linker script paths
-set(STM32F1_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../ots/stm32_cube/f1/linker_scripts)
-set(STM32F4_LINKER_SCRIPTS_PATH ${CMAKE_CURRENT_LIST_DIR}/../../ots/stm32_cube/f4/linker_scripts)
+set(STM32F1_LINKER_SCRIPTS_PATH ${CMAKE_SOURCE_DIR}/src/ots/stm32_cube/f1/linker_scripts)
+set(STM32F4_LINKER_SCRIPTS_PATH ${CMAKE_SOURCE_DIR}/src/ots/stm32_cube/f4/linker_scripts)
 
 function(CreateConfigurationFile)
   configure_file(${CMAKE_CURRENT_LIST_DIR}/../../hal/config.hh.in config.hh)

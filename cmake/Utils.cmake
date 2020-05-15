@@ -27,7 +27,7 @@ function(EelSetTargetProperties Target)
     # NOTE: --defsym=<symbol=expression>
     #         Creates a global symbol in the output file
     set_target_properties(${Target} PROPERTIES LINK_FLAGS "-mcpu=${CPU_FLAG} -mthumb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -flto -nostartfiles -Wl,-Map=project.map,--cref,--no-warn-mismatch,--library-path=${ChibiOS_LINKER_PATH},--script=${ChibiOS_LINKER_SCRIPT},--gc-sections,--defsym=__process_stack_size__=0x400,--defsym=__main_stack_size__=0x400")
-  elseif(EEL_USE_OS_NONE)
+  elseif(NOT EnableRtos)
     set_target_properties(${Target} PROPERTIES LINK_FLAGS "-mcpu=${CPU_FLAG} -mthumb -specs=nano.specs -specs=nosys.specs -T${EEL_LINKER_SCRIPT} -lc -Wl,--gc-sections")
   endif()
 endfunction()
@@ -61,7 +61,7 @@ function(SetTargetProperties Target)
     # NOTE: --defsym=<symbol=expression>
     #         Creates a global symbol in the output file
     set_target_properties(${Target} PROPERTIES LINK_FLAGS "-mcpu=${CPU_FLAG} -mthumb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -flto -nostartfiles -Wl,-Map=project.map,--cref,--no-warn-mismatch,--library-path=${ChibiOS_LINKER_PATH},--script=${ChibiOS_LINKER_SCRIPT},--gc-sections,--defsym=__process_stack_size__=0x400,--defsym=__main_stack_size__=0x400")
-  elseif(EEL_USE_OS_NONE)
+  elseif(NOT EnableRtos)
     set_target_properties(${Target} PROPERTIES LINK_FLAGS "-mcpu=${CPU_FLAG} -mthumb -specs=nano.specs -T${EEL_LINKER_SCRIPT} -lc -lm -lnosys -Wl,--gc-sections")
   endif()
 endfunction()
