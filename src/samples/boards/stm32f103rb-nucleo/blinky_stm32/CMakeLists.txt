@@ -1,4 +1,4 @@
-project(blinky C CXX ASM)
+project(blinky_stm32 C CXX ASM)
 include(Utils)
 
 find_package(STM32HAL COMPONENTS gpio REQUIRED)
