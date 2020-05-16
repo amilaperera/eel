@@ -92,9 +92,9 @@ endforeach()
 # Set linker path and linker script
 set(ChibiOS_LINKER_PATH ${CHIBIOS_ROOT_PATH}/os/common/startup/ARMCMx/compilers/GCC/ld CACHE INTERNAL "linker script path")
 # Set ChibiOS linker script
-if("${EEL_MCU}" MATCHES "[sS][tT][mM]32[fF]103[rR][bB]")
+if("${EelMcu}" MATCHES "[sS][tT][mM]32[fF]103[rR][bB]")
   # TODO: set
-elseif("${EEL_MCU}" MATCHES "[sS][tT][mM]32[fF]446[zZ][eE]")
+elseif("${EelMcu}" MATCHES "[sS][tT][mM]32[fF]446[zZ][eE]")
   set(ChibiOS_LINKER_SCRIPT ${ChibiOS_LINKER_PATH}/STM32F446xE.ld CACHE INTERNAL "linker script")
 endif()
 

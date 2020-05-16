@@ -1,0 +1,4 @@
+#pragma once
+
+#define EEL_@EelMcuName@
+#define EEL_@EelMcuNameXX@
