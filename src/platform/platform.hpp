@@ -6,6 +6,7 @@
 #include "platform/eel_config.hpp"
 
 #if defined(EEL_STM32F446XX)
+#include "ots/stm32_cube/f4/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
 #include "platform/stm32/common.hpp"
 #endif
 

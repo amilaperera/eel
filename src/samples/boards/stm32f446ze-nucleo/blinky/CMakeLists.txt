@@ -5,10 +5,6 @@ find_package(STM32HAL COMPONENTS gpio REQUIRED)
 find_package(CMSIS REQUIRED)
 find_package(OpenOCD REQUIRED)
 
-#include_directories(${CMAKE_SOURCE_DIR} ${CMSIS_INCLUDE_DIRS}
-#        ${STM32HAL_INCLUDE_DIR}
-#        ${CMAKE_CURRENT_SOURCE_DIR}/config)
-
 add_executable(${PROJECT_NAME}.elf
         main.cpp
         ${STM32HAL_SOURCES}
@@ -16,7 +12,6 @@ add_executable(${PROJECT_NAME}.elf
         config/stm32f4xx_it.c
         config/stm32f4xx_hal_msp.c)
 target_include_directories(${PROJECT_NAME}.elf PRIVATE ${CMAKE_SOURCE_DIR}/src ${CMSIS_INCLUDE_DIRS} ${STM32HAL_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/config)
-message(STATUS "inc: ${CMAKE_SOURCE_DIR}")
 
 SetTargetProperties(${PROJECT_NAME}.elf)
 ADD_POST_BUILD_COPY(${PROJECT_NAME})
