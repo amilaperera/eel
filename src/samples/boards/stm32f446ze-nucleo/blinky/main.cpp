@@ -1,28 +1,22 @@
-#include "hal/cortex/sys_tick_timer.hh"
-#include "hal/cortex/lock.hh"
-#include "hal/gpio.hh"
-
-using eel::hal::Pin;
-using eel::hal::PinMode;
-using eel::hal::PullUpDown;
-using eel::hal::OutputType;
-using eel::hal::OutputSpeed;
+#include "hal/hal.hpp"
 
 int main() {
-  // tick per 1ms
-  eel::hal::SysTickTimer::enable<eel::hal::SysTickTimer::Frequency::k1kHz, 0xf>();
+  eel::init();
+  __GPIOB_CLK_ENABLE();
+  GPIO_InitTypeDef GPIO_InitStructure;
 
-  // output pin
-  eel::hal::Gpio pin{Pin::B7};
-  pin.ConfigureOutput(PullUpDown::None, OutputType::PushPull, OutputSpeed::High);
-  pin.Write(false);
+  GPIO_InitStructure.Pin = GPIO_PIN_7;
+
+  GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStructure.Speed = GPIO_SPEED_HIGH;
+  GPIO_InitStructure.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
 
   for (;;) {
-    {
-      eel::hal::Lock lk;
-      pin.Toggle();
-    }
-    eel::hal::Tick::delay(500);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
+    HAL_Delay(500);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_RESET);
+    HAL_Delay(500);
   }
 }
 

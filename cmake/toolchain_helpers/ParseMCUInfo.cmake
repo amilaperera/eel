@@ -82,8 +82,8 @@ set(STM32F1_LINKER_SCRIPTS_PATH ${CMAKE_SOURCE_DIR}/src/ots/stm32_cube/f1/linker
 set(STM32F4_LINKER_SCRIPTS_PATH ${CMAKE_SOURCE_DIR}/src/ots/stm32_cube/f4/linker_scripts)
 
 function(CreateConfigurationFile)
-  configure_file(${CMAKE_SOURCE_DIR}/src/hal/config.hh.in config.hh)
-  FILE(COPY ${CMAKE_BINARY_DIR}/config.hh DESTINATION ${CMAKE_SOURCE_DIR}/src/hal)
+  configure_file(${CMAKE_SOURCE_DIR}/src/platform/eel_config.hpp.in eel_config.hpp)
+  FILE(COPY ${CMAKE_BINARY_DIR}/eel_config.hpp DESTINATION ${CMAKE_SOURCE_DIR}/src/platform)
 endfunction()
 
 # Set linker script

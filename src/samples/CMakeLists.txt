@@ -15,6 +15,9 @@ elseif (${EelMcuName} MATCHES STM32F446ZE)
       add_subdirectory(boards/stm32f446ze-nucleo/gpio_interrupt_stm32)
       add_subdirectory(boards/stm32f446ze-nucleo/usart_stm32)
 
+      # eel projects
+      add_subdirectory(boards/stm32f446ze-nucleo/blinky)
+
       # eel hal projects
       # add_subdirectory(boards/stm32f446ze-nucleo/blinky)
       # add_subdirectory(boards/stm32f446ze-nucleo/gpio_interrupt)

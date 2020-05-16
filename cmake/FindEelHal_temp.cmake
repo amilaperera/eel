@@ -1,5 +1,5 @@
 # TODO: Conditional enabling of platform specific drivers
-# TODO: Conditional enabling of hal parts eg: gpio, rcc, i2c etc.
+# TODO: COnditional enabling of hal parts eg: gpio, rcc, i2c etc.
 find_package(EelHalLL REQUIRED)
 
 set(EelHal_ROOT_PATH ${CMAKE_SOURCE_DIR}/src/hal)
