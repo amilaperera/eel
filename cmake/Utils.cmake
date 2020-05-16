@@ -85,7 +85,7 @@ macro(ADD_OPENOCD_TARGETS BINARY)
     # Flash the program to target & reset
     add_custom_target(${BINARY}_flash
       DEPENDS ${BINARY}.elf
-      COMMAND "${OPENOCD_EXECUTABLE}" -f interface/stlink.cfg -f ${OPENOCD_TARGET_CONFIG}
+      COMMAND "${OPENOCD_EXECUTABLE}" -f interface/stlink-v2-1.cfg -f ${OPENOCD_TARGET_CONFIG}
       -c "program ${BINARY}.elf verify reset exit")
   endif ()
   unset(OPENOCD_TARGET_CONFIG)
