@@ -3,9 +3,9 @@
 //
 
 #pragma once
-#include "platform/eel_config.hpp"
+#include "platform/platform.hpp"
 
-namespace eel::ll {
+namespace eel::hal::ll {
   inline void init() {
     HAL_Init();
   }

@@ -4,8 +4,8 @@
 
 #pragma once
 #include "platform/platform.hpp"
-namespace eel {
+namespace eel::hal {
   inline void init() {
-    return eel::ll::init();
+    return eel::hal::ll::init();
   }
 };

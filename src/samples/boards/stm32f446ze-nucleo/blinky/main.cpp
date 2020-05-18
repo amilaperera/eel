@@ -1,7 +1,9 @@
 #include "hal/hal.hpp"
+#include "hal/pin_out.hpp"
 
 int main() {
-  eel::init();
+  eel::hal::init();
+  eel::hal::pin_out led(eel::hal::pin_name::B7);
   __GPIOB_CLK_ENABLE();
   GPIO_InitTypeDef GPIO_InitStructure;
 
