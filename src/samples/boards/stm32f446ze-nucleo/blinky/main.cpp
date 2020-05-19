@@ -1,24 +1,15 @@
 #include "hal/hal.hpp"
 #include "hal/pin_out.hpp"
 
+namespace eh = eel::hal;
 int main() {
-  eel::hal::init();
-  eel::hal::pin_out led(eel::hal::pin_name::B7);
-  __GPIOB_CLK_ENABLE();
-  GPIO_InitTypeDef GPIO_InitStructure;
-
-  GPIO_InitStructure.Pin = GPIO_PIN_7;
-
-  GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStructure.Speed = GPIO_SPEED_HIGH;
-  GPIO_InitStructure.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStructure);
-
+  eh::init();
+  eh::pin_out led(eh::pin_name::B7);
   for (;;) {
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
-    HAL_Delay(500);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_RESET);
-    HAL_Delay(500);
+    led << eh::pin_level::high;
+    HAL_Delay(1000);
+    led << eh::pin_level::low;
+    HAL_Delay(1000);
   }
 }
 
