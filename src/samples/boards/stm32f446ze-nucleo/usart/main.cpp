@@ -1,9 +1,12 @@
 #include <cstring>
+#include "hal/hal.hpp"
+#include "hal/uart.hpp"
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_conf.h"
-
 int main() {
-  HAL_Init();
+  eel::hal::init();
+//  HAL_Init();
+  eel::hal::uart serial(eel::hal::pin_name::D9, eel::hal::pin_name::D8);
 
   // TX RX configuration
   // On board -

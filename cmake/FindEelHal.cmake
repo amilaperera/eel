@@ -23,6 +23,7 @@ endforeach ()
 
 # append LL sources
 list(APPEND EelHal_SOURCES ${EelHalLL_SOURCES} ${STM32HAL_SOURCES} ${CMSIS_SOURCES})
+message(STATUS "EelHal SRCS:${EelHal_SOURCES}")
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(EelHal DEFAULT_MSG EelHal_INCLUDE_DIR EelHal_SOURCES)
