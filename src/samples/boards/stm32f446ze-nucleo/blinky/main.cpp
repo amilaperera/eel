@@ -8,11 +8,9 @@ using eh::literals::operator""_s;
 
 int main() {
   eh::init();
-  eh::pin_out led(eh::pin_name::B7);
+  eh::pin_out led(eh::pin_name::B7, eh::pin_level::high);
   for (;;) {
-    led << eh::pin_level::high;
-    eh::delay(1_s);
-    led << eh::pin_level::low;
+    led.toggle();
     eh::delay(1_s);
   }
 }

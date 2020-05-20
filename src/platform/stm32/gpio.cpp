@@ -68,4 +68,8 @@ eel::hal::pin_level gpio::read() {
   return HAL_GPIO_ReadPin(gpiox_, gpio_init_.Pin) == GPIO_PIN_RESET ? eel::hal::pin_level::low : eel::hal::pin_level::high;
 }
 
+void gpio::toggle() {
+  HAL_GPIO_TogglePin(gpiox_, gpio_init_.Pin);
+}
+
 }

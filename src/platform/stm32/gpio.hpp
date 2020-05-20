@@ -13,6 +13,7 @@ class gpio {
   void initialize(eel::hal::pin_mode m, eel::hal::pin_speed s, eel::hal::pull_up_down p);
   void write(eel::hal::pin_level lvl);
   eel::hal::pin_level read();
+  void toggle();
   void set_mode(eel::hal::pin_mode m);
   void set_speed(eel::hal::pin_speed s);
   void set_pull_up_down(eel::hal::pull_up_down p);

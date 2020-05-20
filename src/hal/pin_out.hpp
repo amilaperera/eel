@@ -10,6 +10,10 @@ struct pin_out {
   explicit pin_out(eel::hal::pin_name p) : gpio_(p) {
     gpio_.initialize(eel::hal::pin_mode::output_pp, eel::hal::pin_speed::high, eel::hal::pull_up_down::none);
   }
+  pin_out(eel::hal::pin_name p, eel::hal::pin_level lvl) : gpio_(p) {
+    gpio_.initialize(eel::hal::pin_mode::output_pp, eel::hal::pin_speed::high, eel::hal::pull_up_down::none);
+    gpio_.write(lvl);
+  }
   DELETE_COPY_CTOR(pin_out);
   DELETE_COPY_ASSIGNMENT(pin_out);
 
@@ -19,9 +23,14 @@ struct pin_out {
   eel::hal::pin_level read() {
     return gpio_.read();
   }
-  pin_out& operator<<(eel::hal::pin_level lvl) {
+  void operator<<(eel::hal::pin_level lvl) {
     gpio_.write(lvl);
-    return *this;
+  }
+  void operator>>(eel::hal::pin_level& lvl) {
+    lvl = gpio_.read();
+  }
+  void toggle() {
+    gpio_.toggle();
   }
 };
 }
