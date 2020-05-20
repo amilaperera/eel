@@ -17,6 +17,7 @@ elseif (${EelMcuName} MATCHES STM32F446ZE)
 
       # eel projects
       add_subdirectory(boards/stm32f446ze-nucleo/blinky)
+      add_subdirectory(boards/stm32f446ze-nucleo/usart)
 
       # eel hal projects
       # add_subdirectory(boards/stm32f446ze-nucleo/blinky)

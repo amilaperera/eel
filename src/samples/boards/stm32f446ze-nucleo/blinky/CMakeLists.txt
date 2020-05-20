@@ -3,7 +3,7 @@ include(Utils)
 
 #find_package(STM32HAL COMPONENTS gpio REQUIRED)
 #find_package(CMSIS REQUIRED)
-find_package(EelHal REQUIRED)
+find_package(EelHal COMPONENTS gpio REQUIRED)
 find_package(OpenOCD REQUIRED)
 
 add_executable(${PROJECT_NAME}.elf
