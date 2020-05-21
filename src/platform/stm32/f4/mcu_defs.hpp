@@ -38,10 +38,35 @@ enum class pin_speed : std::uint32_t {
   high =  GPIO_SPEED_HIGH,
 };
 
-enum class pull_up_down : std::uint32_t  {
+enum class pin_pud : std::uint32_t  {
   none = GPIO_NOPULL,
   up = GPIO_PULLUP,
   down = GPIO_PULLDOWN,
 };
 
+enum class af : uint8_t {
+  af0, af1, af2, af3, af4, af5, af6, af7, af8, af9, af10, af11, af12, af13, af14, af15
+};
+
+enum class parity : std::uint32_t {
+  none = UART_PARITY_NONE,
+  even = UART_PARITY_EVEN,
+  odd = UART_PARITY_ODD
+};
+
+enum class stop_bits : std::uint32_t {
+  one = UART_STOPBITS_1,
+  two = UART_STOPBITS_2,
+};
+enum class char_size : std::uint32_t {
+ eight = UART_WORDLENGTH_8B,
+ nine = UART_WORDLENGTH_9B
+};
+
+enum class flow_control : std::uint32_t {
+  none = UART_HWCONTROL_NONE,
+  rts = UART_HWCONTROL_RTS,
+  cts = UART_HWCONTROL_CTS,
+  rts_cts = UART_HWCONTROL_RTS_CTS
+};
 }

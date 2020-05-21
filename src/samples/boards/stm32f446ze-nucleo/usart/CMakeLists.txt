@@ -11,6 +11,7 @@ add_executable(${PROJECT_NAME}.elf
         config/stm32f4xx_it.c
         config/stm32f4xx_hal_msp.c)
 target_include_directories(${PROJECT_NAME}.elf PRIVATE ${CMAKE_SOURCE_DIR}/src ${EelHal_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/config)
+target_compile_features(${PROJECT_NAME}.elf PRIVATE cxx_std_17)
 
 SetTargetProperties(${PROJECT_NAME}.elf)
 ADD_POST_BUILD_COPY(${PROJECT_NAME})
