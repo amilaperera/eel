@@ -6,39 +6,8 @@ gpio::gpio(eel::hal::pin_name pin) : handle_(), gpiox_(nullptr), name_(pin) {
   handle_.Pin = (static_cast<std::uint16_t>(1) << static_cast<std::uint16_t>(eel::utils::to_integral(pin) % 16));
   // port
   auto port_value = eel::utils::to_integral(pin) / 16;
-  switch (port_value) {
-    case 0:
-      gpiox_ = GPIOA;
-      __GPIOA_CLK_ENABLE();
-      break;
-    case 1:
-      gpiox_ = GPIOB;
-      __GPIOB_CLK_ENABLE();
-      break;
-    case 2:
-      gpiox_ = GPIOC;
-      __GPIOC_CLK_ENABLE();
-      break;
-    case 3:
-      gpiox_ = GPIOD;
-      __GPIOD_CLK_ENABLE();
-      break;
-    case 4:
-      gpiox_ = GPIOE;
-      __GPIOE_CLK_ENABLE();
-      break;
-    case 5:
-      gpiox_ = GPIOF;
-      __GPIOF_CLK_ENABLE();
-      break;
-    case 6:
-      gpiox_ = GPIOG;
-      __GPIOG_CLK_ENABLE();
-      break;
-    default:
-      // TODO
-      break;
-  }
+  enable_clock(port_value);
+  gpiox_ = get_gpiox(port_value);
 }
 
 void gpio::init(eel::hal::pin_mode m, eel::hal::pin_speed s, eel::hal::pin_pud p) {
@@ -49,7 +18,9 @@ void gpio::init(eel::hal::pin_mode m, eel::hal::pin_speed s, eel::hal::pin_pud p
 }
 
 void gpio::set_af(eel::hal::af a) {
+#if defined(STM32F446XX)
   handle_.Alternate = eel::utils::to_integral(a);
+#endif
 }
 
 eel::hal::pin_name gpio::name() const {
