@@ -4,14 +4,17 @@
 // namespace alias
 namespace eh = eel::hal;
 // for common hal literals
-using eh::literals::operator""_s;
+using namespace eh::literals;
 
 int main() {
   eh::init();
-  eh::pin_out led(eh::pin_name::B7, eh::pin_level::high);
+  eh::pin_out led(eh::pin_name::B7, eh::pin_level::low);
   for (;;) {
-    led.toggle();
-    eh::delay(1_s);
+    for (int i = 0; i < 10; ++i) {
+      led.toggle();
+      eh::delay(100_ms);
+    }
+    eh::delay(9_s);
   }
 }
 
