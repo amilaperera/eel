@@ -1,10 +1,6 @@
-//
-// Created by amila.perera on 16/05/2020.
-//
-
 #pragma once
 #include <cstdint>
-#include "platform/platform.hpp"
+#include "platform/stm32/stm32_hal.hpp"
 
 namespace eel::hal::ll {
   inline void init() {

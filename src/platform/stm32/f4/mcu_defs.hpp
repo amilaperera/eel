@@ -4,8 +4,16 @@
 
 #pragma once
 #include <cinttypes>
+#include "platform/stm32/stm32_hal.hpp"
 
 namespace eel::hal {
+enum class pin_level : bool {low = false, high = true};
+
+enum class af : uint8_t {
+  af0, af1, af2, af3, af4, af5, af6, af7, af8, af9, af10, af11, af12, af13, af14, af15
+};
+
+#if defined(HAL_GPIO_MODULE_ENABLED)
 enum class pin_name {
   A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15,
   B0, B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, B11, B12, B13, B14, B15,
@@ -43,11 +51,9 @@ enum class pin_pud : std::uint32_t  {
   up = GPIO_PULLUP,
   down = GPIO_PULLDOWN,
 };
+#endif
 
-enum class af : uint8_t {
-  af0, af1, af2, af3, af4, af5, af6, af7, af8, af9, af10, af11, af12, af13, af14, af15
-};
-
+#if defined(HAL_UART_MODULE_ENABLED)
 enum class parity : std::uint32_t {
   none = UART_PARITY_NONE,
   even = UART_PARITY_EVEN,
@@ -69,4 +75,6 @@ enum class flow_control : std::uint32_t {
   cts = UART_HWCONTROL_CTS,
   rts_cts = UART_HWCONTROL_RTS_CTS
 };
+#endif
+
 }

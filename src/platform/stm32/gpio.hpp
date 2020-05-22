@@ -6,7 +6,7 @@
 namespace eel::hal::ll {
 class gpio {
  private:
-  GPIO_InitTypeDef gpio_init_;
+  GPIO_InitTypeDef handle_;
   GPIO_TypeDef *gpiox_;
   eel::hal::pin_name name_;
  public:

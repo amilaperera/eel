@@ -1,6 +1,7 @@
 
 #pragma once
 #include "platform/platform.hpp"
+#include "platform/driver_dispatcher.hpp"
 #include "utils/preprocessor.hh"
 namespace eel::hal {
 struct pin_out {
