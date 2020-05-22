@@ -1,6 +1,6 @@
 #pragma once
 #include <cstddef>
-#include "utils/types.hh"
+#include "utils/types.hpp"
 
 namespace eel::utils {
 

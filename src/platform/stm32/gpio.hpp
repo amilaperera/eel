@@ -1,7 +1,7 @@
 
 #pragma once
 #include "platform/platform.hpp"
-#include "utils/types.hh"
+#include "utils/types.hpp"
 
 namespace eel::hal::ll {
 class gpio {

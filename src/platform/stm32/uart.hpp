@@ -2,7 +2,7 @@
 #pragma once
 #include "platform/platform.hpp"
 #include "platform/stm32/gpio.hpp"
-#include "utils/types.hh"
+#include "utils/types.hpp"
 #include <utility>
 
 namespace eel::hal::ll {

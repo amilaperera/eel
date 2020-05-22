@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "utils/types.hh"
+#include "utils/types.hpp"
 
 namespace eel::utils {
 struct console_device {

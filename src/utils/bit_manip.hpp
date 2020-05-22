@@ -1,6 +1,6 @@
 #pragma once
 
-#include "utils/types.hh"
+#include "utils/types.hpp"
 
 namespace eel::utils {
 constexpr U8 kBit0 = (1UL << 0);

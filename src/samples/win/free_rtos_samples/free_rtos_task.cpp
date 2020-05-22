@@ -1,8 +1,8 @@
-#include "utils/os_wrapper/task.hh"
-#include "utils/os_wrapper/queue.hh"
-#include "utils/streams/io_device_wrapper.hh"
-#include "utils/streams/io_stream.hh"
-#include "utils/ports/pc/console_device.hh"
+#include "utils/os_wrapper/task.hpp"
+#include "utils/os_wrapper/queue.hpp"
+#include "utils/streams/io_device_wrapper.hpp"
+#include "utils/streams/io_stream.hpp"
+#include "utils/ports/pc/console_device.hpp"
 
 #ifdef __cplusplus
 extern "C" {

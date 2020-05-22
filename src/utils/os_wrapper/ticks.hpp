@@ -1,6 +1,6 @@
 #pragma once
 #include "ots/FreeRTOS/Source/include/FreeRTOS.h"
-#include "utils/os_wrapper/free_rtos_types.hh"
+#include "utils/os_wrapper/free_rtos_types.hpp"
 
 namespace eel::utils::os_wrapper {
 

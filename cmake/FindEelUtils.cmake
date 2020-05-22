@@ -1,13 +1,13 @@
 set(EelUtils_ROOT_PATH ${CMAKE_SOURCE_DIR}/src/utils)
 
 # OS NONE
-set(EelStreams_SOURCES streams/io_stream.cc)
+set(EelStreams_SOURCES streams/io_stream.cpp)
 if (WIN32)
-    set(EelPorts_SOURCES ports/pc/console_device.cc)
+    set(EelPorts_SOURCES ports/pc/console_device.cpp)
 endif()
 
 # OS
-set(EelOsTask_SOURCES os_wrapper/task.cc)
+set(EelOsTask_SOURCES os_wrapper/task.cpp)
 
 # Collate OS & OS None
 set(EelOsNone_SOURCES ${EelStreams_SOURCES} ${EelPorts_SOURCES})

@@ -3,8 +3,8 @@
 #include <cstring>
 #include "ots/FreeRTOS/Source/include/FreeRTOS.h"
 #include "ots/FreeRTOS/Source/include/task.h"
-#include "utils/os_wrapper/ticks.hh"
-#include "utils/os_wrapper/free_rtos_types.hh"
+#include "utils/os_wrapper/ticks.hpp"
+#include "utils/os_wrapper/free_rtos_types.hpp"
 
 #ifdef __cplusplus
 extern "C" {

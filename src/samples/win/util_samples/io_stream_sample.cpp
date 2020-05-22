@@ -2,9 +2,9 @@
 // Created by Amila Perera on 1/07/2019.
 //
 
-#include "utils/streams/io_device_wrapper.hh"
-#include "utils/streams/io_stream.hh"
-#include "utils/ports/pc/console_device.hh"
+#include "utils/streams/io_device_wrapper.hpp"
+#include "utils/streams/io_stream.hpp"
+#include "utils/ports/pc/console_device.hpp"
 
 using namespace eel::utils;
 

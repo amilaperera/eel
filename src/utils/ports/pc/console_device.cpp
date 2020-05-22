@@ -2,7 +2,7 @@
 // Created by Amila Perera on 3/07/2019.
 //
 
-#include "utils/ports/pc/console_device.hh"
+#include "utils/ports/pc/console_device.hpp"
 #include <iostream>
 
 namespace eel::utils {
