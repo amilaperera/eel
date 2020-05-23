@@ -72,6 +72,19 @@ enum class pin_pud : std::uint32_t  {
 #endif
 
 #if defined(HAL_UART_MODULE_ENABLED)
+
+struct uart_af {
+  eel::hal::pin_name tx;
+  eel::hal::pin_name rx;
+  USART_TypeDef* uartx;
+};
+
+inline static const uart_af uart_af_map[] = {
+    {pin_name::A2, pin_name::A3, USART2},
+    {pin_name::A9, pin_name::A10, USART2},
+    {pin_name::B10, pin_name::B11, USART3},
+};
+
 enum class parity : std::uint32_t {
   none = UART_PARITY_NONE,
   even = UART_PARITY_EVEN,

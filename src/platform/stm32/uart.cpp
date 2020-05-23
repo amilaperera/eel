@@ -6,8 +6,10 @@ uart::uart(eel::hal::pin_name tx, eel::hal::pin_name rx) : handle_(), uartx_(nul
     if (tx == row.tx) {
       // assert(rx == row.rx)
       uartx_ = row.uartx;
+#if !defined (EEL_STM32F103RB)
       tx_.set_af(row.af);
       rx_.set_af(row.af);
+#endif
       break;
     }
   }
