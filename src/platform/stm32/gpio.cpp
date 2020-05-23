@@ -18,7 +18,7 @@ void gpio::init(eel::hal::pin_mode m, eel::hal::pin_speed s, eel::hal::pin_pud p
 }
 
 void gpio::set_af(eel::hal::af a) {
-#if defined(STM32F446XX)
+#if defined(EEL_STM32F446XX)
   handle_.Alternate = eel::utils::to_integral(a);
 #endif
 }
