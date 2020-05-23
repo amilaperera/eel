@@ -7,11 +7,11 @@ template <typename T>
 class IODeviceWrapper : public io_device_interface {
  public:
   explicit IODeviceWrapper(T *d) : device_{d} {}
-  void Write(const U8 *buffer, U32 size) override {
-    device_->Write(buffer, size);
+  void write(const char *buffer, std::size_t sz) override {
+    device_->write(buffer, sz);
   }
-  void Read(U8 *buffer, U32 size) override {
-    device_->Read(buffer, size);
+  void read(char *buffer, std::size_t sz) override {
+    device_->read(buffer, sz);
   }
 
  private:

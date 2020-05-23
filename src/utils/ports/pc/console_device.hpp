@@ -7,8 +7,8 @@
 
 namespace eel::utils {
 struct console_device {
-  void Write(const eel::utils::U8 *buffer, eel::utils::U32 size);
-  void Read(eel::utils::U8 *buffer, eel::utils::U32 size);
+  void write(const char *buffer, std::size_t size);
+  void read(char *buffer, std::size_t size);
 };
 }
 

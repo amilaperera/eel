@@ -17,18 +17,18 @@ void io_stream::print(const char *fmt, ...) {
   va_list argp;
   va_start(argp, fmt);
   if (std::vsnprintf(buffer, kMaxPrintBufferSize, fmt, argp) > 0) {
-    io_device_->Write(reinterpret_cast<const U8 *>(buffer), std::strlen(buffer));
+    io_device_->write(buffer, std::strlen(buffer));
   }
   va_end(argp);
 }
 
 io_stream& io_stream::operator<<(const char *str) {
-  io_device_->Write(reinterpret_cast<const U8 *>(str), std::strlen(str));
+  io_device_->write(str, std::strlen(str));
   return *this;
 }
 
 io_stream& io_stream::operator<<(char ch) {
-  io_device_->Write(reinterpret_cast<const U8 *>(&ch), 1);
+  io_device_->write(&ch, 1);
   return *this;
 }
 
@@ -42,7 +42,7 @@ io_stream& io_stream::operator<<(Manipulator manip) {
 }
 
 io_stream& io_stream::operator>>(char &ch) {
-  io_device_->Read(reinterpret_cast<U8 *>(&ch), 1);
+  io_device_->read(&ch, 1);
   return *this;
 }
 

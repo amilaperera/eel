@@ -6,12 +6,12 @@
 #include <iostream>
 
 namespace eel::utils {
-void console_device::Write(const eel::utils::U8 *buffer, eel::utils::U32 size) {
-  std::cout.write(reinterpret_cast<const char *>(buffer), static_cast<std::streamsize>(size));
+void console_device::write(const char *buffer, std::size_t size) {
+  std::cout.write(buffer, static_cast<std::streamsize>(size));
 }
 
-void console_device::Read(eel::utils::U8 *buffer, eel::utils::U32 size) {
-  std::cin.read(reinterpret_cast<char *>(buffer), static_cast<std::streamsize>(size));
+void console_device::read(char *buffer, std::size_t size) {
+  std::cin.read(buffer, static_cast<std::streamsize>(size));
 }
 }
 
