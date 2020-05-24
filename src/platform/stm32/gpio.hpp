@@ -19,6 +19,6 @@ class gpio {
   void toggle();
   void set_mode(eel::hal::pin_mode m);
   void set_speed(eel::hal::pin_speed s);
-  void set_pull_up_down(eel::hal::pin_pud p);
+  void set_pud(eel::hal::pin_pud p);
 };
 }

@@ -13,7 +13,7 @@ gpio::gpio(eel::hal::pin_name pin) : handle_(), gpiox_(nullptr), name_(pin) {
 void gpio::init(eel::hal::pin_mode m, eel::hal::pin_speed s, eel::hal::pin_pud p) {
   set_mode(m);
   set_speed(s);
-  set_pull_up_down(p);
+  set_pud(p);
   HAL_GPIO_Init(gpiox_, &handle_);
 }
 
@@ -35,7 +35,7 @@ void gpio::set_speed(eel::hal::pin_speed s) {
   handle_.Speed = eel::utils::to_integral(s);
 }
 
-void gpio::set_pull_up_down(eel::hal::pin_pud p) {
+void gpio::set_pud(eel::hal::pin_pud p) {
   handle_.Pull = eel::utils::to_integral(p);
 }
 
