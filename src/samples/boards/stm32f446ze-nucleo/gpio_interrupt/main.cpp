@@ -1,40 +1,23 @@
-#include "hal/cortex/sys_tick_timer.hh"
-#include "hal/cortex/lock.hh"
-#include "hal/gpio.hh"
+#include "hal/hal.hpp"
+#include "hal/pin_out.hpp"
+#include "hal/pin_in.hpp"
+#include <memory>
 
-using eel::hal::Pin;
-using eel::hal::PinMode;
-using eel::hal::PullUpDown;
-using eel::hal::OutputType;
-using eel::hal::OutputSpeed;
-using eel::hal::PinInterrupt;
+bool keep_on{false};
+eel::hal::pin_in* button_ptr{nullptr};
 
-bool is_pressed_or_released{false};
-
-extern "C" void EXTI15_10_IRQHandler() {
-  is_pressed_or_released = true;
-}
+GPIO_IRQ_BEGIN(eel::hal::pin_name::C13)
+   keep_on = (button_ptr->read() == eel::hal::pin_level::high);
+GPIO_IRQ_END
 
 int main() {
-  // tick per 1ms
-  eel::hal::SysTickTimer::enable<eel::hal::SysTickTimer::Frequency::k1kHz, 0xf>();
-
-  // output pin
-  eel::hal::Gpio led{Pin::B7};
-  led.ConfigureOutput(PullUpDown::None, OutputType::PushPull, OutputSpeed::High);
-  led.Write(false);
-
-  // input pin
-  eel::hal::Gpio button{Pin::C13};
-  button.ConfigureInput(PullUpDown::None);
-  button.ConfigureInterrupt(PinInterrupt::kFalling);
-  button.EnableInterrupt(3);
+  eel::hal::init();
+  eel::hal::pin_out led(eel::hal::pin_name::B7);
+  eel::hal::pin_in button(eel::hal::pin_name::C13, eel::hal::interrupt_mode::both);
+  button_ptr = &button;
 
   for (;;) {
-    if (is_pressed_or_released) {
-      led.Toggle();
-    }
+    led << (keep_on ? eel::hal::pin_level::high : eel::hal::pin_level::low);
   }
 }
-
 

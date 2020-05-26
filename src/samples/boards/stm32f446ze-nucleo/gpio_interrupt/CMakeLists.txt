@@ -1,20 +1,18 @@
 project(gpio_interrupt C CXX ASM)
 include(Utils)
 
-find_package(EelHal REQUIRED)
-find_package(EelUtil REQUIRED)
+find_package(EelHal COMPONENTS gpio REQUIRED)
 find_package(OpenOCD REQUIRED)
 
-include_directories(${CMSIS_INCLUDE_DIRS}
-        ${EelHal_INCLUDE_DIR}
-        ${EelUtil_INCLUDE_DIR})
-
 add_executable(${PROJECT_NAME}.elf
-        main.cpp
-        ${EelHal_SOURCES}
-        ${EelUtil_SOURCES})
+    main.cpp
+    ${STM32HAL_SOURCES}
+    ${EelHal_SOURCES}
+    config/stm32f4xx_it.c
+    config/stm32f4xx_hal_msp.c)
+target_include_directories(${PROJECT_NAME}.elf PRIVATE ${CMAKE_SOURCE_DIR}/src ${EelHal_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/config)
 
-EelSetTargetProperties(${PROJECT_NAME}.elf)
+SetTargetProperties(${PROJECT_NAME}.elf)
 ADD_POST_BUILD_COPY(${PROJECT_NAME})
 ADD_OPENOCD_TARGETS(${PROJECT_NAME})
 ADD_SIZE_INFO(${PROJECT_NAME})

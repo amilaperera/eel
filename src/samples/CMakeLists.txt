@@ -6,9 +6,11 @@ if (WIN32)
     endif ()
 endif ()
 if (${EelMcuName} MATCHES STM32F103RB)
+  # stm32 hal projects
   add_subdirectory(boards/stm32f103rb-nucleo/blinky_stm32)
-  add_subdirectory(boards/stm32f103rb-nucleo/blinky)
   add_subdirectory(boards/stm32f103rb-nucleo/usart_stm32)
+  # eel projects
+  add_subdirectory(boards/stm32f103rb-nucleo/blinky)
   add_subdirectory(boards/stm32f103rb-nucleo/usart)
 elseif (${EelMcuName} MATCHES STM32F446ZE)
   if(EnableRtos)
@@ -20,17 +22,8 @@ elseif (${EelMcuName} MATCHES STM32F446ZE)
 
       # eel projects
       add_subdirectory(boards/stm32f446ze-nucleo/blinky)
+      add_subdirectory(boards/stm32f446ze-nucleo/gpio_interrupt)
       add_subdirectory(boards/stm32f446ze-nucleo/usart)
-
-      # eel hal projects
-      # add_subdirectory(boards/stm32f446ze-nucleo/blinky)
-      # add_subdirectory(boards/stm32f446ze-nucleo/gpio_interrupt)
-      # add_subdirectory(boards/stm32f446ze-nucleo/usart)
   endif()
 endif()
-# if (EEL_F4_SAMPLES)
-    # if(EEL_USE_OS_CHIBIOS)
-        # add_subdirectory(boards/stm32f446ze-nucleo/blinky_chibios)
-    # endif()
-# endif()
 

@@ -12,6 +12,9 @@ set(EelHal_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src ${STM32HAL_INCLUDE_DIR} ${CMSIS_I
 # select sources as per the components
 foreach(cmp ${EelHal_FIND_COMPONENTS})
   list(APPEND EelHal_SRCS ${cmp}.cpp)
+  if (${cmp} STREQUAL "gpio")
+    list(APPEND EelHal_SRCS ${cmp}_interrupt.cpp)
+  endif ()
 endforeach()
 list(REMOVE_DUPLICATES EelHal_SRCS)
 
