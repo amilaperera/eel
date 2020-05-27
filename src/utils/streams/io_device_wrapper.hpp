@@ -4,9 +4,9 @@
 namespace eel::utils {
 
 template <typename T>
-class IODeviceWrapper : public io_device_interface {
+class io_device_wrapper : public io_device_interface {
  public:
-  explicit IODeviceWrapper(T *d) : device_{d} {}
+  explicit io_device_wrapper(T *d) : device_{d} {}
   void write(const char *buffer, std::size_t sz) override {
     device_->write(buffer, sz);
   }
@@ -20,7 +20,7 @@ class IODeviceWrapper : public io_device_interface {
 
 template <typename T>
 auto make_io_device(T *device) {
-  return eel::utils::IODeviceWrapper<T>(device);
+  return eel::utils::io_device_wrapper<T>(device);
 }
 
 

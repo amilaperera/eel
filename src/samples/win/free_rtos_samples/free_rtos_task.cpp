@@ -34,8 +34,8 @@ struct sending_task : os_wrapper::task {
   my_queue *queue_;
 };
 
-struct recv_task : os_wrapper::task {
-  explicit recv_task(io_stream *s, my_queue *queue) : task{100, 11, "recv_task"}, stream_{s}, queue_{queue} {}
+struct receiving_task : os_wrapper::task {
+  explicit receiving_task(io_stream *s, my_queue *queue) : task{100, 11, "receiving_task"}, stream_{s}, queue_{queue} {}
   void run() override {
     for (;;) {
       my_queue::item_type item{};
@@ -60,10 +60,10 @@ int main() {
   my_queue queue;
 
   // Sending task
-  sending_task sending_task{&io_stream, &queue};
+  sending_task sender{&io_stream, &queue};
 
   // Receiving task
-  recv_task receiving_task{&io_stream, &queue};
+  receiving_task receiver{&io_stream, &queue};
 
   os_wrapper::start_scheduler();
 }
