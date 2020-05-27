@@ -76,22 +76,18 @@ enum class pin_pud : std::uint32_t  {
 };
 
 inline void set_interrupt(eel::hal::pin_name name) {
+  IRQn_Type irqn_type(EXTI15_10_IRQn);
   switch (eel::utils::to_integral(name) % 16) {
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-      break;
-    case 10:
-    case 11:
-    case 12:
-    case 13:
-    case 14:
-    case 15:
-      HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0x0, 0x0);
-      HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
-      break;
+    case 0: irqn_type = EXTI0_IRQn; break;
+    case 1: irqn_type = EXTI1_IRQn; break;
+    case 2: irqn_type = EXTI2_IRQn; break;
+    case 3: irqn_type = EXTI3_IRQn; break;
+    case 4: irqn_type = EXTI4_IRQn; break;
+    case 5: case 6: case 7: case 8: case 9: irqn_type = EXTI9_5_IRQn; break;
+    default: break;
   }
+  HAL_NVIC_SetPriority(irqn_type, 0x0, 0x0);
+  HAL_NVIC_EnableIRQ(irqn_type);
 }
 #endif
 
