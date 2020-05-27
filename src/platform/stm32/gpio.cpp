@@ -3,7 +3,7 @@
 namespace eel::hal::ll {
 gpio::gpio(eel::hal::pin_name pin) : handle_(), gpiox_(nullptr), name_(pin) {
   // pin
-  handle_.Pin = (static_cast<std::uint16_t>(1) << static_cast<std::uint16_t>(eel::utils::to_integral(pin) % 16));
+  handle_.Pin = stm_pin(pin);
   // port
   auto port_value = eel::utils::to_integral(pin) / 16;
   enable_clock(port_value);

@@ -21,4 +21,9 @@ class gpio {
   void set_speed(eel::hal::pin_speed s);
   void set_pud(eel::hal::pin_pud p);
 };
+
+[[nodiscard]] inline std::uint16_t stm_pin(eel::hal::pin_name pin) {
+  return static_cast<std::uint16_t>(1U << static_cast<std::uint16_t>(eel::utils::to_integral(pin) % 16));
 }
+}
+

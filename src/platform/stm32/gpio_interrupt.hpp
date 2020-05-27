@@ -3,9 +3,8 @@
 #include "platform/stm32/gpio.hpp"
 #include "utils/types.hpp"
 
-
 #define GPIO_IRQ_BEGIN(PIN_NAME) extern "C" void HAL_GPIO_EXTI_Callback(uint16_t pin) { \
-if (pin == (static_cast<std::uint16_t>(1) << static_cast<std::uint16_t>(eel::utils::to_integral(PIN_NAME) % 16))) {
+if (pin == eel::hal::ll::stm_pin(PIN_NAME)) {
 
 #define GPIO_IRQ_END  }}
 

@@ -5,12 +5,17 @@
 #pragma once
 #include <cinttypes>
 #include "platform/stm32/stm32_hal.hpp"
+#include "utils/types.hpp"
 
 namespace eel::hal {
 enum class pin_level : bool {low = false, high = true};
 
 enum class af : uint8_t {
   af0, af1, af2, af3, af4, af5, af6, af7, af8, af9, af10, af11, af12, af13, af14, af15
+};
+
+enum class interrupt_mode : uint8_t {
+  rising, falling, both
 };
 
 #if defined(HAL_GPIO_MODULE_ENABLED)
@@ -69,6 +74,25 @@ enum class pin_pud : std::uint32_t  {
   up = GPIO_PULLUP,
   down = GPIO_PULLDOWN,
 };
+
+inline void set_interrupt(eel::hal::pin_name name) {
+  switch (eel::utils::to_integral(name) % 16) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+      break;
+    case 10:
+    case 11:
+    case 12:
+    case 13:
+    case 14:
+    case 15:
+      HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0x0, 0x0);
+      HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+      break;
+  }
+}
 #endif
 
 #if defined(HAL_UART_MODULE_ENABLED)
