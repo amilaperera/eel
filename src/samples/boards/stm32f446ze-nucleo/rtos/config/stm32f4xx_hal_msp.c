@@ -38,6 +38,7 @@
   */
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
+#include "FreeRTOSConfig.h"
 
 extern void _Error_Handler(char *, int);
 
@@ -51,8 +52,20 @@ void HAL_MspInit(void)
 
   HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
+  /*
+   *  The reason why the SVCall priority is still at the highest urgency (0 value)
+   *  is when executing the SVC instruction, the SVCall interrupt shall not be masked (disabled).
+   *  If SVCall would be at the same priority of the SysTick,
+   *  then a SysTick might happen earlier,
+   *  and then using SVC would cause a hard fault.
+   *  Leaving it at 0 (highest interrupt urgency) ensures
+   *  that it is not masked by a running PendSV or SysTick interrupt,
+   *  and that it is not masked by the BASEPRI register.
+   */
+  HAL_NVIC_SetPriority(SVCall_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(PendSV_IRQn, configLIBRARY_LOWEST_INTERRUPT_PRIORITY, 0);
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
+  HAL_NVIC_SetPriority(SysTick_IRQn, configLIBRARY_LOWEST_INTERRUPT_PRIORITY, 0);
 }
 
 /**
