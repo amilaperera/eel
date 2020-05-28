@@ -62,7 +62,7 @@ class task {
       const char *name = "UnNamedTask") :
       handle_{} {
     // TODO: hook the return value to an assert
-    [[maybe_unused]] auto ret = xTaskCreate(task_func, name, stack_depth, this, priority, &handle_);
+    xTaskCreate(task_func, name, stack_depth, this, priority, &handle_);
   }
 
   ~task() {
