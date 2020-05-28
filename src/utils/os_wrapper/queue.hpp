@@ -84,14 +84,14 @@ template <typename ItemType, size_t Size>
 class queue : public detail::queue_base<ItemType> {
   public:
   static_assert(std::is_trivially_copyable_v<ItemType>, "ItemType must be trivially copyable");
-  queue() : queue_base{} {
+  queue() : detail::queue_base<ItemType>{} {
     // TODO: configSUPPORT_DYNAMIC_ALLOCATION must be set to 1
     // return should be hooked to assert
-    handle_ = xQueueCreate(Size, sizeof(ItemType));
+    this->handle_ = xQueueCreate(Size, sizeof(ItemType));
   }
   ~queue() {
-    if (handle_) {
-      vQueueDelete(handle_);
+    if (this->handle_) {
+      vQueueDelete(this->handle_);
     }
   }
 };
