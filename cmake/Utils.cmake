@@ -66,3 +66,23 @@ macro(ADD_SIZE_INFO BINARY)
   endif ()
 endmacro()
 
+macro (add_rtos_sample name)
+  add_executable(${name}.elf
+      ${ARGN}
+      ${EelHal_SOURCES}
+      ${EelUtils_SOURCES}
+      ${FreeRTOS_SOURCES}
+      ${EelUtils_Os_SOURCES})
+  target_include_directories(${name}.elf PRIVATE
+      ${EelHal_INCLUDE_DIR}
+      ${EelUtils_INCLUDE_DIR}
+      ${FreeRTOS_INCLUDE_DIRS}
+      ${CMAKE_SOURCE_DIR}/src
+      ${CMAKE_CURRENT_SOURCE_DIR}/config)
+  target_compile_features(${name}.elf PRIVATE cxx_std_17)
+
+  SetTargetProperties(${name}.elf)
+  ADD_POST_BUILD_COPY(${name})
+  ADD_OPENOCD_TARGETS(${name})
+  ADD_SIZE_INFO(${name})
+endmacro ()
