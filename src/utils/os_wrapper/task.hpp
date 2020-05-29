@@ -33,21 +33,21 @@ inline void task_delay_until(tick_t *prev_wakeup_time, tick_t time_increment) {
 #endif
 
 #ifdef INCLUDE_vTaskSuspend
-inline void suspend() {
+inline void self_suspend() {
   // self-suspend
   vTaskSuspend(0);
 }
 #endif
 
 #ifdef INCLUDE_uxTaskPriorityGet
-inline base_t priority() {
+inline base_t get_self_priority() {
   // get priority of the calling task
   return uxTaskPriorityGet(0);
 }
 #endif
 
 #ifdef INCLUDE_vTaskPrioritySet
-inline void set_priority(base_t new_value) {
+inline void set_self_priority(base_t new_value) {
   // set priority of the calling task
   vTaskPrioritySet(0, new_value);
 }
@@ -56,13 +56,13 @@ inline void set_priority(base_t new_value) {
 class task {
  public:
   friend void ::task_func(void *);
-
-  explicit task(base_t priority,
-      unsigned short stack_depth = configMINIMAL_STACK_SIZE,
+  template <typename StackType>
+  explicit task(priority prio,
+      stack_size<StackType> stack_depth = stack_size(word_size(configMINIMAL_STACK_SIZE)),
       const char *name = "UnNamedTask") :
       handle_{} {
     // TODO: hook the return value to an assert
-    xTaskCreate(task_func, name, stack_depth, this, priority, &handle_);
+    xTaskCreate(task_func, name, stack_depth.size(), this, prio.get_priority(), &handle_);
   }
 
   ~task() {

@@ -1,14 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : stm32f4xx_hal_msp.c
-  * Description        : This file provides code for the MSP Initialization 
-  *                      and de-Initialization codes.
+  * @file    stm32f1xx_it.c
+  * @brief   Interrupt Service Routines.
   ******************************************************************************
-  ** This notice applies to any and all portions of this file
-  * that are not between comment pairs USER CODE BEGIN and
-  * USER CODE END. Other portions of this file, whether 
-  * inserted by the user or by software development tools
-  * are owned by their respective copyright owners.
   *
   * COPYRIGHT(c) 2018 STMicroelectronics
   *
@@ -37,48 +31,91 @@
   ******************************************************************************
   */
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
+#include "stm32f1xx_hal.h"
+#include "stm32f1xx_it.h"
 #include "FreeRTOSConfig.h"
 
-extern void _Error_Handler(char *, int);
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+/* External variables --------------------------------------------------------*/
+
+/******************************************************************************/
+/*            Cortex-M3 Processor Interruption and Exception Handlers         */ 
+/******************************************************************************/
 
 /**
-  * Initializes the Global MSP.
-  */
-void HAL_MspInit(void)
+* @brief This function handles Non maskable interrupt.
+*/
+void NMI_Handler(void)
 {
-  __HAL_RCC_SYSCFG_CLK_ENABLE();
-  __HAL_RCC_PWR_CLK_ENABLE();
-
-  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-  /* System interrupt init*/
-  /* MemoryManagement_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(MemoryManagement_IRQn, 0, 0);
-  /* BusFault_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(BusFault_IRQn, 0, 0);
-  /* UsageFault_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(UsageFault_IRQn, 0, 0);
-  /* DebugMonitor_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DebugMonitor_IRQn, 0, 0);
-
-  /*
-   *  The reason why the SVCall priority is still at the highest urgency (0 value)
-   *  is when executing the SVC instruction, the SVCall interrupt shall not be masked (disabled).
-   *  If SVCall would be at the same priority of the SysTick,
-   *  then a SysTick might happen earlier,
-   *  and then using SVC would cause a hard fault.
-   *  Leaving it at 0 (highest interrupt urgency) ensures
-   *  that it is not masked by a running PendSV or SysTick interrupt,
-   *  and that it is not masked by the BASEPRI register.
-   */
-  HAL_NVIC_SetPriority(SVCall_IRQn, 0, 0);
-  HAL_NVIC_SetPriority(PendSV_IRQn, configLIBRARY_LOWEST_INTERRUPT_PRIORITY, 0);
-  /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, configLIBRARY_LOWEST_INTERRUPT_PRIORITY, 0);
 }
 
 /**
-  * @}
-  */
+* @brief This function handles Hard fault interrupt.
+*/
+void HardFault_Handler(void)
+{
+  while (1)
+  {
+  }
+}
 
+/**
+* @brief This function handles Memory management fault.
+*/
+void MemManage_Handler(void)
+{
+  while (1)
+  {
+  }
+}
+
+/**
+* @brief This function handles Prefetch fault, memory access fault.
+*/
+void BusFault_Handler(void)
+{
+  while (1)
+  {
+  }
+}
+
+/**
+* @brief This function handles Undefined instruction or illegal state.
+*/
+void UsageFault_Handler(void)
+{
+  while (1)
+  {
+  }
+}
+
+/**
+* @brief This function handles Debug monitor.
+*/
+void DebugMon_Handler(void)
+{
+}
+
+/**
+* @brief This function handles System tick timer.
+*/
+void SysTick_Handler(void)
+{
+  HAL_IncTick();
+  xPortSysTickHandler();
+}
+
+/******************************************************************************/
+/* STM32F1xx Peripheral Interrupt Handlers                                    */
+/* Add here the Interrupt Handlers for the used peripherals.                  */
+/* For the available peripheral interrupt handler names,                      */
+/* please refer to the startup file (startup_stm32f1xx.s).                    */
+/******************************************************************************/
+
+/* USER CODE BEGIN 1 */
+
+/* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
