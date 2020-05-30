@@ -62,7 +62,7 @@ class task {
       const char *name = "UnNamedTask") :
       handle_{} {
     // TODO: hook the return value to an assert
-    xTaskCreate(task_func, name, stack_depth.size(), this, prio.get_priority(), &handle_);
+    xTaskCreate(task_func, name, stack_depth.value(), this, prio.value(), &handle_);
   }
 
   ~task() {
@@ -89,7 +89,7 @@ class task {
 
 #ifdef INCLUDE_uxTaskPriorityGet
   [[nodiscard]]
-  base_t priority() const {
+  base_t value() const {
     return uxTaskPriorityGet(handle_);
   }
 #endif

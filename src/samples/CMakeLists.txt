@@ -1,8 +1,8 @@
 # add windows samples
 if (WIN32)
-  add_subdirectory(win/util_samples)
+  add_subdirectory(win/no_rtos)
   if (EnableRtos)
-    add_subdirectory(win/free_rtos_samples)
+    add_subdirectory(win/rtos)
   endif ()
 endif ()
 

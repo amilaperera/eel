@@ -9,7 +9,7 @@ using tick_t = TickType_t;
 struct priority {
   using type = UBaseType_t;
   constexpr explicit priority(type p) : p_(p) {}
-  [[nodiscard]] constexpr type get_priority() const {return p_;}
+  [[nodiscard]] constexpr type value() const {return p_;}
  private:
   type p_;
 };
@@ -17,7 +17,7 @@ struct priority {
 struct word_size {
   using type = unsigned short;
   constexpr explicit word_size(type s) : sz_(s) {}
-  [[nodiscard]] constexpr type size() const {return sz_;}
+  [[nodiscard]] constexpr type value() const {return sz_;}
  private:
   type sz_;
 };
@@ -25,7 +25,7 @@ struct word_size {
 struct byte_size {
   using type = UBaseType_t;
   constexpr explicit byte_size(type s) : sz_(s) {}
-  [[nodiscard]] constexpr type size() const {return sz_/sizeof(StackType_t);}
+  [[nodiscard]] constexpr type value() const {return sz_/sizeof(StackType_t);}
  private:
   type sz_;
 };
@@ -33,7 +33,7 @@ struct byte_size {
 template <typename T>
 struct stack_size {
   constexpr explicit stack_size(T s) : sz_(s) {}
-  [[nodiscard]] constexpr typename T::type size() const {return sz_.size();}
+  [[nodiscard]] constexpr typename T::type value() const {return sz_.value();}
  private:
   T sz_;
 };
