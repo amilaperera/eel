@@ -4,12 +4,16 @@
 
 namespace eel::utils::os_wrapper {
 
-constexpr tick_t max_ticks() {
-  return portMAX_DELAY;
+struct time_ticks {
+  tick_t ticks;
+};
+
+inline constexpr time_ticks max_ticks() {
+  return { portMAX_DELAY };
 }
 
-inline tick_t tick_count() {
-  return xTaskGetTickCount();
+inline time_ticks tick_count() {
+  return { xTaskGetTickCount() };
 }
 
 namespace literals {
@@ -17,18 +21,18 @@ namespace literals {
   // as an argument
 
   // raw tick count
-  constexpr tick_t operator"" _ticks(unsigned long long ticks) {
-    return static_cast<tick_t>(ticks);
+  constexpr time_ticks operator"" _ticks(unsigned long long ticks) {
+    return { static_cast<tick_t>(ticks) };
   }
 
   // milliseconds -> ticks conversion
-  constexpr tick_t operator"" _ms(unsigned long long ticks) {
-    return static_cast<tick_t>(ticks)/portTICK_PERIOD_MS;
+  constexpr time_ticks operator"" _ms(unsigned long long ms) {
+    return { static_cast<tick_t>(ms / portTICK_PERIOD_MS)};
   }
 
   // seconds -> ticks conversion
-  constexpr tick_t operator"" _s(unsigned long long ticks) {
-    return static_cast<tick_t>(ticks)/portTICK_PERIOD_MS * 1000;
+  constexpr time_ticks operator"" _s(unsigned long long secs) {
+    return { static_cast<tick_t>(secs * 1000 / portTICK_PERIOD_MS) };
   }
   // TOOD operator+
 }

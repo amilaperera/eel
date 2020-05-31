@@ -39,16 +39,16 @@ struct queue_base : public queue_common {
  public:
   using item_type = ItemType;
 
-  bool send_to_back(const ItemType& item, tick_t ticks_to_wait = max_ticks()) {
-    return xQueueSendToBack(handle_, &item, ticks_to_wait) == pdTRUE;
+  bool send_to_back(const ItemType& item, time_ticks ticks_to_wait = max_ticks()) {
+    return xQueueSendToBack(handle_, &item, ticks_to_wait.ticks) == pdTRUE;
   }
 
-  bool send_to_front(const ItemType& item, tick_t ticks_to_wait = max_ticks()) {
-    return xQueueSendToFront(handle_, &item, ticks_to_wait) == pdTRUE;
+  bool send_to_front(const ItemType& item, time_ticks ticks_to_wait = max_ticks()) {
+    return xQueueSendToFront(handle_, &item, ticks_to_wait.ticks) == pdTRUE;
   }
 
-  bool receive(ItemType* item, tick_t ticks_to_wait = max_ticks()) {
-    return xQueueReceive(handle_, item, ticks_to_wait) == pdTRUE;
+  bool receive(ItemType* item, time_ticks ticks_to_wait = max_ticks()) {
+    return xQueueReceive(handle_, item, ticks_to_wait.ticks) == pdTRUE;
   }
 
   bool send_to_back_from_isr(const ItemType& item, bool* is_higher_priority_task_woken) {

@@ -21,14 +21,14 @@ inline void start_scheduler() {
 }
 
 #ifdef INCLUDE_vTaskDelay
-inline void task_delay(tick_t t) {
-  vTaskDelay(t);
+inline void task_delay(time_ticks t) {
+  vTaskDelay(t.ticks);
 }
 #endif
 
 #ifdef INCLUDE_vTaskDelayUntil
-inline void task_delay_until(tick_t *prev_wakeup_time, tick_t time_increment) {
-  vTaskDelayUntil(prev_wakeup_time, time_increment);
+inline void task_delay_until(time_ticks *prev_wakeup_time, time_ticks time_increment) {
+  vTaskDelayUntil(&(prev_wakeup_time->ticks), time_increment.ticks);
 }
 #endif
 
@@ -40,16 +40,16 @@ inline void self_suspend() {
 #endif
 
 #ifdef INCLUDE_uxTaskPriorityGet
-inline base_t get_self_priority() {
+inline priority get_self_priority() {
   // get priority of the calling task
-  return uxTaskPriorityGet(0);
+  return priority{ uxTaskPriorityGet(0) };
 }
 #endif
 
 #ifdef INCLUDE_vTaskPrioritySet
-inline void set_self_priority(base_t new_value) {
+inline void set_self_priority(const priority& new_value) {
   // set priority of the calling task
-  vTaskPrioritySet(0, new_value);
+  vTaskPrioritySet(0, new_value.value());
 }
 #endif
 
@@ -89,14 +89,14 @@ class task {
 
 #ifdef INCLUDE_uxTaskPriorityGet
   [[nodiscard]]
-  base_t value() const {
-    return uxTaskPriorityGet(handle_);
+  priority get_priority() const {
+    return priority{uxTaskPriorityGet(handle_)};
   }
 #endif
 
 #ifdef INCLUDE_vTaskPrioritySet
-  void set_priority(base_t new_value) {
-    vTaskPrioritySet(handle_, new_value);
+  void set_priority(priority new_value) {
+    vTaskPrioritySet(handle_, new_value.value());
   }
 #endif
 

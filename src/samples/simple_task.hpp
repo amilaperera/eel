@@ -19,10 +19,12 @@ struct simple_task : os_wrapper::task {
   void run() override {
     *stream_ << io_stream::yellow << "\r\nSingle task program\r\n" << io_stream::reset;
     for (;;) {
-      *stream_ << io_stream::cyan << "Task running\r\n";
+      *stream_ << io_stream::cyan << "Task running\r\n" << io_stream::reset;
       os_wrapper::task_delay(1_s);
-      *stream_ << io_stream::green << "Task running\r\n";
+      stream_->print("tick count: %d\r\n", os_wrapper::tick_count().ticks);
+      *stream_ << io_stream::green << "Task running\r\n" << io_stream::reset;
       os_wrapper::task_delay(1_s);
+      stream_->print("tick count: %d\r\n", os_wrapper::tick_count().ticks);
     }
   }
  private:
