@@ -4,12 +4,15 @@
 #include "ots/FreeRTOS/Source/include/queue.h"
 #include <type_traits>
 #include "utils/os_wrapper/free_rtos_types.hpp"
+#include <utility>
+#include "utils/preprocessor.hpp"
 
 namespace eel::utils::os_wrapper {
 namespace detail {
 
 class queue_common {
  public:
+  using native_handle_type = QueueHandle_t;
   [[nodiscard]]
   base_t messages_waiting() const {
     return uxQueueMessagesWaiting(handle_);
@@ -26,12 +29,23 @@ class queue_common {
     xQueueReset(handle_);
   }
 
+  [[nodiscard]] native_handle_type& native_handle() {
+    return handle_;
+  }
+
   queue_common(const queue_common&) = delete;
   queue_common& operator=(const queue_common&) = delete;
-  // TODO: Can make movable
  protected:
   queue_common() : handle_{} {}
-  QueueHandle_t handle_;
+  queue_common(queue_common&& other) noexcept : handle_{std::exchange(other.handle_, nullptr)} {}
+  queue_common& operator=(queue_common&& other) noexcept {
+    if (this != &other) {
+      handle_ = std::exchange(other.handle_, nullptr);
+    }
+    return *this;
+  }
+
+  native_handle_type handle_;
 };
 
 template <typename ItemType>
@@ -94,6 +108,11 @@ class queue : public detail::queue_base<ItemType> {
       vQueueDelete(this->handle_);
     }
   }
+  DELETE_COPY_CTOR(queue);
+  DELETE_COPY_ASSIGNMENT(queue);
+
+  queue(queue&& other) noexcept = default;
+  queue& operator=(queue&& other) noexcept = default;
 };
 
 }

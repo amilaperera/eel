@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ots/FreeRTOS/Source/include/FreeRTOS.h"
+#include <type_traits>
 
 namespace eel::utils::os_wrapper {
 using base_t = UBaseType_t;
@@ -14,42 +15,21 @@ struct priority {
   type p_;
 };
 
-struct word_size {
-  using type = unsigned short;
-  constexpr explicit word_size(type s) : sz_(s) {}
+struct stack_size {
+  using type = StackType_t;
+  constexpr explicit stack_size(type s) : sz_(s) {}
   [[nodiscard]] constexpr type value() const {return sz_;}
  private:
   type sz_;
 };
 
-struct byte_size {
-  using type = UBaseType_t;
-  constexpr explicit byte_size(type s) : sz_(s) {}
-  [[nodiscard]] constexpr type value() const {return sz_/sizeof(StackType_t);}
- private:
-  type sz_;
-};
-
-template <typename T>
-struct stack_size {
-  constexpr explicit stack_size(T s) : sz_(s) {}
-  [[nodiscard]] constexpr typename T::type value() const {return sz_.value();}
- private:
-  T sz_;
-};
-
-template <typename T>
-constexpr inline stack_size<T> make_stack_size(T sz) {
-  return stack_size<T>(sz);
-}
 namespace literals {
 constexpr inline auto operator"" _ws(unsigned long long sz) {
-  return make_stack_size(word_size(sz));
+  return stack_size(static_cast<stack_size::type>(sz));
 }
 
 constexpr inline auto operator"" _bs(unsigned long long sz) {
-  return make_stack_size(byte_size(sz));
+  return stack_size(static_cast<stack_size::type>(sz)/sizeof(stack_size::type));
 }
 }
-static constexpr stack_size min_stack_size{make_stack_size(word_size(configMINIMAL_STACK_SIZE))};
 }

@@ -12,9 +12,7 @@ using namespace eel::utils;
 using namespace eel::utils::os_wrapper::literals;
 
 struct simple_task : os_wrapper::task {
-  explicit simple_task(io_stream *s) : task{os_wrapper::priority(10),
-                                            os_wrapper::stack_size(os_wrapper::word_size(1024)),
-                                            "init task"}, stream_{s} {
+  explicit simple_task(io_stream *s) : task{os_wrapper::priority(10), 34_ws}, stream_{s} {
   }
   void run() override {
     *stream_ << io_stream::yellow << "\r\nSingle task program\r\n" << io_stream::reset;

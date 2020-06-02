@@ -5,6 +5,8 @@
 #include "ots/FreeRTOS/Source/include/task.h"
 #include "utils/os_wrapper/ticks.hpp"
 #include "utils/os_wrapper/free_rtos_types.hpp"
+#include <utility>
+#include "utils/preprocessor.hpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,9 +58,9 @@ inline void set_self_priority(const priority& new_value) {
 class task {
  public:
   friend void ::task_func(void *);
-  template <typename StackType>
+
   explicit task(priority prio,
-      stack_size<StackType> stack_depth = stack_size(word_size(configMINIMAL_STACK_SIZE)),
+      stack_size stack_depth = stack_size(configMINIMAL_STACK_SIZE),
       const char *name = "UnNamedTask") :
       handle_{} {
     // TODO: hook the return value to an assert
@@ -73,9 +75,17 @@ class task {
 #endif
   }
 
-  task(const task&) = delete;
-  task& operator=(const task&) = delete;
-  // TODO: can make it movable
+  DELETE_COPY_CTOR(task);
+  DELETE_COPY_ASSIGNMENT(task);
+
+  // move operations
+  task(task&& other) noexcept : handle_(std::exchange(other.handle_, nullptr)) {}
+  task& operator=(task&& other) noexcept {
+    if (this != &other) {
+      handle_ = std::exchange(other.handle_, nullptr);
+    }
+    return *this;
+  }
 
 #ifdef INCLUDE_vTaskSuspend
   void suspend() {
