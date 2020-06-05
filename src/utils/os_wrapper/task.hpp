@@ -56,6 +56,12 @@ inline void set_self_priority(const priority& new_value) {
 #endif
 
 class task {
+public:
+  using native_handle_type = TaskHandle_t;
+
+ private:
+  native_handle_type handle_;
+
  public:
   friend void ::task_func(void *);
 
@@ -67,7 +73,7 @@ class task {
     xTaskCreate(task_func, name, stack_depth.value(), this, prio.value(), &handle_);
   }
 
-  ~task() {
+  virtual ~task() {
 #ifdef INCLUDE_vTaskDelete
     if (handle_) {
       vTaskDelete(handle_);
@@ -85,6 +91,12 @@ class task {
       handle_ = std::exchange(other.handle_, nullptr);
     }
     return *this;
+  }
+
+  virtual void run() = 0;
+
+  [[nodiscard]] native_handle_type& native_handle() {
+    return handle_;
   }
 
 #ifdef INCLUDE_vTaskSuspend
@@ -126,11 +138,6 @@ class task {
     return xTaskResumeFromISR(handle_) == pdPASS;
   }
 #endif
-
-  virtual void run() = 0;
-
- private:
-  TaskHandle_t handle_;
 };
 
 }

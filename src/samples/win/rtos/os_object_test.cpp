@@ -9,7 +9,6 @@ void vAssertCalled( unsigned long ulLine, const char * const pcFileName )
 {
 }
 
-
 int main() {
   // Create the output stream
   console_device console;
@@ -18,8 +17,7 @@ int main() {
 
   io << io_stream::yellow << "OS object test\n" << io_stream::reset;
 
-  test_task_object(&io);
-  test_queue_object(&io);
+  test_task test_task(&io);
 
   os_wrapper::start_scheduler();
 }

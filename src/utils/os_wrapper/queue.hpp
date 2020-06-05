@@ -95,7 +95,7 @@ struct queue_base : public queue_common {
 }
 
 template <typename ItemType, size_t Size>
-class queue : public detail::queue_base<ItemType> {
+class queue final : public detail::queue_base<ItemType> {
   public:
   static_assert(std::is_trivially_copyable_v<ItemType>, "ItemType must be trivially copyable");
   queue() : detail::queue_base<ItemType>{} {
