@@ -15,12 +15,14 @@ using namespace eel::utils::os_wrapper::literals;
 
 inline void test_task_object(io_stream* s);
 inline void test_queue_object(io_stream* s);
+inline void test_queue_contained_type(io_stream* s);
 
 struct test_task : public os_wrapper::task {
   test_task(io_stream *s) : os_wrapper::task(os_wrapper::priority(10)), stream(s) {}
   void run() override {
     test_task_object(stream);
     test_queue_object(stream);
+    test_queue_contained_type(stream);
     for (;;) {}
   }
 private:
@@ -78,5 +80,44 @@ inline void test_queue_object(io_stream* s) {
   s->print("another_q spaces available: %d\r\n", another_q.spaces_available());
   another_q = std::move(new_q);
   s->print("another_q spaces available after move assignment from new_q: %d\r\n", another_q.spaces_available());
+}
+
+#include <string>
+#include <array>
+#include <variant>
+
+struct my_trivial_type_1 {
+  int a;
+  char b[64];
+  float f;
+};
+
+struct my_trivial_type_2 {
+  int a;
+  std::array<char, 50> b;
+  float f;
+};
+
+
+inline void test_queue_contained_type(io_stream* s) {
+  s->print("\r\n---- queue contained type test ----\r\n");
+  using q_type_trivial_1 = os_wrapper::queue<int, 5>;
+  q_type_trivial_1 q1;
+  using q_type_trivial_2 = os_wrapper::queue<char, 5>;
+  q_type_trivial_2 q2;
+  using q_type_trivial_3 = os_wrapper::queue<double, 5>;
+  q_type_trivial_3 q3;
+  using q_type_trivial_4 = os_wrapper::queue<float, 5>;
+  q_type_trivial_4 q4;
+
+  static_assert(std::is_trivially_copyable_v<my_trivial_type_1>, "my_trivial_type_1 is not trivially copyable");
+  os_wrapper::queue<my_trivial_type_1, 5> q5;
+
+  static_assert(std::is_trivially_copyable_v<my_trivial_type_2>, "my_trivial_type_2 is not trivially copyable");
+  os_wrapper::queue<my_trivial_type_2, 5> q6;
+
+  using type_q7 = std::variant<my_trivial_type_1, my_trivial_type_2>;
+  static_assert(std::is_trivially_copyable_v<type_q7>, "my_trivial_type_2 is not trivially copyable");
+  os_wrapper::queue<type_q7, 5> q7;
 }
 

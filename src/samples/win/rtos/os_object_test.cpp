@@ -17,7 +17,7 @@ int main() {
 
   io << io_stream::yellow << "OS object test\n" << io_stream::reset;
 
-  test_task test_task(&io);
+  test_task tt(&io);
 
   os_wrapper::start_scheduler();
 }
