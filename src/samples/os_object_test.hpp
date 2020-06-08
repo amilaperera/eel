@@ -18,12 +18,15 @@ inline void test_queue_object(io_stream* s);
 inline void test_queue_contained_type(io_stream* s);
 
 struct test_task : public os_wrapper::task {
-  test_task(io_stream *s) : os_wrapper::task(os_wrapper::priority(10)), stream(s) {}
+  explicit test_task(io_stream *s) : os_wrapper::task(os_wrapper::priority(10), 156_ws, "test task"), stream(s) {}
   void run() override {
+    *stream << io_stream::yellow << "OS object test\r\n" << io_stream::reset;
     test_task_object(stream);
     test_queue_object(stream);
     test_queue_contained_type(stream);
-    for (;;) {}
+    for (;;) {
+      os_wrapper::task_delay(30_s);
+    }
   }
 private:
   io_stream* stream;
