@@ -8,10 +8,17 @@ class io_device_interface;
 
 class io_stream {
  private:
+  static constexpr std::size_t kMaxPrintBufferSize{128 + 1};
   // private type aliasing
   using Manipulator = io_stream& (*)(io_stream&);
+
   io_device_interface *io_device_;
-  static constexpr std::size_t kMaxPrintBufferSize{128 + 1};
+  char buffer_[kMaxPrintBufferSize];
+  size_t buffer_write_idx_;
+
+  inline void flush_if_needed();
+  inline bool is_buffer_ended_with_crlf();
+
   static constexpr const char* kCrLf = "\r\n";
   static constexpr const char* kColorRed = "\033[31m";
   static constexpr const char* kColorGreen = "\033[32m";

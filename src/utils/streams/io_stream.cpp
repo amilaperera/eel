@@ -6,10 +6,11 @@
 #include <cstring>
 #include <cstdarg>
 #include <cstdio>
+#include <algorithm>
 
 namespace eel::utils {
 
-io_stream::io_stream(io_device_interface *io_device) : io_device_{io_device} {
+  io_stream::io_stream(io_device_interface* io_device) : io_device_{ io_device }, buffer_{0}, buffer_write_idx_{} {
 }
 
 void io_stream::print(const char *fmt, ...) {
@@ -23,12 +24,18 @@ void io_stream::print(const char *fmt, ...) {
 }
 
 io_stream& io_stream::operator<<(const char *str) {
-  io_device_->write(str, std::strlen(str));
+  auto len = std::min(std::strlen(str), kMaxPrintBufferSize - 1);
+  std::copy(str, str + len, buffer_ + buffer_write_idx_);
+  buffer_write_idx_ += len;
+  flush_if_needed();
   return *this;
 }
 
 io_stream& io_stream::operator<<(char ch) {
-  io_device_->write(&ch, 1);
+  if (buffer_write_idx_ < kMaxPrintBufferSize - 1) {
+    buffer_[buffer_write_idx_] = ch;
+  }
+  flush_if_needed();
   return *this;
 }
 
@@ -101,5 +108,18 @@ io_stream& io_stream::debug(io_stream& ios) { return green(ios); }
 io_stream& io_stream::no_debug(io_stream &ios) { return reset(ios); }
 io_stream& io_stream::trace(io_stream &ios) { return white(ios); }
 io_stream& io_stream::no_trace(io_stream &ios) { return reset(ios); }
+
+// private impl
+inline bool io_stream::is_buffer_ended_with_crlf() {
+  return buffer_write_idx_ > 1 && (buffer_[buffer_write_idx_ - 2] == '\r' && buffer_[buffer_write_idx_ - 1] == '\n');
+}
+
+inline void io_stream::flush_if_needed() {
+  if (buffer_write_idx_ >= kMaxPrintBufferSize - 1 || is_buffer_ended_with_crlf()) {
+    io_device_->write(buffer_, std::strlen(buffer_));
+    std::fill_n(buffer_, kMaxPrintBufferSize, 0x00);
+    buffer_write_idx_ = 0;
+  }
+}
 
 }
