@@ -65,6 +65,13 @@ struct queue_base : public queue_common {
     return xQueueReceive(handle_, item, ticks_to_wait.ticks) == pdTRUE;
   }
 
+  bool receive_from_isr(ItemType* item, bool* is_task_woken) {
+    os_wrapper::base_t task_woken = pdFALSE;
+    auto ret = xQueueReceiveFromISR(handle_, item, &task_woken);
+    *is_task_woken = task_woken == pdTRUE;
+    return ret == pdTRUE;
+  }
+
   bool send_to_back_from_isr(const ItemType& item, bool* is_higher_priority_task_woken) {
     base_t is_woken{pdFALSE};
     auto ret = xQueueSendToBackFromISR(handle_, &item, is_higher_priority_task_woken);
@@ -89,6 +96,15 @@ struct queue_base : public queue_common {
     *is_higher_priority_task_woken = (is_woken == pdTRUE);
     return ret == pdPASS;
   }
+
+  bool peek(ItemType* item, time_ticks ticks_to_wait = max_ticks()) {
+    return xQueuePeek(handle_, item, ticks_to_wait.ticks) == pdTRUE;
+  }
+
+  bool peek_from_isr(ItemType* item) {
+    return xQueuePeekFromISR(handle_, item) == pdTRUE;
+  }
+
  protected:
   queue_base() : queue_common{} {}
 };
