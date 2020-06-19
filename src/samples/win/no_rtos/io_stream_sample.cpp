@@ -26,5 +26,9 @@ int main() {
   io_stream << io_stream::cyan << "This is a cyan line\r\n";
   io_stream << io_stream::magenta << "This is a magenta line\r\n";
   io_stream << io_stream::white << "This is a white line\r\n";
+  io_stream << "This is a string with int " << 34 << io_stream::endl;
+  io_stream.print("This is a string with some numerals %d %c", 34, 'a');
+  io_stream << io_stream::endl;
+  io_stream.print_ln("This line should automatically flushed %d %d %c 0x%02x", 234, 432, 'b', 88);
   return 0;
 }

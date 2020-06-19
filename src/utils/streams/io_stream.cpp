@@ -10,31 +10,33 @@
 
 namespace eel::utils {
 
-  io_stream::io_stream(io_device_interface* io_device) : io_device_{ io_device }, buffer_{0}, buffer_write_idx_{} {
+  io_stream::io_stream(io_device_interface* io_device) : io_device_{ io_device }, stream_buffer_() {
 }
 
 void io_stream::print(const char *fmt, ...) {
-  char buffer[kMaxPrintBufferSize] = {0};
-  va_list argp;
-  va_start(argp, fmt);
-  if (std::vsnprintf(buffer, kMaxPrintBufferSize, fmt, argp) > 0) {
-    io_device_->write(buffer, std::strlen(buffer));
-  }
-  va_end(argp);
+  va_list args;
+  va_start (args, fmt);
+  stream_buffer_.copy(fmt, args);
+  va_end (args);
+  flush_if_needed();
+}
+
+void io_stream::print_ln(const char* fmt, ...) {
+  va_list args;
+  va_start (args, fmt);
+  stream_buffer_.copy(detail::append_crlf, fmt, args);
+  va_end (args);
+  flush_if_needed();
 }
 
 io_stream& io_stream::operator<<(const char *str) {
-  auto len = std::min(std::strlen(str), kMaxPrintBufferSize - 1);
-  std::copy(str, str + len, buffer_ + buffer_write_idx_);
-  buffer_write_idx_ += len;
+  stream_buffer_.copy(str);
   flush_if_needed();
   return *this;
 }
 
 io_stream& io_stream::operator<<(char ch) {
-  if (buffer_write_idx_ < kMaxPrintBufferSize - 1) {
-    buffer_[buffer_write_idx_] = ch;
-  }
+  stream_buffer_.copy(ch);
   flush_if_needed();
   return *this;
 }
@@ -42,6 +44,12 @@ io_stream& io_stream::operator<<(char ch) {
 io_stream& io_stream::operator<<(bool b) {
   *this << (b ? "true" : "false");
   return *this;
+}
+
+io_stream& io_stream::operator<<(int v) {
+  char str[11 + 1]{ 0 };
+  itoa(v, str, 10);
+  return *this << str;
 }
 
 io_stream& io_stream::operator<<(Manipulator manip) {
@@ -110,15 +118,10 @@ io_stream& io_stream::trace(io_stream &ios) { return white(ios); }
 io_stream& io_stream::no_trace(io_stream &ios) { return reset(ios); }
 
 // private impl
-inline bool io_stream::is_buffer_ended_with_crlf() {
-  return buffer_write_idx_ > 1 && (buffer_[buffer_write_idx_ - 2] == '\r' && buffer_[buffer_write_idx_ - 1] == '\n');
-}
-
-inline void io_stream::flush_if_needed() {
-  if (buffer_write_idx_ >= kMaxPrintBufferSize - 1 || is_buffer_ended_with_crlf()) {
-    io_device_->write(buffer_, std::strlen(buffer_));
-    std::fill_n(buffer_, kMaxPrintBufferSize, 0x00);
-    buffer_write_idx_ = 0;
+void io_stream::flush_if_needed() {
+  if (stream_buffer_.buffer_full() || stream_buffer_.ended_with_crlf()) {
+    io_device_->write(stream_buffer_.buffer(), stream_buffer_.size());
+    stream_buffer_.reset();
   }
 }
 
