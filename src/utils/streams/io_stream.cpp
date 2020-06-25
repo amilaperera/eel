@@ -21,7 +21,7 @@ void io_stream::print(const char *fmt, ...) {
   flush_if_needed();
 }
 
-void io_stream::print_ln(const char* fmt, ...) {
+void io_stream::println(const char* fmt, ...) {
   va_list args;
   va_start (args, fmt);
   stream_buffer_.copy(detail::append_crlf, fmt, args);

@@ -3,6 +3,7 @@
 #include <cstdarg>
 #include "utils/types.hpp"
 #include <algorithm>
+#include <cstring>
 
 namespace eel::utils {
 namespace detail {
@@ -87,7 +88,7 @@ class io_stream {
  public:
   explicit io_stream(io_device_interface *io_device);
   void print(const char* fmt, ...);
-  void print_ln(const char* fmt, ...);
+  void println(const char* fmt, ...);
   // stream insertion
   io_stream& operator<<(const char *str);
   io_stream& operator<<(char ch);

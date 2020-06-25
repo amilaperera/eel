@@ -97,7 +97,7 @@ struct queue_base : public queue_common {
     return ret == pdPASS;
   }
 
-  bool peek(ItemType* item, time_ticks ticks_to_wait = max_ticks()) {
+  bool peek(ItemType* item, time_ticks ticks_to_wait = max_ticks()) const {
     return xQueuePeek(handle_, item, ticks_to_wait.ticks) == pdTRUE;
   }
 
