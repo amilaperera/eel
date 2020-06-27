@@ -35,6 +35,7 @@ class semaphore_common_base {
     vSemaphoreDelete(handle_);
   }
 };
+
 class semaphore_base : public semaphore_common_base {
  public:
   explicit semaphore_base(const binary_sem_tag& tag) : semaphore_common_base(tag) {}
