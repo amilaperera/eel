@@ -4,7 +4,8 @@
 #include <type_traits>
 
 namespace eel::utils::os_wrapper {
-using base_t = UBaseType_t;
+using s_base_t = BaseType_t;
+using u_base_t = UBaseType_t;
 using tick_t = TickType_t;
 
 struct priority {
