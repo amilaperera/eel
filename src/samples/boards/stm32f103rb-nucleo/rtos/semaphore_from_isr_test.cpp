@@ -5,6 +5,7 @@
 #include "utils/streams/io_device_wrapper.hpp"
 #include "utils/streams/io_stream.hpp"
 #include "samples/semaphore_from_isr_test.hpp"
+#include "system_clock_config.hpp"
 
 using namespace eel::utils;
 using namespace eel::utils::os_wrapper::literals;
@@ -13,7 +14,7 @@ eel::hal::pin_in* button_ptr{nullptr};
 os_wrapper::binary_semaphore* sem{nullptr};
 
 GPIO_IRQ_BEGIN(eel::hal::pin_name::C13)
-    if (button_ptr->read() == eel::hal::pin_level::high) {
+    if (button_ptr->read() == eel::hal::pin_level::low) {
       sem->give_from_isr();
     }
 GPIO_IRQ_END
@@ -22,7 +23,7 @@ struct init_task : os_wrapper::task {
   init_task() : os_wrapper::task{os_wrapper::priority(20)} {}
 
   void run() override {
-    eel::hal::uart serial(eel::hal::pin_name::D8, eel::hal::pin_name::D9, 115200);
+    eel::hal::uart serial(eel::hal::pin_name::A2, eel::hal::pin_name::A3, 115200);
     auto io_device = make_io_device(&serial);
     io_stream io{&io_device};
 
@@ -41,6 +42,8 @@ struct init_task : os_wrapper::task {
 
 int main() {
   eel::hal::init();
+  SystemClock_Config(); // TODO(Amila)
+
   [[maybe_unused]] auto init_routine = new init_task;
   os_wrapper::start_scheduler();
 }

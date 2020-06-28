@@ -35,7 +35,7 @@ struct task_1 : os_wrapper::task {
     os_wrapper::lock_guard lk(m_);
     blob_.a++;
     blob_.b++;
-    stream_.println("updated values: (a: %d, b: %d), int: %d", blob_.a, blob_.b, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
+    stream_.println("updated values: (a: %d, b: %d)", blob_.a, blob_.b);
   }
   void print_button_press_info() {
     os_wrapper::lock_guard lk(m_);

@@ -75,7 +75,7 @@ enum class pin_pud : std::uint32_t  {
   down = GPIO_PULLDOWN,
 };
 
-inline void set_interrupt(eel::hal::pin_name name) {
+inline void set_interrupt(eel::hal::pin_name name, std::uint32_t prio) {
   IRQn_Type irqn_type(EXTI15_10_IRQn);
   switch (eel::utils::to_integral(name) % 16) {
     case 0: irqn_type = EXTI0_IRQn; break;
@@ -86,7 +86,7 @@ inline void set_interrupt(eel::hal::pin_name name) {
     case 5: case 6: case 7: case 8: case 9: irqn_type = EXTI9_5_IRQn; break;
     default: break;
   }
-  HAL_NVIC_SetPriority(irqn_type, 0x0, 0x0);
+  HAL_NVIC_SetPriority(irqn_type, prio, 0x0);
   HAL_NVIC_EnableIRQ(irqn_type);
 }
 #endif
