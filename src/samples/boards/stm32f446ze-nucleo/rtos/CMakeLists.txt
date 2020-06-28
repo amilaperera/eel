@@ -10,4 +10,6 @@ find_package(OpenOCD REQUIRED)
 add_rtos_sample(simple_task simple_task.cpp config/stm32f4xx_hal_msp.c config/stm32f4xx_it.c)
 add_rtos_sample(sender_receiver_tasks sender_receiver_tasks.cpp config/stm32f4xx_hal_msp.c config/stm32f4xx_it.c)
 add_rtos_sample(os_object_test os_object_test.cpp config/stm32f4xx_hal_msp.c config/stm32f4xx_it.c)
+add_rtos_sample(mailbox_test mailbox_test.cpp config/stm32f4xx_hal_msp.c config/stm32f4xx_it.c)
+add_rtos_sample(semaphore_test semaphore_test.cpp config/stm32f4xx_hal_msp.c config/stm32f4xx_it.c)
 
