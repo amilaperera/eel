@@ -13,6 +13,7 @@ class gpio_interrupt : public gpio {
  public:
   gpio_interrupt(eel::hal::pin_name pin, interrupt_mode mode) : gpio(pin), mode_(mode) {}
   void init(eel::hal::pin_speed s, eel::hal::pin_pud p);
+  void set_priority(std::uint32_t prio);
  private:
   interrupt_mode mode_;
 };

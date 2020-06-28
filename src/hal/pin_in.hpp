@@ -13,6 +13,9 @@ struct pin_in {
   DELETE_COPY_CTOR(pin_in);
   DELETE_COPY_ASSIGNMENT(pin_in);
 
+  void set_priority(std::uint32_t prio) {
+    gpio_interrupt_.set_priority(prio);
+  }
   eel::hal::pin_level read() {
     return gpio_interrupt_.read();
   }

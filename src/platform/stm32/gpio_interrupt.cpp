@@ -18,7 +18,10 @@ namespace eel::hal::ll {
         break;
     }
     gpio::init(m, s, p);
-    set_interrupt(name_);
+  }
+
+  void gpio_interrupt::set_priority(std::uint32_t prio) {
+    set_interrupt(name_, prio);
   }
 }
 
