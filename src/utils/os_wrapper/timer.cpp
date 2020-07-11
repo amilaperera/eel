@@ -2,7 +2,7 @@
 // Created by amila.perera on 10/07/2020.
 //
 #include "utils/os_wrapper/timer.hpp"
-
+#if (configUSE_TIMERS == 1)
 namespace eel::utils::os_wrapper::detail {
 
 timer_create_helper<timer_type::one_shot>::Callback timer_create_helper<timer_type::one_shot>::callback = one_shot_timer_callback;
@@ -17,3 +17,4 @@ void periodic_timer_callback(TimerHandle_t handle) {
   self->callback_();
 }
 }
+#endif
