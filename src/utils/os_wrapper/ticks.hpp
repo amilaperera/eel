@@ -34,6 +34,13 @@ namespace literals {
   constexpr time_ticks operator"" _s(unsigned long long secs) {
     return { static_cast<tick_t>(secs * 1000 / portTICK_PERIOD_MS) };
   }
-  // TOOD operator+
+
+  constexpr time_ticks operator+(time_ticks const& t1, time_ticks const& t2) {
+    return {static_cast<tick_t>(t1.ticks + t2.ticks)};
+  }
+
+  constexpr time_ticks operator-(time_ticks const& t1, time_ticks const& t2) {
+    return {static_cast<tick_t>(t1.ticks - t2.ticks)};
+  }
 }
 }

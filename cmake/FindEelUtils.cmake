@@ -7,7 +7,7 @@ if (WIN32)
 endif()
 
 # OS
-set(EelOsTask_SOURCES os_wrapper/task.cpp)
+set(EelOsTask_SOURCES os_wrapper/task.cpp os_wrapper/timer.cpp)
 
 # Collate OS & OS None
 set(EelOsNone_SOURCES ${EelStreams_SOURCES} ${EelPorts_SOURCES})
