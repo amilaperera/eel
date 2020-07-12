@@ -45,6 +45,31 @@ class timer_base {
  protected:
   TimerHandle_t handle_;
   std::function<void()> callback_;
+
+  template <typename Func, typename ... Ts>
+  bool impl(Func f, bool *flag, Ts&& ... ts) {
+    os_wrapper::s_base_t is_woken{pdFALSE};
+    auto ret = std::invoke(f, this, std::forward<Ts>(ts)..., &is_woken);
+    *flag = (is_woken == pdTRUE);
+    return ret == pdTRUE;
+  }
+
+  bool start_from_isr_impl(os_wrapper::s_base_t *is_woken) {
+    return xTimerStartFromISR(handle_, is_woken) == pdTRUE;
+  }
+
+  bool stop_from_isr_impl(os_wrapper::s_base_t *is_woken) {
+    return xTimerStopFromISR(handle_, is_woken) == pdTRUE;
+  }
+
+  bool reset_from_isr_impl(os_wrapper::s_base_t *is_woken) {
+    return xTimerResetFromISR(handle_, is_woken) == pdTRUE;
+  }
+
+  bool change_timer_from_isr_impl(tick_t new_tick_period, os_wrapper::s_base_t *is_woken) {
+    return xTimerChangePeriodFromISR(handle_, new_tick_period, is_woken);
+  }
+
  public:
   template <detail::timer_type T>
   timer_base(const char* name, os_wrapper::time_ticks t, std::function<void()> callback, timer_create_helper<T>) : handle_{}, callback_(std::move(callback)) {
@@ -86,6 +111,22 @@ class timer_base {
 
   [[nodiscard]] time_ticks get_expiry_time() const {
     return {xTimerGetExpiryTime(handle_)};
+  }
+
+  bool start_from_isr(bool *is_higher_priority_task_woken) {
+    return impl(&timer_base::start_from_isr_impl, is_higher_priority_task_woken);
+  }
+
+  bool stop_from_isr(bool *is_higher_priority_task_woken) {
+    return impl(&timer_base::stop_from_isr_impl, is_higher_priority_task_woken);
+  }
+
+  bool change_period_from_isr(time_ticks new_period, bool *is_higher_priority_task_woken) {
+    return impl(&timer_base::change_timer_from_isr_impl, is_higher_priority_task_woken, new_period.ticks);
+  }
+
+  bool reset_from_isr(bool *is_higher_priority_task_woken) {
+    return impl(&timer_base::reset_from_isr_impl, is_higher_priority_task_woken);
   }
 };
 }
