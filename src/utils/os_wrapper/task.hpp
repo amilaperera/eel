@@ -99,6 +99,10 @@ public:
     return handle_;
   }
 
+  [[nodiscard]] const native_handle_type& native_handle() const {
+    return handle_;
+  }
+
 #ifdef INCLUDE_vTaskSuspend
   void suspend() {
     vTaskSuspend(handle_);
@@ -139,5 +143,24 @@ public:
   }
 #endif
 };
+
+#if (INCLUDE_eTaskGetState == 1)
+enum class task_state {
+  ready = eReady,
+  running = eRunning,
+  blocked = eBlocked,
+  suspended = eSuspended,
+  deleted = eDeleted,
+  invalid = eInvalid,
+};
+
+task_state get_task_state(task const& t) {
+  return static_cast<task_state>(eTaskGetState(t.native_handle()));
+}
+#endif
+
+u_base_t get_nof_tasks() {
+  return uxTaskGetNumberOfTasks();
+}
 
 }
