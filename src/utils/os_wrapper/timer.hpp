@@ -4,7 +4,6 @@
 
 #pragma once
 
-
 #include "ots/FreeRTOS/Source/include/FreeRTOS.h"
 #include "ots/FreeRTOS/Source/include/timers.h"
 #include "utils/os_wrapper/ticks.hpp"

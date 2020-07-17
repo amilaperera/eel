@@ -154,12 +154,12 @@ enum class task_state {
   invalid = eInvalid,
 };
 
-task_state get_task_state(task const& t) {
+inline task_state get_task_state(task const& t) {
   return static_cast<task_state>(eTaskGetState(t.native_handle()));
 }
 #endif
 
-u_base_t get_nof_tasks() {
+inline u_base_t get_nof_tasks() {
   return uxTaskGetNumberOfTasks();
 }
 
