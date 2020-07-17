@@ -42,12 +42,9 @@ struct timer_create_helper<detail::timer_type::periodic> : public timer_create_h
 };
 
 class timer_base {
- protected:
-  TimerHandle_t handle_;
-  std::function<void()> callback_;
-
+ private:
   template <typename Func, typename ... Ts>
-  bool impl(Func f, bool *flag, Ts&& ... ts) {
+  bool from_isr_impl_caller(Func f, bool *flag, Ts&& ... ts) {
     os_wrapper::s_base_t is_woken{pdFALSE};
     auto ret = std::invoke(f, this, std::forward<Ts>(ts)..., &is_woken);
     *flag = (is_woken == pdTRUE);
@@ -69,6 +66,10 @@ class timer_base {
   bool change_timer_from_isr_impl(tick_t new_tick_period, os_wrapper::s_base_t *is_woken) {
     return xTimerChangePeriodFromISR(handle_, new_tick_period, is_woken);
   }
+
+ protected:
+  TimerHandle_t handle_;
+  std::function<void()> callback_;
 
  public:
   template <detail::timer_type T>
@@ -114,19 +115,21 @@ class timer_base {
   }
 
   bool start_from_isr(bool *is_higher_priority_task_woken) {
-    return impl(&timer_base::start_from_isr_impl, is_higher_priority_task_woken);
+    return from_isr_impl_caller(&timer_base::start_from_isr_impl, is_higher_priority_task_woken);
   }
 
   bool stop_from_isr(bool *is_higher_priority_task_woken) {
-    return impl(&timer_base::stop_from_isr_impl, is_higher_priority_task_woken);
+    return from_isr_impl_caller(&timer_base::stop_from_isr_impl, is_higher_priority_task_woken);
   }
 
   bool change_period_from_isr(time_ticks new_period, bool *is_higher_priority_task_woken) {
-    return impl(&timer_base::change_timer_from_isr_impl, is_higher_priority_task_woken, new_period.ticks);
+    return from_isr_impl_caller(&timer_base::change_timer_from_isr_impl,
+                                is_higher_priority_task_woken,
+                                new_period.ticks);
   }
 
   bool reset_from_isr(bool *is_higher_priority_task_woken) {
-    return impl(&timer_base::reset_from_isr_impl, is_higher_priority_task_woken);
+    return from_isr_impl_caller(&timer_base::reset_from_isr_impl, is_higher_priority_task_woken);
   }
 };
 }
