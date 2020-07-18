@@ -31,6 +31,12 @@ struct buffer_view {
   }
 };
 
+template <size_t N>
+struct buffer_wrapper {
+  unsigned char data[N];
+  buffer_wrapper() : data{0} {}
+};
+
 namespace detail {
 struct basic_stream_buffer_base {
  protected:
@@ -42,32 +48,74 @@ struct basic_stream_buffer_base {
   ~basic_stream_buffer_base() {
     vStreamBufferDelete(handle_);
   }
+
+ public:
+  [[nodiscard]] size_t spaces_available() const {
+    return xStreamBufferSpacesAvailable(handle_);
+  }
+
+  [[nodiscard]] bool is_empty() const {
+    return xStreamBufferIsEmpty(handle_) == pdTRUE;
+  }
+
+  [[nodiscard]] bool is_full() const {
+    return xStreamBufferIsFull(handle_) == pdTRUE;
+  }
+
+  bool reset() {
+    return xStreamBufferReset(handle_) == pdTRUE;
+  }
 };
 }
 
-template <typename T>
+template <typename ItemType>
 class basic_stream_buffer final : public detail::basic_stream_buffer_base {
+  static_assert(std::is_trivially_copyable_v<ItemType>, "ItemType must be trivially copyable");
+
  private:
-  const size_t item_size = sizeof(T);
+  const size_t item_size;
 
  public:
-  basic_stream_buffer(size_t sz, size_t trigger_items) : detail::basic_stream_buffer_base(sz, item_size* trigger_items) {
+  using type = ItemType;
+  explicit basic_stream_buffer(size_t sz, size_t trigger_items = 1) : detail::basic_stream_buffer_base(sz, trigger_items * sizeof(ItemType)), item_size(sizeof(ItemType)) {
   };
 
-  size_t send_one(T const& item, time_ticks time_out) {
-    return xStreamBufferSend(handle_, &item, item_size, time_out.ticks);
+  size_t send_one(ItemType const& item, time_ticks timeout = os_wrapper::max_ticks()) {
+    return xStreamBufferSend(handle_, &item, item_size, timeout.ticks);
+  }
+
+  size_t receive_one(ItemType& item, time_ticks timeout = os_wrapper::max_ticks()) {
+    return xStreamBufferReceive(handle_, &item, item_size, timeout.ticks);
+  }
+
+  size_t send_one_from_isr(ItemType const& item, bool* is_higher_priority_task_woken) {
+    s_base_t is_woken{pdFALSE};
+    auto ret = xStreamBufferSendFromISR(handle_, &item, item_size, &is_woken);
+    *is_higher_priority_task_woken = (is_woken == pdTRUE);
+    return ret;
+  }
+
+  size_t receive_one_from_isr(ItemType& item, bool* is_higher_priority_task_woken) {
+    s_base_t is_woken{pdFALSE};
+    auto ret = xStreamBufferReceiveFromISR(handle_, &item, item_size, &is_woken);
+    *is_higher_priority_task_woken = (is_woken == pdTRUE);
+    return ret;
   }
 };
 
 template <>
 class basic_stream_buffer<void> final : public detail::basic_stream_buffer_base {
- private:
  public:
   basic_stream_buffer(size_t sz, size_t trigger_items) : detail::basic_stream_buffer_base(sz, trigger_items) {}
 
-  size_t send(const buffer_view& bview, time_ticks time_out) {
-    return xStreamBufferSend(handle_, bview.get_data(), bview.get_size(), time_out.ticks);
+  size_t send(const buffer_view& buffer, time_ticks timeout = os_wrapper::max_ticks()) {
+    return xStreamBufferSend(handle_, buffer.get_data(), buffer.get_size(), timeout.ticks);
   }
+
+  template <size_t N>
+  size_t receive(buffer_wrapper<N>& buffer_wrapper, time_ticks timeout = os_wrapper::max_ticks()) {
+   return xStreamBufferReceive(handle_, buffer_wrapper.data, N, timeout.ticks);
+ }
 };
 
 using stream_buffer = basic_stream_buffer<void>;
