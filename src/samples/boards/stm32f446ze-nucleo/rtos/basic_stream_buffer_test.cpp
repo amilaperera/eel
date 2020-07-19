@@ -3,7 +3,7 @@
 #include "utils/os_wrapper/task.hpp"
 #include "utils/streams/io_device_wrapper.hpp"
 #include "utils/streams/io_stream.hpp"
-#include "samples/stream_buffer_test.hpp"
+#include "samples/basic_stream_buffer_test.hpp"
 
 using namespace eel::utils;
 using namespace eel::utils::os_wrapper::literals;
