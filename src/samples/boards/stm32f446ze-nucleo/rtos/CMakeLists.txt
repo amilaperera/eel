@@ -15,4 +15,5 @@ add_rtos_sample(semaphore_test semaphore_test.cpp config/stm32f4xx_hal_msp.c con
 add_rtos_sample(semaphore_from_isr_test semaphore_from_isr_test.cpp config/stm32f4xx_hal_msp.c config/stm32f4xx_it.c)
 add_rtos_sample(timer_test timer_test.cpp config/stm32f4xx_hal_msp.c config/stm32f4xx_it.c)
 add_rtos_sample(basic_stream_buffer_test basic_stream_buffer_test.cpp config/stm32f4xx_hal_msp.c config/stm32f4xx_it.c)
+add_rtos_sample(event_group_test event_group_test.cpp config/stm32f4xx_hal_msp.c config/stm32f4xx_it.c)
 
